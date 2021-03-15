@@ -11,9 +11,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        print("Started")
+        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
-
-
+    @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
+        // log when textfield input changes.
+        print(sender.text)
+    }
+    
 }
 
