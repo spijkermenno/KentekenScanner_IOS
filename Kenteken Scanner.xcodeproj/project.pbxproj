@@ -1,0 +1,598 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AA25FF97E90013F8FE /* AppDelegate.swift */; };
+		A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */; };
+		A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AE25FF97E90013F8FE /* ViewController.swift */; };
+		A93E03B225FF97E90013F8FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93E03B025FF97E90013F8FE /* Main.storyboard */; };
+		A93E03B425FF97E90013F8FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93E03B325FF97E90013F8FE /* Assets.xcassets */; };
+		A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */; };
+		A93E03C225FF97EA0013F8FE /* Kenteken_ScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03C125FF97EA0013F8FE /* Kenteken_ScannerTests.swift */; };
+		A93E03CD25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A93E03BE25FF97EA0013F8FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A93E039F25FF97E90013F8FE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A93E03A625FF97E90013F8FE;
+			remoteInfo = "Kenteken Scanner";
+		};
+		A93E03C925FF97EA0013F8FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A93E039F25FF97E90013F8FE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A93E03A625FF97E90013F8FE;
+			remoteInfo = "Kenteken Scanner";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A93E03A725FF97E90013F8FE /* Kenteken Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kenteken Scanner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A93E03AA25FF97E90013F8FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A93E03AE25FF97E90013F8FE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A93E03B125FF97E90013F8FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A93E03B325FF97E90013F8FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A93E03B625FF97E90013F8FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A93E03B825FF97E90013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A93E03BD25FF97EA0013F8FE /* Kenteken ScannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kenteken ScannerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A93E03C125FF97EA0013F8FE /* Kenteken_ScannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kenteken_ScannerTests.swift; sourceTree = "<group>"; };
+		A93E03C325FF97EA0013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A93E03C825FF97EA0013F8FE /* Kenteken ScannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kenteken ScannerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kenteken_ScannerUITests.swift; sourceTree = "<group>"; };
+		A93E03CE25FF97EA0013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A93E03A425FF97E90013F8FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93E03BA25FF97EA0013F8FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93E03C525FF97EA0013F8FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A93E039E25FF97E90013F8FE = {
+			isa = PBXGroup;
+			children = (
+				A93E03A925FF97E90013F8FE /* Kenteken Scanner */,
+				A93E03C025FF97EA0013F8FE /* Kenteken ScannerTests */,
+				A93E03CB25FF97EA0013F8FE /* Kenteken ScannerUITests */,
+				A93E03A825FF97E90013F8FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A93E03A825FF97E90013F8FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A93E03A725FF97E90013F8FE /* Kenteken Scanner.app */,
+				A93E03BD25FF97EA0013F8FE /* Kenteken ScannerTests.xctest */,
+				A93E03C825FF97EA0013F8FE /* Kenteken ScannerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A93E03A925FF97E90013F8FE /* Kenteken Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				A93E03AA25FF97E90013F8FE /* AppDelegate.swift */,
+				A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */,
+				A93E03AE25FF97E90013F8FE /* ViewController.swift */,
+				A93E03B025FF97E90013F8FE /* Main.storyboard */,
+				A93E03B325FF97E90013F8FE /* Assets.xcassets */,
+				A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */,
+				A93E03B825FF97E90013F8FE /* Info.plist */,
+			);
+			path = "Kenteken Scanner";
+			sourceTree = "<group>";
+		};
+		A93E03C025FF97EA0013F8FE /* Kenteken ScannerTests */ = {
+			isa = PBXGroup;
+			children = (
+				A93E03C125FF97EA0013F8FE /* Kenteken_ScannerTests.swift */,
+				A93E03C325FF97EA0013F8FE /* Info.plist */,
+			);
+			path = "Kenteken ScannerTests";
+			sourceTree = "<group>";
+		};
+		A93E03CB25FF97EA0013F8FE /* Kenteken ScannerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */,
+				A93E03CE25FF97EA0013F8FE /* Info.plist */,
+			);
+			path = "Kenteken ScannerUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A93E03A625FF97E90013F8FE /* Kenteken Scanner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A93E03D125FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken Scanner" */;
+			buildPhases = (
+				A93E03A325FF97E90013F8FE /* Sources */,
+				A93E03A425FF97E90013F8FE /* Frameworks */,
+				A93E03A525FF97E90013F8FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Kenteken Scanner";
+			productName = "Kenteken Scanner";
+			productReference = A93E03A725FF97E90013F8FE /* Kenteken Scanner.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A93E03BC25FF97EA0013F8FE /* Kenteken ScannerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A93E03D425FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken ScannerTests" */;
+			buildPhases = (
+				A93E03B925FF97EA0013F8FE /* Sources */,
+				A93E03BA25FF97EA0013F8FE /* Frameworks */,
+				A93E03BB25FF97EA0013F8FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A93E03BF25FF97EA0013F8FE /* PBXTargetDependency */,
+			);
+			name = "Kenteken ScannerTests";
+			productName = "Kenteken ScannerTests";
+			productReference = A93E03BD25FF97EA0013F8FE /* Kenteken ScannerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A93E03C725FF97EA0013F8FE /* Kenteken ScannerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A93E03D725FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken ScannerUITests" */;
+			buildPhases = (
+				A93E03C425FF97EA0013F8FE /* Sources */,
+				A93E03C525FF97EA0013F8FE /* Frameworks */,
+				A93E03C625FF97EA0013F8FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A93E03CA25FF97EA0013F8FE /* PBXTargetDependency */,
+			);
+			name = "Kenteken ScannerUITests";
+			productName = "Kenteken ScannerUITests";
+			productReference = A93E03C825FF97EA0013F8FE /* Kenteken ScannerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A93E039F25FF97E90013F8FE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					A93E03A625FF97E90013F8FE = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					A93E03BC25FF97EA0013F8FE = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = A93E03A625FF97E90013F8FE;
+					};
+					A93E03C725FF97EA0013F8FE = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = A93E03A625FF97E90013F8FE;
+					};
+				};
+			};
+			buildConfigurationList = A93E03A225FF97E90013F8FE /* Build configuration list for PBXProject "Kenteken Scanner" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A93E039E25FF97E90013F8FE;
+			productRefGroup = A93E03A825FF97E90013F8FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A93E03A625FF97E90013F8FE /* Kenteken Scanner */,
+				A93E03BC25FF97EA0013F8FE /* Kenteken ScannerTests */,
+				A93E03C725FF97EA0013F8FE /* Kenteken ScannerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A93E03A525FF97E90013F8FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */,
+				A93E03B425FF97E90013F8FE /* Assets.xcassets in Resources */,
+				A93E03B225FF97E90013F8FE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93E03BB25FF97EA0013F8FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93E03C625FF97EA0013F8FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A93E03A325FF97E90013F8FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */,
+				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
+				A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93E03B925FF97EA0013F8FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93E03C225FF97EA0013F8FE /* Kenteken_ScannerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93E03C425FF97EA0013F8FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93E03CD25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A93E03BF25FF97EA0013F8FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A93E03A625FF97E90013F8FE /* Kenteken Scanner */;
+			targetProxy = A93E03BE25FF97EA0013F8FE /* PBXContainerItemProxy */;
+		};
+		A93E03CA25FF97EA0013F8FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A93E03A625FF97E90013F8FE /* Kenteken Scanner */;
+			targetProxy = A93E03C925FF97EA0013F8FE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A93E03B025FF97E90013F8FE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A93E03B125FF97E90013F8FE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A93E03B625FF97E90013F8FE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A93E03CF25FF97EA0013F8FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A93E03D025FF97EA0013F8FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A93E03D225FF97EA0013F8FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A93E03D325FF97EA0013F8FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A93E03D525FF97EA0013F8FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				INFOPLIST_FILE = "Kenteken ScannerTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-ScannerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kenteken Scanner.app/Kenteken Scanner";
+			};
+			name = Debug;
+		};
+		A93E03D625FF97EA0013F8FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				INFOPLIST_FILE = "Kenteken ScannerTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-ScannerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kenteken Scanner.app/Kenteken Scanner";
+			};
+			name = Release;
+		};
+		A93E03D825FF97EA0013F8FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				INFOPLIST_FILE = "Kenteken ScannerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-ScannerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Kenteken Scanner";
+			};
+			name = Debug;
+		};
+		A93E03D925FF97EA0013F8FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				INFOPLIST_FILE = "Kenteken ScannerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-ScannerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Kenteken Scanner";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A93E03A225FF97E90013F8FE /* Build configuration list for PBXProject "Kenteken Scanner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A93E03CF25FF97EA0013F8FE /* Debug */,
+				A93E03D025FF97EA0013F8FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A93E03D125FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken Scanner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A93E03D225FF97EA0013F8FE /* Debug */,
+				A93E03D325FF97EA0013F8FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A93E03D425FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken ScannerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A93E03D525FF97EA0013F8FE /* Debug */,
+				A93E03D625FF97EA0013F8FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A93E03D725FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken ScannerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A93E03D825FF97EA0013F8FE /* Debug */,
+				A93E03D925FF97EA0013F8FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A93E039F25FF97E90013F8FE /* Project object */;
+}
