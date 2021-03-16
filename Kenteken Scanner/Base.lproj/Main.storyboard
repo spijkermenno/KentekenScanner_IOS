@@ -16,29 +16,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="00-XXX-0" textAlignment="center" minimumFontSize="17" background="download-removebg-preview" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-Ll-YNd">
-                                <rect key="frame" x="62" y="106" width="290" height="68"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnY-ia-yhp">
+                                <rect key="frame" x="62" y="106" width="290" height="65"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kenteken-blauw" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-kD-OZy">
+                                        <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="64.666666666666671"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="tgV-kD-OZy" secondAttribute="height" multiplier="23:34" id="2AZ-Er-F9N"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="00-XXX-0" textAlignment="center" minimumFontSize="17" background="kenteken-geel" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-Ll-YNd">
+                                        <rect key="frame" x="43" y="1" width="248" height="63"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="KentekenHandler:forEvent:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="CSe-cr-k52"/>
+                                            <action selector="KentekenHandler:forEvent:" destination="BYZ-38-t0r" eventType="valueChanged" id="clg-Uu-6xx"/>
+                                            <action selector="KentekenHandler:forEvent:" destination="BYZ-38-t0r" eventType="editingChanged" id="ilY-qd-GCQ"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="36N-6o-4C4"/>
+                                    <constraint firstItem="tgV-kD-OZy" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="top" id="NB9-Qz-ymi"/>
+                                    <constraint firstItem="XIm-Ll-YNd" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="top" id="Qud-PB-MYi"/>
+                                    <constraint firstAttribute="bottom" secondItem="tgV-kD-OZy" secondAttribute="bottom" id="SK9-MJ-ru1"/>
+                                    <constraint firstAttribute="width" secondItem="tnY-ia-yhp" secondAttribute="height" multiplier="283:63" id="VHw-cw-Bqj"/>
+                                    <constraint firstAttribute="bottom" secondItem="XIm-Ll-YNd" secondAttribute="bottom" id="g6l-Ad-6Kb"/>
+                                    <constraint firstAttribute="trailing" secondItem="XIm-Ll-YNd" secondAttribute="trailing" id="lHe-VJ-tSk"/>
+                                    <constraint firstItem="XIm-Ll-YNd" firstAttribute="leading" secondItem="tnY-ia-yhp" secondAttribute="leading" constant="42" id="t9U-wE-Q8J"/>
+                                    <constraint firstItem="tgV-kD-OZy" firstAttribute="leading" secondItem="tnY-ia-yhp" secondAttribute="leading" id="vbN-u2-5fh"/>
                                 </constraints>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="KentekenHandler:forEvent:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="CSe-cr-k52"/>
-                                    <action selector="KentekenHandler:forEvent:" destination="BYZ-38-t0r" eventType="valueChanged" id="clg-Uu-6xx"/>
-                                    <action selector="KentekenHandler:forEvent:" destination="BYZ-38-t0r" eventType="editingChanged" id="ilY-qd-GCQ"/>
-                                </connections>
-                            </textField>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="scrollview" translatesAutoresizingMaskIntoConstraints="NO" id="0D0-3M-VBE">
+                                <rect key="frame" x="62" y="179" width="290" height="634"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="ccy-Dw-A5f"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="1Wh-0p-KNm"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="XIm-Ll-YNd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="Eqw-9K-gAD"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XIm-Ll-YNd" secondAttribute="trailing" constant="62" id="pjr-my-pOw"/>
-                            <constraint firstItem="XIm-Ll-YNd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="yAK-3d-Ngt"/>
+                            <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="5El-K4-0DI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0D0-3M-VBE" secondAttribute="bottom" constant="62" id="6pu-iJ-uUb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0D0-3M-VBE" secondAttribute="trailing" constant="62" id="7l1-A8-OCs"/>
+                            <constraint firstItem="0D0-3M-VBE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="GwB-xx-cxP"/>
+                            <constraint firstItem="tnY-ia-yhp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="HdS-4w-lPH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tnY-ia-yhp" secondAttribute="trailing" constant="62" id="b5g-R8-f5h"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="scrollview" destination="0D0-3M-VBE" id="oNB-I0-Bxp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -46,7 +76,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="download-removebg-preview" width="149" height="37.666667938232422"/>
+        <image name="kenteken-blauw" width="25" height="37.666667938232422"/>
+        <image name="kenteken-geel" width="123.66666412353516" height="37"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

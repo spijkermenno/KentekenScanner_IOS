@@ -15,29 +15,108 @@ class ViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        
+        
     }
+    
+    @IBOutlet weak var scrollview: UIScrollView!
+    
     @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
+        let enteredKenteken : String = sender.text!
         //check if valid kenteken
-        sender.text = (formatKenteken(sender.text!))
+        sender.text = (formatKenteken(enteredKenteken))
+        
+        if getSidecode(enteredKenteken) != -2 {
+            print(apiCall(kenteken: enteredKenteken));
+        }
+    }
+    
+    func apiCall(kenteken: String) -> Bool {
+        let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
+        
+        print(urlString)
+   
+        let url = URL(string: urlString)!
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            print(data.count)
+            
+            let decoder = JSONDecoder()
+            let dataObject = try! decoder.decode([kentekenDataObject].self, from: data)
+            
+            DispatchQueue.main.async {
+                self.fillScrollView(object: dataObject.first!);
+            }
+            
+        }
+
+        task.resume()
+    
+        return false;
+    }
+    
+    func fillScrollView(object: kentekenDataObject) {
+        let mir = Mirror(reflecting: object)
+
+        for child in mir.children {
+            let textView : UITextView = {
+                let v = UITextView()
+                return v
+            }()
+            
+            let label : UILabel = {
+                let v = UILabel()
+                v.text = child.label
+                return v
+            }()
+            
+            let value : UILabel = {
+                let v = UILabel()
+                v.text = child.value as? String
+                return v
+            }()
+            
+            textView.addSubview(label)
+            textView.addSubview(value)
+            
+            scrollview.addSubview(textView)
+        }
     }
     
     func formatKenteken(_ kenteken: String) -> String {
         let sidecode = getSidecode(kenteken);
         
-        let fixedkenteken = kenteken.uppercased()
+        var fixedkenteken = kenteken.uppercased()
+        fixedkenteken = fixedkenteken.replacingOccurrences(of: "-", with: "")
         
         // Not a valid kenteken
         if (sidecode == -2) {
             return fixedkenteken;
         }
         
-        var kenteken = Array(fixedkenteken);
+        let kenteken = Array(fixedkenteken);
         
         if (sidecode <= 6) {
             return String(kenteken[0..<2]) + "-" + String(kenteken[2..<4]) + "-" + String(kenteken[4..<6])
         }
         
-        return ""
+        if (sidecode == 7 || sidecode == 9) {
+            return String(kenteken[0..<2]) + "-" + String(kenteken[2..<5]) + "-" + String(kenteken[5..<6])
+        }
+        
+        if (sidecode == 8 || sidecode == 10) {
+            return String(kenteken[0..<1]) + "-" + String(kenteken[1..<4]) + "-" + String(kenteken[4..<6])
+        }
+        
+        if (sidecode == 11 || sidecode == 14) {
+            return String(kenteken[0..<3]) + "-" + String(kenteken[3..<5]) + "-" + String(kenteken[5..<6])
+        }
+        
+        if (sidecode == 12 || sidecode == 13) {
+            return String(kenteken[0..<1]) + "-" + String(kenteken[1..<3]) + "-" + String(kenteken[3..<6])
+        }
+        
+        return fixedkenteken
     }
     
     func getSidecode(_ kenteken: String) -> Int {

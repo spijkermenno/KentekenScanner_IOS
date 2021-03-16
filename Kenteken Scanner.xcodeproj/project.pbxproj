@@ -15,6 +15,7 @@
 		A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */; };
 		A93E03C225FF97EA0013F8FE /* Kenteken_ScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03C125FF97EA0013F8FE /* Kenteken_ScannerTests.swift */; };
 		A93E03CD25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */; };
+		A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		A93E03C825FF97EA0013F8FE /* Kenteken ScannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kenteken ScannerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kenteken_ScannerUITests.swift; sourceTree = "<group>"; };
 		A93E03CE25FF97EA0013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KentekenDataObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				A93E03B325FF97E90013F8FE /* Assets.xcassets */,
 				A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */,
 				A93E03B825FF97E90013F8FE /* Info.plist */,
+				A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */,
 			);
 			path = "Kenteken Scanner";
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */,
+				A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */,
 				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
 				A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */,
 			);
