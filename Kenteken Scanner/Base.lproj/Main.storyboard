@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnY-ia-yhp">
-                                <rect key="frame" x="62" y="106" width="290" height="65"/>
+                            <view contentMode="scaleToFill" restorationIdentifier="KentekenHolder" translatesAutoresizingMaskIntoConstraints="NO" id="tnY-ia-yhp">
+                                <rect key="frame" x="62" y="106" width="290" height="64.666666666666686"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kenteken-blauw" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-kD-OZy">
                                         <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="64.666666666666671"/>
@@ -26,7 +26,7 @@
                                         </constraints>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="00-XXX-0" textAlignment="center" minimumFontSize="17" background="kenteken-geel" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-Ll-YNd">
-                                        <rect key="frame" x="43" y="1" width="248" height="63"/>
+                                        <rect key="frame" x="42" y="0.0" width="248" height="64.666666666666671"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -49,30 +49,37 @@
                                     <constraint firstItem="tgV-kD-OZy" firstAttribute="leading" secondItem="tnY-ia-yhp" secondAttribute="leading" id="vbN-u2-5fh"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="scrollview" translatesAutoresizingMaskIntoConstraints="NO" id="0D0-3M-VBE">
-                                <rect key="frame" x="62" y="179" width="290" height="634"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="ccy-Dw-A5f"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="1Wh-0p-KNm"/>
-                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="5El-K4-0DI"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0D0-3M-VBE" secondAttribute="bottom" constant="62" id="6pu-iJ-uUb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0D0-3M-VBE" secondAttribute="trailing" constant="62" id="7l1-A8-OCs"/>
-                            <constraint firstItem="0D0-3M-VBE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="GwB-xx-cxP"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="HdS-4w-lPH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tnY-ia-yhp" secondAttribute="trailing" constant="62" id="b5g-R8-f5h"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="scrollview" destination="0D0-3M-VBE" id="oNB-I0-Bxp"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="77.678571428571431"/>
+        </scene>
+        <!--Data Table View-->
+        <scene sceneID="4ZN-Tm-lt0">
+            <objects>
+                <tableViewController id="VcL-lM-zTH" customClass="dataTableView" customModule="Kenteken_Scanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="eaX-0U-qF3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="VcL-lM-zTH" id="zYd-bb-Veb"/>
+                            <outlet property="delegate" destination="VcL-lM-zTH" id="Res-8N-fTp"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="diZ-HN-zZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="850.72463768115949" y="77.678571428571431"/>
         </scene>
     </scenes>
     <resources>

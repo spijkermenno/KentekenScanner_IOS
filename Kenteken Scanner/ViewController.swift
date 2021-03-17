@@ -11,15 +11,12 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Started")
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-        
-        
     }
-    
-    @IBOutlet weak var scrollview: UIScrollView!
+
+    @IBOutlet weak var tableView: dataTableView!
     
     @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
         let enteredKenteken : String = sender.text!
@@ -45,42 +42,14 @@ class ViewController: UIViewController {
             let dataObject = try! decoder.decode([kentekenDataObject].self, from: data)
             
             DispatchQueue.main.async {
-                self.fillScrollView(object: dataObject.first!);
+                let dataTableViewObj:dataTableView = dataTableView()
+                dataTableViewObj.loadData(object: dataObject.first!)
+                self.present(dataTableViewObj, animated: true, completion: nil)
             }
-            
         }
-
         task.resume()
     
         return false;
-    }
-    
-    func fillScrollView(object: kentekenDataObject) {
-        let mir = Mirror(reflecting: object)
-
-        for child in mir.children {
-            let textView : UITextView = {
-                let v = UITextView()
-                return v
-            }()
-            
-            let label : UILabel = {
-                let v = UILabel()
-                v.text = child.label
-                return v
-            }()
-            
-            let value : UILabel = {
-                let v = UILabel()
-                v.text = child.value as? String
-                return v
-            }()
-            
-            textView.addSubview(label)
-            textView.addSubview(value)
-            
-            scrollview.addSubview(textView)
-        }
     }
     
     func formatKenteken(_ kenteken: String) -> String {
