@@ -7,7 +7,13 @@
 
 import UIKit
 
+enum StorageIdentifier {
+    case Favorite, Recent
+}
+
 class ViewController: UIViewController {
+    let favoriteStorageIdentifier: String = "Favorite"
+    let recentStorageIdentifier: String = "Recent"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,8 +21,6 @@ class ViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
-
-    @IBOutlet weak var tableView: dataTableView!
     
     @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
         let enteredKenteken : String = sender.text!
@@ -24,8 +28,32 @@ class ViewController: UIViewController {
         sender.text = (formatKenteken(enteredKenteken))
         
         if getSidecode(enteredKenteken) != -2 {
-            print(apiCall(kenteken: enteredKenteken));
+            apiCall(kenteken: enteredKenteken);
         }
+    }
+    
+    func saveToLocalStorage(string: String, storageType: StorageIdentifier) {
+        let defaults = UserDefaults.standard
+        
+        if storageType == StorageIdentifier.Favorite {
+            defaults.set(string, forKey: favoriteStorageIdentifier)
+        } else if storageType == StorageIdentifier.Recent {
+            defaults.set(string, forKey: recentStorageIdentifier)
+        }
+    }
+    
+    func retrieveFromLocalStorage(storageType: StorageIdentifier) -> String {
+        let defaults = UserDefaults.standard
+        if storageType == StorageIdentifier.Favorite {
+            if let result = defaults.string(forKey: favoriteStorageIdentifier) {
+                return result
+            }
+        } else if storageType == StorageIdentifier.Recent {
+            if let result = defaults.string(forKey: recentStorageIdentifier) {
+                return result
+            }
+        }
+        return "Error: storage indentifier invalid"
     }
     
     func apiCall(kenteken: String) -> Bool {
@@ -36,7 +64,11 @@ class ViewController: UIViewController {
         let url = URL(string: urlString)!
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else { return }
-            print(data.count)
+            
+            if data.count > 0 {
+                self.saveToLocalStorage(string: kenteken, storageType: StorageIdentifier.Recent)
+                print(self.retrieveFromLocalStorage(storageType: StorageIdentifier.Recent))
+            }
             
             let decoder = JSONDecoder()
             let dataObject = try! decoder.decode([kentekenDataObject].self, from: data)

@@ -33,10 +33,12 @@ class dataTableView: UITableViewController {
                 value = val
             }
         
-            keys[i] = key.replacingOccurrences(of: "_", with: " ")
-            values[i] = value
+            if value != "Geen data beschikbaar" {
+                keys[i] = key.replacingOccurrences(of: "_", with: " ")
+                values[i] = value
+                i += 1
+            }
             
-            i += 1
         }
     }
     
