@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class dataTableView: UITableViewController {
     var kentekenData: kentekenDataObject?
@@ -17,7 +18,9 @@ class dataTableView: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellid")
+        
     }
+
     
     func loadData(object: kentekenDataObject) {
         kentekenData = object

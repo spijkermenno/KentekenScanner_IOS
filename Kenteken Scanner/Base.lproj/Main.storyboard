@@ -17,16 +17,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" restorationIdentifier="KentekenHolder" translatesAutoresizingMaskIntoConstraints="NO" id="tnY-ia-yhp">
-                                <rect key="frame" x="62" y="106" width="290" height="64.666666666666686"/>
+                                <rect key="frame" x="62" y="106" width="290" height="64"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kenteken-blauw" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-kD-OZy">
-                                        <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="64.666666666666671"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="tgV-kD-OZy" secondAttribute="height" multiplier="23:34" id="2AZ-Er-F9N"/>
-                                        </constraints>
-                                    </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="00-XXX-0" textAlignment="center" minimumFontSize="17" background="kenteken-geel" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-Ll-YNd">
-                                        <rect key="frame" x="42" y="0.0" width="248" height="64.666666666666671"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="00-XXX-0" textAlignment="center" minimumFontSize="17" background="kenteken-geel" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-Ll-YNd">
+                                        <rect key="frame" x="40" y="-7" width="259" height="77"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -36,26 +31,31 @@
                                             <action selector="KentekenHandler:forEvent:" destination="BYZ-38-t0r" eventType="editingChanged" id="ilY-qd-GCQ"/>
                                         </connections>
                                     </textField>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="kenteken-blauw" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-kD-OZy">
+                                        <rect key="frame" x="-7" y="-7" width="51" height="78"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="tgV-kD-OZy" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="top" id="NB9-Qz-ymi"/>
-                                    <constraint firstItem="XIm-Ll-YNd" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="top" id="Qud-PB-MYi"/>
-                                    <constraint firstAttribute="bottom" secondItem="tgV-kD-OZy" secondAttribute="bottom" id="SK9-MJ-ru1"/>
-                                    <constraint firstAttribute="width" secondItem="tnY-ia-yhp" secondAttribute="height" multiplier="283:63" id="VHw-cw-Bqj"/>
-                                    <constraint firstAttribute="bottom" secondItem="XIm-Ll-YNd" secondAttribute="bottom" id="g6l-Ad-6Kb"/>
-                                    <constraint firstAttribute="trailing" secondItem="XIm-Ll-YNd" secondAttribute="trailing" id="lHe-VJ-tSk"/>
-                                    <constraint firstItem="XIm-Ll-YNd" firstAttribute="leading" secondItem="tnY-ia-yhp" secondAttribute="leading" constant="42" id="t9U-wE-Q8J"/>
-                                    <constraint firstItem="tgV-kD-OZy" firstAttribute="leading" secondItem="tnY-ia-yhp" secondAttribute="leading" id="vbN-u2-5fh"/>
+                                    <constraint firstAttribute="width" constant="290" id="Sgd-qZ-GGj"/>
+                                    <constraint firstAttribute="width" secondItem="tnY-ia-yhp" secondAttribute="height" multiplier="145:32" id="kZE-3c-694"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAr-i5-57D">
+                                <rect key="frame" x="57" y="186" width="56" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Recents"/>
+                                <connections>
+                                    <action selector="RecentButton:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tQK-u2-dHX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="5El-K4-0DI"/>
-                            <constraint firstItem="tnY-ia-yhp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="HdS-4w-lPH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tnY-ia-yhp" secondAttribute="trailing" constant="62" id="b5g-R8-f5h"/>
+                            <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="qxx-kq-9Fs"/>
+                            <constraint firstItem="tnY-ia-yhp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tyG-wY-ipj"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -80,6 +80,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="diZ-HN-zZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="850.72463768115949" y="77.678571428571431"/>
+        </scene>
+        <!--Kenteken Data Table View Controller-->
+        <scene sceneID="wvm-Z2-b2V">
+            <objects>
+                <tableViewController id="YPw-EN-iRP" customClass="kentekenDataTableViewController" customModule="Kenteken_Scanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="IGf-Jl-srD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ftr-0O-y9W">
+                                <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ftr-0O-y9W" id="Gdm-wg-uos">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="YPw-EN-iRP" id="1ex-MM-KJB"/>
+                            <outlet property="delegate" destination="YPw-EN-iRP" id="pnd-g2-buz"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m2J-mW-6US" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-146" y="-595"/>
         </scene>
     </scenes>
     <resources>

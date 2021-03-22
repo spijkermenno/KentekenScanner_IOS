@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3524A6D48186DDBB13EB71D6 /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091A7E6E2C611B930F9DFEBB /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework */; };
+		744AEE6AFEFFF2F2280C16C6 /* Pods_Kenteken_ScannerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA15F59AF61C03555444160 /* Pods_Kenteken_ScannerTests.framework */; };
+		782D826DA705E05295F4080B /* Pods_Kenteken_Scanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B91E2AE16768A0E10083C8 /* Pods_Kenteken_Scanner.framework */; };
 		A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AA25FF97E90013F8FE /* AppDelegate.swift */; };
 		A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */; };
 		A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AE25FF97E90013F8FE /* ViewController.swift */; };
@@ -17,6 +20,13 @@
 		A93E03CD25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */; };
 		A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */; };
 		A945102A2601005B00E6798C /* dataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94510292601005B00E6798C /* dataTableView.swift */; };
+		A945103E2608834B00E6798C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A945103D2608834B00E6798C /* GoogleService-Info.plist */; };
+		A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */; };
+		A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */; };
+		A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */; };
+		A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */; };
+		A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */; };
+		A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +47,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		091A7E6E2C611B930F9DFEBB /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38204EE43252B5D76DE21A7E /* Pods-Kenteken Scanner-Kenteken ScannerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken Scanner-Kenteken ScannerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		62FD4A949184D129425F86DA /* Pods-Kenteken Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken Scanner.debug.xcconfig"; path = "Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner.debug.xcconfig"; sourceTree = "<group>"; };
+		7C7063421E6A5DDA6AB572FF /* Pods-Kenteken ScannerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken ScannerTests.release.xcconfig"; path = "Target Support Files/Pods-Kenteken ScannerTests/Pods-Kenteken ScannerTests.release.xcconfig"; sourceTree = "<group>"; };
+		7DA15F59AF61C03555444160 /* Pods_Kenteken_ScannerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kenteken_ScannerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		85CEBFD413479C1B68E529CC /* Pods-Kenteken Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken Scanner.release.xcconfig"; path = "Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner.release.xcconfig"; sourceTree = "<group>"; };
+		A4B91E2AE16768A0E10083C8 /* Pods_Kenteken_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kenteken_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93E03A725FF97E90013F8FE /* Kenteken Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kenteken Scanner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93E03AA25FF97E90013F8FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +70,15 @@
 		A93E03CE25FF97EA0013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KentekenDataObject.swift; sourceTree = "<group>"; };
 		A94510292601005B00E6798C /* dataTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTableView.swift; sourceTree = "<group>"; };
+		A945103D2608834B00E6798C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageHelper.swift; sourceTree = "<group>"; };
+		A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = analyticsHelper.swift; sourceTree = "<group>"; };
+		A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageTypeEnum.swift; sourceTree = "<group>"; };
+		A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networkRequestHelper.swift; sourceTree = "<group>"; };
+		A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenFactory.swift; sourceTree = "<group>"; };
+		A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenDataTableViewController.swift; sourceTree = "<group>"; };
+		DD5149D452FC3C01D92AF59D /* Pods-Kenteken ScannerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken ScannerTests.debug.xcconfig"; path = "Target Support Files/Pods-Kenteken ScannerTests/Pods-Kenteken ScannerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ECCA27C93B2A53723E2B2C3F /* Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig"; path = "Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				782D826DA705E05295F4080B /* Pods_Kenteken_Scanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				744AEE6AFEFFF2F2280C16C6 /* Pods_Kenteken_ScannerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,19 +102,46 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3524A6D48186DDBB13EB71D6 /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		404D6971CCFDF3FAD3867E6C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				62FD4A949184D129425F86DA /* Pods-Kenteken Scanner.debug.xcconfig */,
+				85CEBFD413479C1B68E529CC /* Pods-Kenteken Scanner.release.xcconfig */,
+				38204EE43252B5D76DE21A7E /* Pods-Kenteken Scanner-Kenteken ScannerUITests.debug.xcconfig */,
+				ECCA27C93B2A53723E2B2C3F /* Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig */,
+				DD5149D452FC3C01D92AF59D /* Pods-Kenteken ScannerTests.debug.xcconfig */,
+				7C7063421E6A5DDA6AB572FF /* Pods-Kenteken ScannerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9A5F48F8690C0EF03E797EBF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A4B91E2AE16768A0E10083C8 /* Pods_Kenteken_Scanner.framework */,
+				091A7E6E2C611B930F9DFEBB /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework */,
+				7DA15F59AF61C03555444160 /* Pods_Kenteken_ScannerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A93E039E25FF97E90013F8FE = {
 			isa = PBXGroup;
 			children = (
+				A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */,
 				A93E03A925FF97E90013F8FE /* Kenteken Scanner */,
 				A93E03C025FF97EA0013F8FE /* Kenteken ScannerTests */,
 				A93E03CB25FF97EA0013F8FE /* Kenteken ScannerUITests */,
 				A93E03A825FF97E90013F8FE /* Products */,
+				404D6971CCFDF3FAD3867E6C /* Pods */,
+				9A5F48F8690C0EF03E797EBF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,8 +165,14 @@
 				A93E03B325FF97E90013F8FE /* Assets.xcassets */,
 				A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */,
 				A93E03B825FF97E90013F8FE /* Info.plist */,
+				A945103D2608834B00E6798C /* GoogleService-Info.plist */,
 				A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */,
 				A94510292601005B00E6798C /* dataTableView.swift */,
+				A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */,
+				A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */,
+				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
+				A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */,
+				A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */,
 			);
 			path = "Kenteken Scanner";
 			sourceTree = "<group>";
@@ -141,9 +202,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A93E03D125FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken Scanner" */;
 			buildPhases = (
+				26D2409C582EDD4757D15AC2 /* [CP] Check Pods Manifest.lock */,
 				A93E03A325FF97E90013F8FE /* Sources */,
 				A93E03A425FF97E90013F8FE /* Frameworks */,
 				A93E03A525FF97E90013F8FE /* Resources */,
+				B0190FFA054D8359996806B7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -158,6 +221,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A93E03D425FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken ScannerTests" */;
 			buildPhases = (
+				3B35D8B5FB2AEAE36E817D2B /* [CP] Check Pods Manifest.lock */,
 				A93E03B925FF97EA0013F8FE /* Sources */,
 				A93E03BA25FF97EA0013F8FE /* Frameworks */,
 				A93E03BB25FF97EA0013F8FE /* Resources */,
@@ -176,9 +240,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A93E03D725FF97EA0013F8FE /* Build configuration list for PBXNativeTarget "Kenteken ScannerUITests" */;
 			buildPhases = (
+				14566E462AF79D91F9FB129F /* [CP] Check Pods Manifest.lock */,
 				A93E03C425FF97EA0013F8FE /* Sources */,
 				A93E03C525FF97EA0013F8FE /* Frameworks */,
 				A93E03C625FF97EA0013F8FE /* Resources */,
+				A8CA0391E0C0AFB4737E5CE3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -238,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */,
+				A945103E2608834B00E6798C /* GoogleService-Info.plist in Resources */,
 				A93E03B425FF97E90013F8FE /* Assets.xcassets in Resources */,
 				A93E03B225FF97E90013F8FE /* Main.storyboard in Resources */,
 			);
@@ -259,14 +326,123 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		14566E462AF79D91F9FB129F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Kenteken Scanner-Kenteken ScannerUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		26D2409C582EDD4757D15AC2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Kenteken Scanner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3B35D8B5FB2AEAE36E817D2B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Kenteken ScannerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A8CA0391E0C0AFB4737E5CE3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B0190FFA054D8359996806B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A93E03A325FF97E90013F8FE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */,
+				A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */,
+				A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */,
 				A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */,
+				A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */,
 				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
+				A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */,
+				A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */,
+				A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */,
 				A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */,
 				A945102A2601005B00E6798C /* dataTableView.swift in Sources */,
 			);
@@ -441,6 +617,7 @@
 		};
 		A93E03D225FF97EA0013F8FE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62FD4A949184D129425F86DA /* Pods-Kenteken Scanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -454,12 +631,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		A93E03D325FF97EA0013F8FE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85CEBFD413479C1B68E529CC /* Pods-Kenteken Scanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -473,12 +651,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		A93E03D525FF97EA0013F8FE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD5149D452FC3C01D92AF59D /* Pods-Kenteken ScannerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -501,6 +680,7 @@
 		};
 		A93E03D625FF97EA0013F8FE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C7063421E6A5DDA6AB572FF /* Pods-Kenteken ScannerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -523,6 +703,7 @@
 		};
 		A93E03D825FF97EA0013F8FE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38204EE43252B5D76DE21A7E /* Pods-Kenteken Scanner-Kenteken ScannerUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -543,6 +724,7 @@
 		};
 		A93E03D925FF97EA0013F8FE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ECCA27C93B2A53723E2B2C3F /* Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
