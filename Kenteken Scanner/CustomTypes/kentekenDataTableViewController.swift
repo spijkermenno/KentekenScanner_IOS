@@ -14,6 +14,9 @@ class kentekenDataTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellid")
+        
+        self.tableView.estimatedRowHeight = 80
+        self.tableView.rowHeight = 80
 
         kentekens = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent)
 
@@ -51,8 +54,9 @@ class kentekenDataTableViewController: UITableViewController {
         cell.backgroundView = imgFrame
         
         cell.textLabel!.textAlignment = NSTextAlignment.center
-        cell.textLabel!.text = KentekenFactory().format(kentekens[indexPath.row].uppercased())
-                
+        cell.textLabel!.font = UIFont(name: "GillSans", size: 36)
+        cell.textLabel!.text = "   " + KentekenFactory().format(kentekens[indexPath.row].uppercased())
+        
         return cell
     }
     

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "8F6705F9-E9D2-4C94-B35E-325AF1D69FF4"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BF653C5F-18CB-495A-85A7-E969E39351B2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Kenteken Scanner/CustomTypes/CameraViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "CameraViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "BF653C5F-18CB-495A-85A7-E969E39351B2 - 54e349c7c877dce7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.CameraViewController.cutoutView.getter : Swift.Optional&lt;__C.UIView&gt;"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Desktop/Kenteken%20Scanner/Kenteken%20Scanner/CustomTypes/CameraViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "BF653C5F-18CB-495A-85A7-E969E39351B2 - 98a96555ed4564fb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.CameraViewController.cutoutView.setter : Swift.Optional&lt;__C.UIView&gt;"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Desktop/Kenteken%20Scanner/Kenteken%20Scanner/CustomTypes/CameraViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "BF653C5F-18CB-495A-85A7-E969E39351B2 - 6c4e9ffe6fee88f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.CameraViewController.cutoutView.modify : Swift.Optional&lt;__C.UIView&gt;"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Desktop/Kenteken%20Scanner/Kenteken%20Scanner/CustomTypes/CameraViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "BF653C5F-18CB-495A-85A7-E969E39351B2 - 8e56955b7e186ef0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.CameraViewController.cutoutView.modify : Swift.Optional&lt;__C.UIView&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Desktop/Kenteken%20Scanner/Kenteken%20Scanner/CustomTypes/CameraViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "BF653C5F-18CB-495A-85A7-E969E39351B2 - 6e2176ec9e9cd702"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.CameraViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Kenteken_Scanner.CameraViewController"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Desktop/Kenteken%20Scanner/Kenteken%20Scanner/CustomTypes/CameraViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "640">
+               </Location>
+               <Location
+                  uuid = "BF653C5F-18CB-495A-85A7-E969E39351B2 - 6b5e98d613c8a9cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.CameraViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Kenteken_Scanner.CameraViewController&gt;"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Desktop/Kenteken%20Scanner/Kenteken%20Scanner/CustomTypes/CameraViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "608">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

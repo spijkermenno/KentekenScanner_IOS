@@ -9,7 +9,10 @@ import UIKit
 import Firebase
 
 class ViewController: UIViewController {
-        override func viewDidLoad() {
+    var cameraViewController: VisionViewController!
+    @IBOutlet var kentekenField: UITextField!
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
@@ -34,5 +37,27 @@ class ViewController: UIViewController {
         dataTableViewObj.setContext(ctx_: self)
         self.present(dataTableViewObj, animated: true, completion: nil)
     }
+    
+    @IBAction func CameraButton(_ sender: Any, forEvent event: UIEvent) {
+        guard let vc = UIStoryboard.load("VisionViewController") as? VisionViewController else {return}
+        vc.setContext(ctx_: self)
+        cameraViewController = vc
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func createAlert(title: String, message: String, dismiss: Bool) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        if dismiss {
+            alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
+        }
+
+        self.present(alert, animated: true)
+    }
 }
 
+extension UIStoryboard{
+   class func load(_ storyboard: String) -> UIViewController{
+      return UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: storyboard)
+   }
+}

@@ -27,6 +27,11 @@
 		A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */; };
 		A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */; };
 		A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */; };
+		A9A1406D260B4EB800571D1C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A14069260B4EB800571D1C /* CameraViewController.swift */; };
+		A9A1406E260B4EB800571D1C /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406A260B4EB800571D1C /* StringUtils.swift */; };
+		A9A1406F260B4EB800571D1C /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406B260B4EB800571D1C /* PreviewView.swift */; };
+		A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406C260B4EB800571D1C /* VisionViewController.swift */; };
+		A9A1408B260B50B700571D1C /* VisionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A14089260B50B700571D1C /* VisionViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +82,11 @@
 		A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networkRequestHelper.swift; sourceTree = "<group>"; };
 		A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenFactory.swift; sourceTree = "<group>"; };
 		A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenDataTableViewController.swift; sourceTree = "<group>"; };
+		A9A14069260B4EB800571D1C /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		A9A1406A260B4EB800571D1C /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		A9A1406B260B4EB800571D1C /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		A9A1406C260B4EB800571D1C /* VisionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionViewController.swift; sourceTree = "<group>"; };
+		A9A1408A260B50B700571D1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/VisionViewController.storyboard; sourceTree = "<group>"; };
 		DD5149D452FC3C01D92AF59D /* Pods-Kenteken ScannerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken ScannerTests.debug.xcconfig"; path = "Target Support Files/Pods-Kenteken ScannerTests/Pods-Kenteken ScannerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ECCA27C93B2A53723E2B2C3F /* Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig"; path = "Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,7 +145,6 @@
 		A93E039E25FF97E90013F8FE = {
 			isa = PBXGroup;
 			children = (
-				A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */,
 				A93E03A925FF97E90013F8FE /* Kenteken Scanner */,
 				A93E03C025FF97EA0013F8FE /* Kenteken ScannerTests */,
 				A93E03CB25FF97EA0013F8FE /* Kenteken ScannerUITests */,
@@ -158,21 +167,17 @@
 		A93E03A925FF97E90013F8FE /* Kenteken Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				A98AC2B0260B4BF3008B4AE0 /* Camera */,
+				A98AC25E260B3A07008B4AE0 /* Storyboards */,
+				A98AC25D260B39EC008B4AE0 /* CustomTypes */,
+				A98AC25C260B39D7008B4AE0 /* Factories */,
+				A98AC25B260B39AB008B4AE0 /* Helpers */,
 				A93E03AA25FF97E90013F8FE /* AppDelegate.swift */,
 				A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */,
 				A93E03AE25FF97E90013F8FE /* ViewController.swift */,
-				A93E03B025FF97E90013F8FE /* Main.storyboard */,
 				A93E03B325FF97E90013F8FE /* Assets.xcassets */,
-				A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */,
 				A93E03B825FF97E90013F8FE /* Info.plist */,
 				A945103D2608834B00E6798C /* GoogleService-Info.plist */,
-				A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */,
-				A94510292601005B00E6798C /* dataTableView.swift */,
-				A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */,
-				A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */,
-				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
-				A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */,
-				A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */,
 			);
 			path = "Kenteken Scanner";
 			sourceTree = "<group>";
@@ -193,6 +198,56 @@
 				A93E03CE25FF97EA0013F8FE /* Info.plist */,
 			);
 			path = "Kenteken ScannerUITests";
+			sourceTree = "<group>";
+		};
+		A98AC25B260B39AB008B4AE0 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */,
+				A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */,
+				A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		A98AC25C260B39D7008B4AE0 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		A98AC25D260B39EC008B4AE0 /* CustomTypes */ = {
+			isa = PBXGroup;
+			children = (
+				A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */,
+				A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */,
+				A94510292601005B00E6798C /* dataTableView.swift */,
+				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
+			);
+			path = CustomTypes;
+			sourceTree = "<group>";
+		};
+		A98AC25E260B3A07008B4AE0 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				A93E03B025FF97E90013F8FE /* Main.storyboard */,
+				A9A14089260B50B700571D1C /* VisionViewController.storyboard */,
+				A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		A98AC2B0260B4BF3008B4AE0 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				A9A14069260B4EB800571D1C /* CameraViewController.swift */,
+				A9A1406B260B4EB800571D1C /* PreviewView.swift */,
+				A9A1406A260B4EB800571D1C /* StringUtils.swift */,
+				A9A1406C260B4EB800571D1C /* VisionViewController.swift */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +360,7 @@
 			files = (
 				A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */,
 				A945103E2608834B00E6798C /* GoogleService-Info.plist in Resources */,
+				A9A1408B260B50B700571D1C /* VisionViewController.storyboard in Resources */,
 				A93E03B425FF97E90013F8FE /* Assets.xcassets in Resources */,
 				A93E03B225FF97E90013F8FE /* Main.storyboard in Resources */,
 			);
@@ -438,10 +494,14 @@
 				A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */,
 				A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */,
 				A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */,
+				A9A1406D260B4EB800571D1C /* CameraViewController.swift in Sources */,
+				A9A1406F260B4EB800571D1C /* PreviewView.swift in Sources */,
 				A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */,
+				A9A1406E260B4EB800571D1C /* StringUtils.swift in Sources */,
 				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
 				A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */,
 				A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */,
+				A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */,
 				A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */,
 				A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */,
 				A945102A2601005B00E6798C /* dataTableView.swift in Sources */,
@@ -494,6 +554,14 @@
 				A93E03B625FF97E90013F8FE /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A9A14089260B50B700571D1C /* VisionViewController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9A1408A260B50B700571D1C /* Base */,
+			);
+			name = VisionViewController.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
