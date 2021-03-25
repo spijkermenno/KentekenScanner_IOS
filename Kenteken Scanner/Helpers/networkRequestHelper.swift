@@ -39,6 +39,7 @@ class NetworkRequestHelper {
                     
                     let dataTableViewObj:dataTableView = dataTableView()
                     dataTableViewObj.loadData(object: dataObject.first!)
+                    dataTableViewObj.setKenteken(kenteken_: kenteken)
                     view.present(dataTableViewObj, animated: true, completion: nil)
                 }
             } else {

@@ -69,7 +69,19 @@
                                 </state>
                                 <connections>
                                     <action selector="CameraButton:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BrC-pw-KwZ"/>
-                                    <action selector="RecentButton:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LtA-05-xEs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ejz-uQ-eAU">
+                                <rect key="frame" x="182" y="186" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="3fL-T5-NYx"/>
+                                    <constraint firstAttribute="height" constant="50" id="ccM-NU-5pC"/>
+                                </constraints>
+                                <state key="normal">
+                                    <imageReference key="image" image="star" catalog="system" symbolScale="large" renderingMode="original"/>
+                                </state>
+                                <connections>
+                                    <action selector="FavoriteButton:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aYD-08-BnM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -78,10 +90,12 @@
                         <constraints>
                             <constraint firstItem="bqM-kl-kup" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="16" id="WeF-SC-XH2"/>
                             <constraint firstItem="hAr-i5-57D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="Xng-D7-SSt"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="c1Q-D5-qlC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqM-kl-kup" secondAttribute="trailing" constant="62" id="dJF-xs-Wwd"/>
                             <constraint firstItem="hAr-i5-57D" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="16" id="eXi-ZR-6Nr"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="qxx-kq-9Fs"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tyG-wY-ipj"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="top" secondItem="hAr-i5-57D" secondAttribute="top" id="xY9-qJ-VCh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -107,6 +121,11 @@
                     </tableView>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="diZ-HN-zZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="sRZ-aG-t0R">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button"/>
+                </button>
             </objects>
             <point key="canvasLocation" x="850.72463768115949" y="77.678571428571431"/>
         </scene>
@@ -144,6 +163,7 @@
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="kenteken-blauw" width="25" height="37.666667938232422"/>
         <image name="kenteken-geel" width="123.66666412353516" height="37"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <image name="tray.and.arrow.down" catalog="system" width="128" height="109"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

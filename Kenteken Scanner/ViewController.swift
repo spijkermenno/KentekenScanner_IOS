@@ -35,6 +35,15 @@ class ViewController: UIViewController {
         
         let dataTableViewObj:kentekenDataTableViewController = kentekenDataTableViewController()
         dataTableViewObj.setContext(ctx_: self)
+        dataTableViewObj.setStorageIdentifier(identifier: StorageIdentifier.Recent)
+        self.present(dataTableViewObj, animated: true, completion: nil)
+    }
+    @IBAction func FavoriteButton(_ sender: Any, forEvent event: UIEvent) {
+        AnalyticsHelper().logEvent(eventkey: "favorite_load", key: "click", value: true)
+        
+        let dataTableViewObj:kentekenDataTableViewController = kentekenDataTableViewController()
+        dataTableViewObj.setContext(ctx_: self)
+        dataTableViewObj.setStorageIdentifier(identifier: StorageIdentifier.Favorite)
         self.present(dataTableViewObj, animated: true, completion: nil)
     }
     
