@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func RecentButton(_ sender: Any, forEvent event: UIEvent) {
-        //let recentKentekens: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent)
+        AnalyticsHelper().logEvent(eventkey: "recent_load", key: "click", value: true)
         
         let dataTableViewObj:kentekenDataTableViewController = kentekenDataTableViewController()
         dataTableViewObj.setContext(ctx_: self)
@@ -53,6 +53,7 @@ class ViewController: UIViewController {
         }
 
         self.present(alert, animated: true)
+        AnalyticsHelper().logError(eventkey: "failed_search");
     }
 }
 

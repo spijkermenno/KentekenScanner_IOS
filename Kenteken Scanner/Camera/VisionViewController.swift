@@ -54,6 +54,7 @@ class VisionViewController: CameraViewController {
                 DispatchQueue.main.async {
                       self.dismiss(animated: true, completion: nil)
                     NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self.ctx)
+                    AnalyticsHelper().logEvent(eventkey: "camera-search", key: "kenteken", value: kenteken);
                 }
             }
 		}

@@ -65,6 +65,7 @@ class kentekenDataTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
         
         NetworkRequestHelper().kentekenRequest(kenteken: kentekens[indexPath.row], view: ctx!)
+        AnalyticsHelper().logEvent(eventkey: "recent_search", key: "kenteken", value: kentekens[indexPath.row])
     }
     
     /*
