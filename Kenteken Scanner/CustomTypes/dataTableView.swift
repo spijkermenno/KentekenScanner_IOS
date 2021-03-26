@@ -35,19 +35,24 @@ class dataTableView: UITableViewController {
     
     @objc func favoriteTap(_ button: UIButton) {
         var favorites: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Favorite);
-        
+        print(favorites)
+        print(favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()))
         if favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
-            favorites.remove(at: favorites.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())!)
+            print("remove from favorites")
+            let index = favorites.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+            favorites.remove(at: index!)
+            StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
+            button.setImage(UIImage(systemName: "star")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            favorites.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
+                                
+            StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
+            
+            print("Currently saved kentekens: ")
+            print(StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Favorite))
+            
+            button.setImage(UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
-    
-        favorites.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
-                            
-        StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
-        
-        print("Currently saved kentekens: ")
-        print(StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Favorite))
-        
-        button.setImage(UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
     
     @objc func shareTap(_ button: UIButton) {
