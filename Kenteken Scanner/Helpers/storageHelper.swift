@@ -12,12 +12,23 @@ class StorageHelper {
 
     let favoriteStorageIdentifier: String = "Favorite"
     let recentStorageIdentifier: String = "Recent"
+    let alertStorageIdentifier: String = "Alert"
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
     
     func saveToLocalStorage(arr: [String], storageType: StorageIdentifier) {
         if storageType == StorageIdentifier.Favorite {
             defaults.set(arr, forKey: favoriteStorageIdentifier)
         } else if storageType == StorageIdentifier.Recent {
             defaults.set(arr, forKey: recentStorageIdentifier)
+        }
+    }
+    
+    func saveToLocalStorage(arr: [NotificationObject], storageType: StorageIdentifier) {
+        print(arr)
+        print(storageType)
+        if storageType == StorageIdentifier.Alert {
+            defaults.set(try? PropertyListEncoder().encode(arr), forKey: alertStorageIdentifier)
         }
     }
     
@@ -31,6 +42,15 @@ class StorageHelper {
                 return result
             }
         }
+        return []
+    }
+    
+    func retrieveFromLocalStorage(storageType: StorageIdentifier) -> [NotificationObject] {
+        if let alerts = defaults.object(forKey: alertStorageIdentifier) as? Data {
+            let d = try? PropertyListDecoder().decode(Array<NotificationObject>.self, from: alerts)
+            return d!
+        }
+        
         return []
     }
 }

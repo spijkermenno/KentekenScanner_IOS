@@ -9,19 +9,22 @@ import Foundation
 import FirebaseAnalytics
 
 class AnalyticsHelper {
+    let DEBUG = true
     
     func logEvent(eventkey: String, key: String, value: Any) {
-        print("event log")
-        let cleanEventKey = eventkey.replacingOccurrences(of: "-", with: "_").replacingOccurrences(of: " ", with: "_")
-        print(cleanEventKey)
-        Analytics.logEvent(cleanEventKey, parameters: [
-            key: value
-          ])
+        if !DEBUG {
+            let cleanEventKey = eventkey.replacingOccurrences(of: "-", with: "_").replacingOccurrences(of: " ", with: "_")
+            print(cleanEventKey)
+            Analytics.logEvent(cleanEventKey, parameters: [
+                key: value
+            ])
+        }
     }
     
     func logError(eventkey: String) {
-        print("error log")
-        let cleanEventKey = eventkey.replacingOccurrences(of: "-", with: "_").replacingOccurrences(of: " ", with: "_")
-        Analytics.logEvent(cleanEventKey, parameters: ["error": true])
+        if !DEBUG {
+            let cleanEventKey = eventkey.replacingOccurrences(of: "-", with: "_").replacingOccurrences(of: " ", with: "_")
+            Analytics.logEvent(cleanEventKey, parameters: ["error": true])
+        }
     }
 }

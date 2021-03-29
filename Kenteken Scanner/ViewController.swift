@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import GoogleMobileAds
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     var cameraViewController: VisionViewController!
     @IBOutlet var kentekenField: UITextField!
     
@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
@@ -54,6 +54,39 @@ class ViewController: UIViewController {
             print("Error: \(error?.localizedDescription ?? "No error available.")")
           }
         }
+    }
+    
+    func createNotification(title: String, description: String, activationTimeFromNow: Double) -> String {
+        // Request permission to perform notifications
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("All set!")
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Create new notifcation content instance
+        let notificationContent = UNMutableNotificationContent()
+
+        let uuid = UUID().uuidString
+
+        // Add the content to the notification content
+        notificationContent.title = title
+        notificationContent.body = description
+        notificationContent.badge = NSNumber(value: 1)
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: activationTimeFromNow, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: uuid, content: notificationContent, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error {
+                print("Notification Error: ", error)
+            }
+        }
+        
+        return uuid
     }
     
     // Searchfield on text change handler
@@ -122,6 +155,7 @@ class ViewController: UIViewController {
                               constant: 0)
           ])
        }
+
 }
 
 extension UIStoryboard{

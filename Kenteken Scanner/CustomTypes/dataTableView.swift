@@ -14,6 +14,7 @@ class dataTableView: UITableViewController {
     var values = [Int: String]()
     var buttonOrder: CGFloat = 0
     var kenteken: String!
+    var context: ViewController!
     
     let cellIdentifier = "cellid"
     
@@ -33,6 +34,14 @@ class dataTableView: UITableViewController {
         return button
     }()
     
+    lazy var notificationButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .init(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.66)
+        button.addTarget(self, action: #selector(notificationTap(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     @objc func favoriteTap(_ button: UIButton) {
         var favorites: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Favorite);
         print(favorites)
@@ -48,9 +57,6 @@ class dataTableView: UITableViewController {
                                 
             StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
             
-            print("Currently saved kentekens: ")
-            print(StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Favorite))
-            
             button.setImage(UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
@@ -61,16 +67,68 @@ class dataTableView: UITableViewController {
         present(ac, animated: true)
     }
     
+    @objc func notificationTap(_ button: UIButton) {
+        var inArray = false
+        var notification: NotificationObject
+        var i = 0
+        var location = 0
+        
+        print(StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert) as [NotificationObject])
+        
+        var alerts: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert);
+        for alert in alerts {
+            if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
+                // kenteken allready in list.
+                inArray = true
+                notification = alert
+                location = i
+            }
+            i += 1
+        }
+        
+        if inArray {
+            // remove from array and remove from notifcationcenter
+            
+            print("remove from alerts")
+            alerts.remove(at: location)
+            StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+            button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            let uuid = context.createNotification(title: "APK Melding", description: "De APK van kenteken \(kenteken) verloopt bijna!", activationTimeFromNow: 10)
+            alerts.append(NotificationObject(kenteken: kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
+            StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+            button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if let view = UIApplication.shared.keyWindow {
             view.addSubview(favoriteButton)
+            view.addSubview(notificationButton)
             view.addSubview(shareButton)
             
+            let alerts = StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Alert) as [NotificationObject]
+            
+            var inArray = false
+            for alert in alerts {
+                if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
+                    // kenteken allready in list.
+                    inArray = true
+                }
+            }
+            
+            if inArray {
+                self.createButton(button: notificationButton, icon: UIImage(systemName: "bell.fill")!)
+            } else {
+                self.createButton(button: notificationButton, icon: UIImage(systemName: "bell")!)
+            }
+
             if StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Favorite).contains(kenteken) {
                 self.createButton(button: favoriteButton, icon: UIImage(systemName: "star.fill")!)
             } else {
                 self.createButton(button: favoriteButton, icon: UIImage(systemName: "star")!)
             }
+            
             self.createButton(button: shareButton, icon: UIImage(systemName: "square.and.arrow.up")!)
         }
     }
@@ -102,6 +160,10 @@ class dataTableView: UITableViewController {
     
     func setKenteken(kenteken_: String) {
         self.kenteken = kenteken_
+    }
+    
+    func setContext(context_: ViewController) {
+        self.context = context_
     }
     
     func loadData(object: kentekenDataObject) {
@@ -139,8 +201,9 @@ class dataTableView: UITableViewController {
     override func viewDidDisappear(_ animated: Bool) {
         favoriteButton.removeFromSuperview()
         shareButton.removeFromSuperview()
+        notificationButton.removeFromSuperview()
     }
-    
+        
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cellId")

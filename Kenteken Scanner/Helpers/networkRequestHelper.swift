@@ -32,14 +32,12 @@ class NetworkRequestHelper {
                                         
                     StorageHelper().saveToLocalStorage(arr: recents, storageType: StorageIdentifier.Recent)
                     
-                    print("Currently saved kentekens: ")
-                    print(StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Recent))
-                    
                     view.kentekenField.text = KentekenFactory().format(kenteken)
                     
                     let dataTableViewObj:dataTableView = dataTableView()
                     dataTableViewObj.loadData(object: dataObject.first!)
                     dataTableViewObj.setKenteken(kenteken_: kenteken)
+                    dataTableViewObj.setContext(context_: view)
                     view.present(dataTableViewObj, animated: true, completion: nil)
                 }
             } else {
