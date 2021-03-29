@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 
 class dataTableView: UITableViewController {
-    var kentekenData: kentekenDataObject?
+    var kentekenData: kentekenDataObject!
     var keys = [Int: String]()
     var values = [Int: String]()
     var buttonOrder: CGFloat = 0
@@ -42,6 +42,14 @@ class dataTableView: UITableViewController {
         return button
     }()
     
+    func setKenteken(kenteken_: String) {
+        self.kenteken = kenteken_
+    }
+    
+    func setContext(context_: ViewController) {
+        self.context = context_
+    }
+    
     @objc func favoriteTap(_ button: UIButton) {
         var favorites: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Favorite);
         print(favorites)
@@ -69,9 +77,22 @@ class dataTableView: UITableViewController {
     
     @objc func notificationTap(_ button: UIButton) {
         var inArray = false
-        var notification: NotificationObject
+        var notification: NotificationObject!
         var i = 0
         var location = 0
+        var timeInSeconds: Int = 0
+                
+        if let olddate = kentekenData?.vervaldatum_apk {
+            print(olddate)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            let date = dateFormatter.date(from:olddate)
+             
+            print(date!)
+            let timeInDays = 0 - (60 * 60 * 24 * 30)
+            let notificationdate = date!.advanced(by: TimeInterval(timeInDays))
+            timeInSeconds = Int(Date().distance(to: notificationdate))
+        }
         
         print(StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert) as [NotificationObject])
         
@@ -93,11 +114,14 @@ class dataTableView: UITableViewController {
             alerts.remove(at: location)
             StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
             button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.uuid])
         } else {
-            let uuid = context.createNotification(title: "APK Melding", description: "De APK van kenteken \(kenteken) verloopt bijna!", activationTimeFromNow: 10)
-            alerts.append(NotificationObject(kenteken: kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
-            StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
-            button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            if timeInSeconds > 0 {
+                let uuid = context.createNotification(title: "APK Melding", description: "De APK van kenteken \(kenteken!) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
+                alerts.append(NotificationObject(kenteken: kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
+                StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+                button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
         }
     }
     
@@ -110,18 +134,31 @@ class dataTableView: UITableViewController {
             let alerts = StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Alert) as [NotificationObject]
             
             var inArray = false
+            var notification: NotificationObject!
+            
             for alert in alerts {
                 if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                     // kenteken allready in list.
                     inArray = true
+                    notification = alert
                 }
+                
             }
             
             if inArray {
-                self.createButton(button: notificationButton, icon: UIImage(systemName: "bell.fill")!)
-            } else {
-                self.createButton(button: notificationButton, icon: UIImage(systemName: "bell")!)
+                let ctx = self
+                UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
+                    for request in requests {
+                        if request.identifier == notification.uuid {
+                            DispatchQueue.main.async {
+                                ctx.notificationButton.setImage(UIImage(systemName: "bell.fill")!.withRenderingMode(.alwaysOriginal), for: .normal)
+                            }
+                        }
+                    }
+                })
             }
+            
+            self.createButton(button: notificationButton, icon: UIImage(systemName: "bell")!)
 
             if StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Favorite).contains(kenteken) {
                 self.createButton(button: favoriteButton, icon: UIImage(systemName: "star.fill")!)
@@ -156,14 +193,6 @@ class dataTableView: UITableViewController {
         button.setImage(icon.withRenderingMode(.alwaysOriginal), for: .normal)
         
         buttonOrder += 1
-    }
-    
-    func setKenteken(kenteken_: String) {
-        self.kenteken = kenteken_
-    }
-    
-    func setContext(context_: ViewController) {
-        self.context = context_
     }
     
     func loadData(object: kentekenDataObject) {

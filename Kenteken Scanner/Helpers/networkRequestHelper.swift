@@ -19,7 +19,7 @@ class NetworkRequestHelper {
             
             let decoder = JSONDecoder()
             let dataObject = try! decoder.decode([kentekenDataObject].self, from: data)
-            
+            x
             if dataObject.count > 0 {
                 DispatchQueue.main.async {
                     var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
