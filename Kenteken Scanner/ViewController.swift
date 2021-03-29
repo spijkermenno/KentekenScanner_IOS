@@ -7,16 +7,53 @@
 
 import UIKit
 import Firebase
+import GoogleMobileAds
 
 class ViewController: UIViewController {
     var cameraViewController: VisionViewController!
     @IBOutlet var kentekenField: UITextField!
     
+    var bannerView: GADBannerView!
+    var remoteConfig: RemoteConfig!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        addBannerViewToView(bannerView)
+        
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        
+        bannerView.load(GADRequest())
+        
+        bannerView.isHidden = true
+        
+        remoteConfig = RemoteConfig.remoteConfig()
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        
+        remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
+        
+        remoteConfig.fetch() { (status, error) -> Void in
+          if status == .success {
+            print("Config fetched!")
+            self.remoteConfig.activate() { (changed, error) in
+                if self.remoteConfig.configValue(forKey: "show_ads").stringValue == "true" {
+                    DispatchQueue.main.async {
+                        self.bannerView.isHidden = false
+                    }
+                }
+            }
+          } else {
+            print("Config not fetched")
+            print("Error: \(error?.localizedDescription ?? "No error available.")")
+          }
+        }
     }
     
     // Searchfield on text change handler
@@ -64,6 +101,27 @@ class ViewController: UIViewController {
         self.present(alert, animated: true)
         AnalyticsHelper().logError(eventkey: "failed_search");
     }
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+          [NSLayoutConstraint(item: bannerView,
+                              attribute: .bottom,
+                              relatedBy: .equal,
+                              toItem: bottomLayoutGuide,
+                              attribute: .top,
+                              multiplier: 1,
+                              constant: 0),
+           NSLayoutConstraint(item: bannerView,
+                              attribute: .centerX,
+                              relatedBy: .equal,
+                              toItem: view,
+                              attribute: .centerX,
+                              multiplier: 1,
+                              constant: 0)
+          ])
+       }
 }
 
 extension UIStoryboard{

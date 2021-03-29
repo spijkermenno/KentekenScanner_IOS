@@ -9,7 +9,8 @@ target 'Kenteken Scanner' do
 
   # add the Firebase pod for Google Analytics
   pod 'FirebaseAnalytics'
-pod 'Firebase/RemoteConfig'
+  pod 'Firebase/RemoteConfig'
+  pod 'Google-Mobile-Ads-SDK'
 
   # add pods for any other desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods

@@ -27,6 +27,7 @@
 		A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */; };
 		A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */; };
 		A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */; };
+		A97624242611EBBE00565703 /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = A97624232611EBBE00565703 /* RemoteConfigDefaults.plist */; };
 		A9A1406D260B4EB800571D1C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A14069260B4EB800571D1C /* CameraViewController.swift */; };
 		A9A1406E260B4EB800571D1C /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406A260B4EB800571D1C /* StringUtils.swift */; };
 		A9A1406F260B4EB800571D1C /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406B260B4EB800571D1C /* PreviewView.swift */; };
@@ -82,6 +83,7 @@
 		A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networkRequestHelper.swift; sourceTree = "<group>"; };
 		A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenFactory.swift; sourceTree = "<group>"; };
 		A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenDataTableViewController.swift; sourceTree = "<group>"; };
+		A97624232611EBBE00565703 /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		A9A14069260B4EB800571D1C /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		A9A1406A260B4EB800571D1C /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		A9A1406B260B4EB800571D1C /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				A93E03AE25FF97E90013F8FE /* ViewController.swift */,
 				A93E03B325FF97E90013F8FE /* Assets.xcassets */,
 				A93E03B825FF97E90013F8FE /* Info.plist */,
+				A97624232611EBBE00565703 /* RemoteConfigDefaults.plist */,
 				A945103D2608834B00E6798C /* GoogleService-Info.plist */,
 			);
 			path = "Kenteken Scanner";
@@ -358,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A97624242611EBBE00565703 /* RemoteConfigDefaults.plist in Resources */,
 				A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */,
 				A945103E2608834B00E6798C /* GoogleService-Info.plist in Resources */,
 				A9A1408B260B50B700571D1C /* VisionViewController.storyboard in Resources */,
