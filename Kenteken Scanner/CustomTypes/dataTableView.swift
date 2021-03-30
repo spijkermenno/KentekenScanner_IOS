@@ -86,6 +86,7 @@ class dataTableView: UITableViewController {
             print(olddate)
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyyMMdd"
+            //dateFormatter.dateFormat = "dd-MM-yy"
             let date = dateFormatter.date(from:olddate)
              
             print(date!)
