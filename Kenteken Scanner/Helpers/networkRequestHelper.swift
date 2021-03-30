@@ -9,11 +9,12 @@ import Foundation
 
 class NetworkRequestHelper {
     func kentekenRequest(kenteken: String, view: ViewController) {
-        let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
+        //let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
+        let urlString : String = "https://mennospijker.nl/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
+        let url = URL(string: urlString)!
         
         print(urlString)
    
-        let url = URL(string: urlString)!
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else { return }
             
