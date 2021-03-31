@@ -22,6 +22,18 @@ class kentekenDataTableViewController: UITableViewController {
         self.tableView.separatorStyle = .none
 
         kentekens = StorageHelper().retrieveFromLocalStorage(storageType: storageType)
+        
+        print(kentekens)
+        print(kentekens.count)
+        
+        if kentekens.count == 0 {
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: {
+                         self.ctx?.createAlert(title: "Geen data", message: "Er zijn nog geen kentekens opgeslagen.", dismiss: true)
+                    }
+                )
+            }
+        }
     }
     
     func setStorageIdentifier(identifier: StorageIdentifier) {

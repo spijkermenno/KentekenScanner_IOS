@@ -80,17 +80,17 @@ class dataTableView: UITableViewController {
             var i = 0
             var location = 0
             var timeInSeconds: Int = 0
-            
+        var date: Date
                     
             if let olddate = kentekenData?.vervaldatum_apk {
                 print(olddate)
                 let dateFormatter = DateFormatter()
                 //dateFormatter.dateFormat = "yyyyMMdd"
                 dateFormatter.dateFormat = "dd-MM-yy"
-                let date = dateFormatter.date(from:olddate)
+                date = dateFormatter.date(from:olddate)!
                  
-                let timeInDays = 0 - (60 * 60 * 24 * 30)
-                let notificationdate = date!.advanced(by: TimeInterval(timeInDays))
+                let timeInDays = 0 - (60 * 60 * 24 * 30.5)
+                let notificationdate = date.advanced(by: TimeInterval(timeInDays))
                 timeInSeconds = Int(Date().distance(to: notificationdate))
             }
             
@@ -98,6 +98,8 @@ class dataTableView: UITableViewController {
             
             var alerts: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert);
             for alert in alerts {
+                print(alert.kenteken)
+                print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
                 if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                     // kenteken allready in list.
                     inArray = true
@@ -130,7 +132,7 @@ class dataTableView: UITableViewController {
                     style: .default) { (action)
                     in
                         if timeInSeconds > 0 {
-                            let uuid = ctx.context.createNotification(title: "APK Melding", description: "De APK van kenteken \(KentekenFactory().format(ctx.kenteken)) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
+                            let uuid = ctx.context.createNotification(title: "APK Alert", description: "De APK van kenteken \(KentekenFactory().format(ctx.kenteken)) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
                             alerts.append(NotificationObject(kenteken: ctx.kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
                             StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
                             button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -161,7 +163,6 @@ class dataTableView: UITableViewController {
                     inArray = true
                     notification = alert
                 }
-                
             }
             
             if inArray {
