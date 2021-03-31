@@ -9,8 +9,9 @@ import Foundation
 
 class NetworkRequestHelper {
     func kentekenRequest(kenteken: String, view: ViewController) {
+        view.showSpinner(onView: view.view)
         //let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
-        let urlString : String = "https://mennospijker.nl/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
+        let urlString : String = "https://mennospijker.nl/api/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
         
         print(urlString)
@@ -39,6 +40,7 @@ class NetworkRequestHelper {
                     dataTableViewObj.loadData(object: dataObject.first!)
                     dataTableViewObj.setKenteken(kenteken_: kenteken)
                     dataTableViewObj.setContext(context_: view)
+                    view.removeSpinner()
                     view.present(dataTableViewObj, animated: true, completion: nil)
                 }
             } else {

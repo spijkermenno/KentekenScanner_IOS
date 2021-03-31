@@ -52,7 +52,6 @@ class dataTableView: UITableViewController {
     
     @objc func favoriteTap(_ button: UIButton) {
         var favorites: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Favorite);
-        print(favorites)
         print(favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()))
         if favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
             print("remove from favorites")
@@ -70,59 +69,78 @@ class dataTableView: UITableViewController {
     }
     
     @objc func shareTap(_ button: UIButton) {
-        let items = [URL(string: String("https://www.mennospijker.nl/kenteken/?kenteken=" + kenteken))!]
+        let items = [URL(string: String("https://www.mennospijker.nl/api/kenteken/" + kenteken))!]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
     }
     
     @objc func notificationTap(_ button: UIButton) {
-        var inArray = false
-        var notification: NotificationObject!
-        var i = 0
-        var location = 0
-        var timeInSeconds: Int = 0
-                
-        if let olddate = kentekenData?.vervaldatum_apk {
-            print(olddate)
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyyMMdd"
-            //dateFormatter.dateFormat = "dd-MM-yy"
-            let date = dateFormatter.date(from:olddate)
-             
-            print(date!)
-            let timeInDays = 0 - (60 * 60 * 24 * 30)
-            let notificationdate = date!.advanced(by: TimeInterval(timeInDays))
-            timeInSeconds = Int(Date().distance(to: notificationdate))
-        }
-        
-        print(StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert) as [NotificationObject])
-        
-        var alerts: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert);
-        for alert in alerts {
-            if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
-                // kenteken allready in list.
-                inArray = true
-                notification = alert
-                location = i
-            }
-            i += 1
-        }
-        
-        if inArray {
-            // remove from array and remove from notifcationcenter
+            var inArray = false
+            var notification: NotificationObject!
+            var i = 0
+            var location = 0
+            var timeInSeconds: Int = 0
             
-            print("remove from alerts")
-            alerts.remove(at: location)
-            StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
-            button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.uuid])
-        } else {
-            if timeInSeconds > 0 {
-                let uuid = context.createNotification(title: "APK Melding", description: "De APK van kenteken \(kenteken!) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
-                alerts.append(NotificationObject(kenteken: kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
-                StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
-                button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                    
+            if let olddate = kentekenData?.vervaldatum_apk {
+                print(olddate)
+                let dateFormatter = DateFormatter()
+                //dateFormatter.dateFormat = "yyyyMMdd"
+                dateFormatter.dateFormat = "dd-MM-yy"
+                let date = dateFormatter.date(from:olddate)
+                 
+                let timeInDays = 0 - (60 * 60 * 24 * 30)
+                let notificationdate = date!.advanced(by: TimeInterval(timeInDays))
+                timeInSeconds = Int(Date().distance(to: notificationdate))
             }
+            
+            print(StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert) as [NotificationObject])
+            
+            var alerts: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert);
+            for alert in alerts {
+                if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
+                    // kenteken allready in list.
+                    inArray = true
+                    notification = alert
+                    location = i
+                }
+                i += 1
+            }
+            
+            if inArray {
+                // remove from array and remove from notifcationcenter
+                
+                print("remove from alerts")
+                alerts.remove(at: location)
+                StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+                button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.uuid])
+            } else {
+                let ctx = self
+                let alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK een melding geven.", preferredStyle: .alert)
+                
+                let cancelAction = UIAlertAction(
+                    title: "Annuleer",
+                    style: .destructive) { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                }
+
+                let confirmAction = UIAlertAction(
+                    title: "Aanmaken",
+                    style: .default) { (action)
+                    in
+                        if timeInSeconds > 0 {
+                            let uuid = ctx.context.createNotification(title: "APK Melding", description: "De APK van kenteken \(KentekenFactory().format(ctx.kenteken)) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
+                            alerts.append(NotificationObject(kenteken: ctx.kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
+                            StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+                            button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                    }
+            }
+                
+            alert.addAction(cancelAction)
+            alert.addAction(confirmAction)
+
+            self.present(alert, animated: true)
         }
     }
     
@@ -159,9 +177,13 @@ class dataTableView: UITableViewController {
                 })
             }
             
-            self.createButton(button: notificationButton, icon: UIImage(systemName: "bell")!)
-
-            if StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Favorite).contains(kenteken) {
+            if kentekenData.vervaldatum_apk == nil {
+                notificationButton.isHidden = true
+            } else {
+                self.createButton(button: notificationButton, icon: UIImage(systemName: "bell")!)
+            }
+            
+            if StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Favorite).contains(kenteken.replacingOccurrences(of: "-", with: "")) {
                 self.createButton(button: favoriteButton, icon: UIImage(systemName: "star.fill")!)
             } else {
                 self.createButton(button: favoriteButton, icon: UIImage(systemName: "star")!)
@@ -169,6 +191,7 @@ class dataTableView: UITableViewController {
             
             self.createButton(button: shareButton, icon: UIImage(systemName: "square.and.arrow.up")!)
         }
+        buttonOrder = 0
     }
     
     override func viewDidLoad() {

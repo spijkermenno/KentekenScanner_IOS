@@ -17,8 +17,9 @@ class kentekenDataTableViewController: UITableViewController {
         super.viewDidLoad()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellid")
         
-        self.tableView.estimatedRowHeight = 80
-        self.tableView.rowHeight = 80
+        self.tableView.estimatedRowHeight = 100
+        self.tableView.rowHeight = 100
+        self.tableView.separatorStyle = .none
 
         kentekens = StorageHelper().retrieveFromLocalStorage(storageType: storageType)
     }
@@ -43,12 +44,11 @@ class kentekenDataTableViewController: UITableViewController {
     
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
         
-        let padding: CGFloat = 20
-        
-        let img = UIImage(named: "kenteken-full.png")!
-        img.withAlignmentRectInsets(UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
+        let img = UIImage(named: "kenteken-full-border.png")!
+        //img.withAlignmentRectInsets(UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
         
         let imgFrame = UIImageView(image: img)
+    
         imgFrame.contentMode = .scaleAspectFit
         
         cell.backgroundView = imgFrame

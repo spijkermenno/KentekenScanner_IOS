@@ -9,15 +9,21 @@ import UIKit
 import Firebase
 import GoogleMobileAds
 
-class ViewController: UIViewController, UNUserNotificationCenterDelegate {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate {
     var cameraViewController: VisionViewController!
     @IBOutlet var kentekenField: UITextField!
     
     var bannerView: GADBannerView!
     var remoteConfig: RemoteConfig!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
@@ -31,6 +37,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         bannerView.load(GADRequest())
         
         bannerView.isHidden = true
+        
+        kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
         remoteConfig = RemoteConfig.remoteConfig()
         let settings = RemoteConfigSettings()
@@ -56,6 +64,12 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         }
     }
     
+    @objc func appMovedToBackground() {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+
+
     func createNotification(title: String, description: String, activationTimeFromNow: Double) -> String {
         // Request permission to perform notifications
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -74,7 +88,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         // Add the content to the notification content
         notificationContent.title = title
         notificationContent.body = description
-        notificationContent.badge = NSNumber(value: 1)
+        notificationContent.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: activationTimeFromNow, repeats: false)
         
@@ -87,6 +101,17 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         }
         
         return uuid
+    }
+    
+    @objc func runKentekenAPI() {
+        let enteredKenteken : String = kentekenField.text!
+        //check if valid kenteken
+        kentekenField.text = KentekenFactory().format(enteredKenteken)
+        
+        if KentekenFactory().getSidecode(enteredKenteken) != -2 {
+            NetworkRequestHelper().kentekenRequest(kenteken: enteredKenteken, view: self);
+            AnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: enteredKenteken);
+        }
     }
     
     // Searchfield on text change handler
@@ -132,7 +157,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         }
 
         self.present(alert, animated: true)
-        AnalyticsHelper().logError(eventkey: "failed_search");
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -163,3 +187,30 @@ extension UIStoryboard{
       return UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: storyboard)
    }
 }
+
+var vSpinner : UIView?
+
+extension UIViewController {
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(style: .large)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            vSpinner?.removeFromSuperview()
+            vSpinner = nil
+        }
+    }
+}
+ 
