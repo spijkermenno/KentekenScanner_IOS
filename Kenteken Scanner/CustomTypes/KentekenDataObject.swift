@@ -12,6 +12,20 @@ struct kentekenDataObject: Decodable {
     // https://opendata.rdw.nl/resource/m9d7-ebf2.json
     
     var kenteken: String!
+    var vermogen_PK: String!
+    var aantal_cilinders: String!
+    var cilinderinhoud: String!
+    var vervaldatum_apk: String!
+    var vervaldatum_tachograaf: String!
+    var catalogus_prijs: String!
+    var laadvermogen: String!
+    var lengte: String!
+    var breedte: String!
+    var brandstof_omschrijving: String!
+    var brandstofverbruik_buiten: String!
+    var brandstofverbruik_gecombineerd: String!
+    var brandstofverbruik_stad: String!
+
     var voertuigsoort: String!
     var merk: String!
     var handelsbenaming: String!
@@ -32,19 +46,12 @@ struct kentekenDataObject: Decodable {
     var uitvoering: String!
     var export_indicator: String!
     var openstaande_terugroepactie_indicator: String!
-    var api_gekentekende_voertuigen_assen: String!
-    var api_gekentekende_voertuigen_brandstof: String!
-    var api_gekentekende_voertuigen_carrosserie: String!
-    var api_gekentekende_voertuigen_carrosserie_specifiek: String!
-    var api_gekentekende_voertuigen_voertuigklasse: String!
 
     // number values stored in strings.
-    var vervaldatum_apk: String!
     var datum_tenaamstelling: String!
     var bruto_bpm: String!
     var aantal_zitplaatsen: String!
-    var aantal_cilinders: String!
-    var cilinderinhoud: String!
+
     var massa_ledig_voertuig: String!
     var toegestane_maximum_massa_voertuig: String!
     var massa_rijklaar: String!
@@ -52,9 +59,7 @@ struct kentekenDataObject: Decodable {
     var maximum_trekken_massa_geremd: String!
     var datum_eerste_toelating: String!
     var datum_eerste_afgifte_nederland: String!
-    var catalogus_prijs: String!
     var maximale_constructiesnelheid_brom_snorfiets: String!
-    var laadvermogen: String!
     var oplegger_geremd: String!
     var aanhangwagen_autonoom_geremd: String!
     var aanhangwagen_middenas_geremd: String!
@@ -65,18 +70,16 @@ struct kentekenDataObject: Decodable {
     var afstand_hart_koppeling_tot_achterzijde_voertuig: String!
     var afstand_voorzijde_voertuig_tot_hart_koppeling: String!
     var afwijkende_maximum_snelheid: String!
-    var lengte: String!
-    var breedte: String!
     var technische_max_massa_voertuig: String!
     var volgnummer_wijziging_eu_typegoedkeuring: String!
     var vermogen_massarijklaar: String!
     var wielbasis: String!
-    var vervaldatum_tachograaf: String!
     var taxi_indicator: String!
     var maximum_massa_samenstelling: String!
     var aantal_rolstoelplaatsen: String!
     var maximum_ondersteunende_snelheid: String!
-    
+    var vermogen_KW: String!
+
     // voertuig assen
     // https://opendata.rdw.nl/resource/3huj-srit.json
     
@@ -91,10 +94,6 @@ struct kentekenDataObject: Decodable {
     // https://opendata.rdw.nl/resource/8ys7-d773.json
     
     var brandstof_volgnummer: String!
-    var brandstof_omschrijving: String!
-    var brandstofverbruik_buiten: String!
-    var brandstofverbruik_gecombineerd: String!
-    var brandstofverbruik_stad: String!
     var co2_uitstoot_gecombineerd: String!
     
     // voertuig carrosserie

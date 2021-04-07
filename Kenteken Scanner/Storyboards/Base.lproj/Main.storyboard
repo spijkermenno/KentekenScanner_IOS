@@ -53,7 +53,7 @@
                                 </constraints>
                                 <state key="normal">
                                     <color key="titleShadowColor" name="AccentColor"/>
-                                    <imageReference key="image" image="tray.and.arrow.down" catalog="system" symbolScale="large" renderingMode="original"/>
+                                    <imageReference key="image" image="clock.arrow.circlepath" catalog="system" symbolScale="large" renderingMode="original"/>
                                 </state>
                                 <connections>
                                     <action selector="RecentButton:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tQK-u2-dHX"/>
@@ -162,10 +162,10 @@
     </scenes>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
+        <image name="clock.arrow.circlepath" catalog="system" width="128" height="110"/>
         <image name="kenteken-blauw" width="25" height="37.666667938232422"/>
         <image name="kenteken-geel" width="123.66666412353516" height="37"/>
         <image name="star" catalog="system" width="128" height="116"/>
-        <image name="tray.and.arrow.down" catalog="system" width="128" height="109"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

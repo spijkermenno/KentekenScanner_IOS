@@ -57,7 +57,6 @@ class kentekenDataTableViewController: UITableViewController {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
         
         let img = UIImage(named: "kenteken-full-border.png")!
-        //img.withAlignmentRectInsets(UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
         
         let imgFrame = UIImageView(image: img)
     

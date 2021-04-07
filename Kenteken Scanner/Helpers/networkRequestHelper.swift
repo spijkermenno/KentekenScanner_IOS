@@ -14,7 +14,7 @@ class NetworkRequestHelper {
         let urlString : String = "https://mennospijker.nl/api/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
         
-        print(urlString)
+        view.kentekenField.text = KentekenFactory().format(kenteken)
    
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else { return }
@@ -22,7 +22,7 @@ class NetworkRequestHelper {
             let decoder = JSONDecoder()
             let dataObject = try! decoder.decode([kentekenDataObject].self, from: data)
             
-            if dataObject.count > 0 {
+            if dataObject.first?.kenteken != nil {
                 DispatchQueue.main.async {
                     var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
                     
@@ -46,7 +46,9 @@ class NetworkRequestHelper {
             } else {
                 // no kenteken found, show dialog.
                 DispatchQueue.main.async {
-                    view.createAlert(title: "Kenteken niet gevonden", message: "het kenteken \(kenteken) kan niet worden gevonden in de database.", dismiss: true)
+                    view.createAlert(title: "Kenteken niet gevonden", message: "het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database.", dismiss: true)
+                    view.kentekenField.text = nil
+                    view.removeSpinner()
                 }
             }
         }

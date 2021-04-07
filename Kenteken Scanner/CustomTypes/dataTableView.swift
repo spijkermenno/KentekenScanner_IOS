@@ -12,6 +12,7 @@ class dataTableView: UITableViewController {
     var kentekenData: kentekenDataObject!
     var keys = [Int: String]()
     var values = [Int: String]()
+    var switchCells = [UITableViewCell: String]()
     var buttonOrder: CGFloat = 0
     var kenteken: String!
     var context: ViewController!
@@ -249,7 +250,7 @@ class dataTableView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return keys.count
+        return keys.count + 1
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -257,14 +258,142 @@ class dataTableView: UITableViewController {
         shareButton.removeFromSuperview()
         notificationButton.removeFromSuperview()
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt
+         indexPath: IndexPath) {
+        if keys[indexPath.row]!.contains("brandstofverbruik") {
+            let value = values[indexPath.row]!
+            let temp = value.split(separator: "\n")
+            
+            let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+            
+            if temp[0] == currentCell.detailTextLabel!.text! {
+                currentCell.detailTextLabel!.text = String(temp[1])
+            } else {
+                currentCell.detailTextLabel!.text = String(temp[0])
+            }
+
+        }
+        
+        if keys[indexPath.row] == "vervaldatum apk" {
+            var date: Date
+                        
+            if let olddate = kentekenData?.vervaldatum_apk {
+                let dateFormatter = DateFormatter()
+                //dateFormatter.dateFormat = "yyyyMMdd"
+                dateFormatter.dateFormat = "dd-MM-yy"
+                date = dateFormatter.date(from:olddate)!
+                
+                if date < Date() {
+                    let alert = UIAlertController(title: "APK Verlopen", message: "De APK van dit voertuig is verlopen.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
+
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+        
+        if keys[indexPath.row] == "vervaldatum tachograaf" {
+            var date: Date
+                        
+            if let olddate = kentekenData?.vervaldatum_tachograaf {
+                let dateFormatter = DateFormatter()
+                //dateFormatter.dateFormat = "yyyyMMdd"
+                dateFormatter.dateFormat = "dd-MM-yy"
+                date = dateFormatter.date(from:olddate)!
+                
+                if date < Date() {
+                    let alert = UIAlertController(title: "Tachograaf verlopen", message: "De Tachograaf van dit voertuig is verlopen.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
+
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+      }
         
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cellId")
+        var cell: UITableViewCell!
+
+        if keys[indexPath.row] == "kenteken" {
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
+        } else {
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cellId")
+        }
         
-        cell.textLabel?.text = keys[indexPath.row]
-        cell.detailTextLabel?.text = values[indexPath.row]
-                
+        switch keys[indexPath.row] {
+        case "datum eerste toelating":
+             dateCell(cell: cell, index: indexPath.row)
+        case "datum eerste afgifte nederland":
+             dateCell(cell: cell, index: indexPath.row)
+        case "datum tenaamstelling":
+             dateCell(cell: cell, index: indexPath.row)
+        case "vervaldatum apk":
+             dateCell(cell: cell, index: indexPath.row)
+        case "vervaldatum tachograaf":
+             dateCell(cell: cell, index: indexPath.row)
+        case "brandstofverbruik buiten":
+            let value = values[indexPath.row]!
+            let temp = value.split(separator: "\n")
+            
+            cell.textLabel?.text = keys[indexPath.row]
+            cell.detailTextLabel!.text = String(temp[0])
+        case "brandstofverbruik stad":
+            let value = values[indexPath.row]!
+            let temp = value.split(separator: "\n")
+            
+            cell.textLabel?.text = keys[indexPath.row]
+            cell.detailTextLabel!.text = String(temp[0])
+        case "brandstofverbruik gecombineerd":
+            let value = values[indexPath.row]!
+            let temp = value.split(separator: "\n")
+            
+            cell.textLabel?.text = keys[indexPath.row]
+            cell.detailTextLabel!.text = String(temp[0])
+        case "kenteken":
+            let img = UIImage(named: "kenteken-full-border.png")!
+            
+            let imgFrame = UIImageView(image: img)
+        
+            imgFrame.contentMode = .scaleAspectFit
+        
+            cell.backgroundView = imgFrame
+            
+            cell.textLabel!.textAlignment = NSTextAlignment.center
+            cell.textLabel!.font = UIFont(name: "GillSans", size: 36)
+            cell.textLabel!.textAlignment = .center
+            cell.textLabel!.text = "   " + KentekenFactory().format(values[indexPath.row]!.uppercased())
+        default:
+            cell.textLabel?.text = keys[indexPath.row]
+            cell.detailTextLabel?.text = values[indexPath.row]
+        }
+        
         return cell
+    }
+    
+    
+    // format the cell to a date related cell
+    func dateCell(cell: UITableViewCell, index: Int) {
+        var date: Date
+                    
+        if let olddate = values[index] {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MM-yy"
+            date = dateFormatter.date(from:olddate)!
+            
+            if keys[index] == "vervaldatum apk" && date < Date() {
+                cell.textLabel?.textColor = UIColor.red
+            }
+            
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "dd MMM yyyy"
+            
+            cell.detailTextLabel?.text = dateFormatterPrint.string(from: date)
+            
+            cell.textLabel?.text = keys[index]
+        }
     }
 }
