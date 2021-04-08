@@ -16,6 +16,9 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     var bannerView: GADBannerView!
     var remoteConfig: RemoteConfig!
     
+    var spinnerView: UIView!
+    var ai: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -161,6 +164,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
 
         self.present(alert, animated: true)
         print("presented alert")
+        self.removeSpinner()
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -196,19 +200,19 @@ extension UIStoryboard{
 
 var vSpinner : UIView?
 
-extension UIViewController {
+extension ViewController {
     func showSpinner(onView : UIView) {
         print("set spinner")
 
-        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let ai = UIActivityIndicatorView.init(style: .large)
+        ai = UIActivityIndicatorView.init(style: .large)
         ai.startAnimating()
         ai.center = spinnerView.center
         
         DispatchQueue.main.async {
-            spinnerView.addSubview(ai)
-            onView.addSubview(spinnerView)
+            self.spinnerView.addSubview(self.ai)
+            onView.addSubview(self.spinnerView)
         }
         vSpinner = spinnerView
     }
@@ -224,4 +228,4 @@ extension UIViewController {
 
     }
 }
- 
+

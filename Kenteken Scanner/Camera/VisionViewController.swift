@@ -17,6 +17,8 @@ class VisionViewController: CameraViewController {
 	// Temporal string tracker
 	let numberTracker = StringTracker()
     var ctx: ViewController!
+    var requesting = false
+    let networkReqHandler = NetworkRequestHelper()
 	
 	override func viewDidLoad() {
 		// Set up vision request before letting ViewController set up the camera
@@ -24,9 +26,7 @@ class VisionViewController: CameraViewController {
 		request = VNRecognizeTextRequest(completionHandler: recognizeTextHandler)
 
 		super.viewDidLoad()
-        
-        print("New view")
-	}
+    }
     
     func setContext(ctx_: ViewController) {
         self.ctx = ctx_
@@ -36,37 +36,48 @@ class VisionViewController: CameraViewController {
 	
 	// Vision recognition handler.
 	func recognizeTextHandler(request: VNRequest, error: Error?) {
-		var redBoxes = [CGRect]() // Shows all recognized text lines
-		var greenBoxes = [CGRect]() // Shows words that might be serials
+        let redBoxes = [CGRect]() // Shows all recognized text lines
+        let greenBoxes = [CGRect]() // Shows words that might be serials
 		
 		guard let results = request.results as? [VNRecognizedTextObservation] else {
 			return
 		}
+        
 		
-		let maximumCandidates = 1
-		
-		for visionResult in results {
-			guard let candidate = visionResult.topCandidates(maximumCandidates).first else { continue }
-			
-            if KentekenFactory().getSidecode(candidate.string) != -2 {
-                let kenteken: String = candidate.string
-                print("valid kenteken: " + KentekenFactory().format(kenteken))
-                DispatchQueue.main.async {
-                      self.dismiss(animated: true, completion: nil)
-                    NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self.ctx)
-                    AnalyticsHelper().logEvent(eventkey: "camera-search", key: "kenteken", value: kenteken);
+            let maximumCandidates = 1
+            var possibleKenteken = ""
+            
+            for visionResult in results {
+                guard let candidate = visionResult.topCandidates(maximumCandidates).first else {
+                    continue
+                }
+                var query = ""
+                
+                if candidate.string.count == 3 {
+                    if possibleKenteken != "" {
+                        if KentekenFactory().getSidecode(possibleKenteken + candidate.string) != -2 {
+                            query = possibleKenteken + candidate.string
+                        }
+                    } else {
+                        possibleKenteken = candidate.string
+                    }
+                } else if candidate.string.count == 6 || candidate.string.count == 8 {
+                    query = candidate.string
+                }
+                            
+                if query != "" && KentekenFactory().getSidecode(query) != -2 {
+                    print("execution: \(query) - \(KentekenFactory().getSidecode(query))")
+                    let kenteken: String = query
+                    print("valid kenteken: " + KentekenFactory().format(kenteken))
+
+                    DispatchQueue.main.async {
+                        self.previewView.session?.stopRunning()
+                        self.dismiss(animated: true, completion: nil)
+                        self.networkReqHandler.kentekenRequest(kenteken: kenteken, view: self.ctx)
+                        AnalyticsHelper().logEvent(eventkey: "camera-search", key: "kenteken", value: kenteken);
+                    }
                 }
             }
-		}
-		
-		// Log any found numbers.
-		show(boxGroups: [(color: UIColor.red.cgColor, boxes: redBoxes), (color: UIColor.green.cgColor, boxes: greenBoxes)])
-		
-		// Check if we have any temporally stable numbers.
-		if let sureNumber = numberTracker.getStableString() {
-			showString(string: sureNumber)
-			numberTracker.reset(string: sureNumber)
-		}
 	}
 	
 	override func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {

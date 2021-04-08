@@ -8,6 +8,8 @@
 import Foundation
 
 class NetworkRequestHelper {
+    var filling = false
+    
     func kentekenRequest(kenteken: String, view: ViewController) {
         view.showSpinner(onView: view.view)
         //let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
@@ -23,19 +25,19 @@ class NetworkRequestHelper {
             }
             
             let decoder = JSONDecoder()
-            let dataObject = try! decoder.decode([kentekenDataObject].self, from: data)
-            
-            if dataObject.first?.kenteken != nil {
-                DispatchQueue.main.async {
-                    self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.backupKentekenRequest(kenteken: kenteken, view: view)
+            if let dataObject = try? decoder.decode([kentekenDataObject].self, from: data) {
+                
+                if dataObject.first?.kenteken != nil {
+                    DispatchQueue.main.async {
+                        self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.backupKentekenRequest(kenteken: kenteken, view: view)
+                    }
                 }
             }
         }
-        print("end task")
         task.resume()
     }
     
@@ -64,7 +66,7 @@ class NetworkRequestHelper {
                 print("show error")
                 // no kenteken found, show dialog.
                 DispatchQueue.main.async {
-                    view.createAlert(title: "Kenteken niet gevonden", message: "het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database.", dismiss: true)
+                    view.createAlert(title: "Kenteken niet gevonden", message: "het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekend niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.", dismiss: true)
                     view.kentekenField.text = nil
                     view.removeSpinner()
                 }
@@ -77,24 +79,28 @@ class NetworkRequestHelper {
     }
     
     func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject]) {
-        var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
+        if !filling {
+            filling = true
+            
+            var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
+            
+            if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
+                recents.remove(at: recents.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())!)
+            }
         
-        if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
-            recents.remove(at: recents.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())!)
+            recents.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
+                                
+            StorageHelper().saveToLocalStorage(arr: recents, storageType: StorageIdentifier.Recent)
+            
+            view.kentekenField.text = KentekenFactory().format(kenteken)
+            
+            let dataTableViewObj:dataTableView = dataTableView()
+            dataTableViewObj.loadData(object: dataObject.first!)
+            dataTableViewObj.setKenteken(kenteken_: kenteken)
+            dataTableViewObj.setContext(context_: view)
+            view.removeSpinner()
+            view.present(dataTableViewObj, animated: true, completion: nil)
         }
-    
-        recents.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
-                            
-        StorageHelper().saveToLocalStorage(arr: recents, storageType: StorageIdentifier.Recent)
-        
-        view.kentekenField.text = KentekenFactory().format(kenteken)
-        
-        let dataTableViewObj:dataTableView = dataTableView()
-        dataTableViewObj.loadData(object: dataObject.first!)
-        dataTableViewObj.setKenteken(kenteken_: kenteken)
-        dataTableViewObj.setContext(context_: view)
-        view.removeSpinner()
-        view.present(dataTableViewObj, animated: true, completion: nil)
     }
 
 }
