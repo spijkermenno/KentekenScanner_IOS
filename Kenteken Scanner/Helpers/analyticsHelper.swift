@@ -9,7 +9,15 @@ import Foundation
 import FirebaseAnalytics
 
 class AnalyticsHelper {
-    let DEBUG = true
+    let DEBUG = false
+    
+    init() {
+        print("DEBUGGING: \(DEBUG)")
+    }
+    
+    func setDebug() {
+        
+    }
     
     func logEvent(eventkey: String, key: String, value: Any) {
         if !DEBUG {

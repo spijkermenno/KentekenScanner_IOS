@@ -150,13 +150,17 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func createAlert(title: String, message: String, dismiss: Bool) {
+        print("create alert")
+
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         if dismiss {
+            print("alert dismiss true")
             alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
         }
 
         self.present(alert, animated: true)
+        print("presented alert")
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -184,6 +188,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
 
 extension UIStoryboard{
    class func load(_ storyboard: String) -> UIViewController{
+    print("ext: load")
+
       return UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: storyboard)
    }
 }
@@ -192,6 +198,8 @@ var vSpinner : UIView?
 
 extension UIViewController {
     func showSpinner(onView : UIView) {
+        print("set spinner")
+
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let ai = UIActivityIndicatorView.init(style: .large)
@@ -202,15 +210,18 @@ extension UIViewController {
             spinnerView.addSubview(ai)
             onView.addSubview(spinnerView)
         }
-        
         vSpinner = spinnerView
     }
     
     func removeSpinner() {
+        print("remove spinner")
         DispatchQueue.main.async {
             vSpinner?.removeFromSuperview()
             vSpinner = nil
+            print("spinner fixed")
         }
+        print("spinner removed")
+
     }
 }
  
