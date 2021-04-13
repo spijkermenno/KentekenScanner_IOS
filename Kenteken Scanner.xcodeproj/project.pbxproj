@@ -146,6 +146,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A9064E2526257799003E71D9 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		A93E039E25FF97E90013F8FE = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +178,7 @@
 		A93E03A925FF97E90013F8FE /* Kenteken Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				A9064E2526257799003E71D9 /* Objects */,
 				A98AC2B0260B4BF3008B4AE0 /* Camera */,
 				A98AC25E260B3A07008B4AE0 /* Storyboards */,
 				A98AC25D260B39EC008B4AE0 /* CustomTypes */,
@@ -226,8 +234,8 @@
 		A98AC25D260B39EC008B4AE0 /* CustomTypes */ = {
 			isa = PBXGroup;
 			children = (
-				A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */,
 				A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */,
+				A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */,
 				A94510292601005B00E6798C /* dataTableView.swift */,
 				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
 				A97624282612109800565703 /* notification.swift */,

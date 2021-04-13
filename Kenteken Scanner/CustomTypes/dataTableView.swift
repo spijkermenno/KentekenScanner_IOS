@@ -17,6 +17,10 @@ class dataTableView: UITableViewController {
     var kenteken: String!
     var context: ViewController!
     
+    let customCells = 1
+    var customCellsFilled = 0
+    var totalCells = 0
+    
     let cellIdentifier = "cellid"
     
     lazy var favoriteButton: UIButton = {
@@ -250,7 +254,8 @@ class dataTableView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return keys.count + 1
+        totalCells = keys.count + customCells + 1
+        return keys.count + customCells + 1
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -261,56 +266,94 @@ class dataTableView: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt
          indexPath: IndexPath) {
-        if keys[indexPath.row]!.contains("brandstofverbruik") {
-            let value = values[indexPath.row]!
-            let temp = value.split(separator: "\n")
+        if keys.count > indexPath.row {
+            if keys[indexPath.row]!.contains("brandstofverbruik") {
+                let value = values[indexPath.row]!
+                let temp = value.split(separator: "\n")
+                
+                let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+                
+                if temp[0] == currentCell.detailTextLabel!.text! {
+                    currentCell.detailTextLabel!.text = String(temp[1])
+                } else {
+                    currentCell.detailTextLabel!.text = String(temp[0])
+                }
+
+            }
             
+            if keys[indexPath.row] == "vervaldatum apk" {
+                var date: Date
+                            
+                if let olddate = kentekenData?.vervaldatum_apk {
+                    let dateFormatter = DateFormatter()
+                    //dateFormatter.dateFormat = "yyyyMMdd"
+                    dateFormatter.dateFormat = "dd-MM-yy"
+                    date = dateFormatter.date(from:olddate)!
+                    
+                    if date < Date() {
+                        let alert = UIAlertController(title: "APK Verlopen", message: "De APK van dit voertuig is verlopen.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
+
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+            
+            if keys[indexPath.row] == "vervaldatum tachograaf" {
+                var date: Date
+                            
+                if let olddate = kentekenData?.vervaldatum_tachograaf {
+                    let dateFormatter = DateFormatter()
+                    //dateFormatter.dateFormat = "yyyyMMdd"
+                    dateFormatter.dateFormat = "dd-MM-yy"
+                    date = dateFormatter.date(from:olddate)!
+                    
+                    if date < Date() {
+                        let alert = UIAlertController(title: "Tachograaf verlopen", message: "De Tachograaf van dit voertuig is verlopen.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
+
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        } else {
             let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MM-yy"
+            let date = dateFormatter.date(from:kentekenData.datum_eerste_toelating)
             
-            if temp[0] == currentCell.detailTextLabel!.text! {
-                currentCell.detailTextLabel!.text = String(temp[1])
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "yyyy"
+            
+            let year = dateFormatterPrint.string(from: date!)
+            
+            let name = kentekenData.handelsbenaming!.replacingOccurrences(of: kentekenData.merk, with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
+            
+            let carsUrl = "https://www.autoscout24.nl/lst/\(kentekenData.merk!)/\(name)?desc=0&size=20&cy=NL&fregto=\(year)&fregfrom=\(year)";
+            
+            guard let url = URL(string: carsUrl) else {
+                print(carsUrl)
+                return
+            }
+            
+            print(url)
+            
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
-                currentCell.detailTextLabel!.text = String(temp[0])
-            }
-
-        }
-        
-        if keys[indexPath.row] == "vervaldatum apk" {
-            var date: Date
-                        
-            if let olddate = kentekenData?.vervaldatum_apk {
-                let dateFormatter = DateFormatter()
-                //dateFormatter.dateFormat = "yyyyMMdd"
-                dateFormatter.dateFormat = "dd-MM-yy"
-                date = dateFormatter.date(from:olddate)!
-                
-                if date < Date() {
-                    let alert = UIAlertController(title: "APK Verlopen", message: "De APK van dit voertuig is verlopen.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
-
-                    self.present(alert, animated: true)
-                }
-            }
-        }
-        
-        if keys[indexPath.row] == "vervaldatum tachograaf" {
-            var date: Date
-                        
-            if let olddate = kentekenData?.vervaldatum_tachograaf {
-                let dateFormatter = DateFormatter()
-                //dateFormatter.dateFormat = "yyyyMMdd"
-                dateFormatter.dateFormat = "dd-MM-yy"
-                date = dateFormatter.date(from:olddate)!
-                
-                if date < Date() {
-                    let alert = UIAlertController(title: "Tachograaf verlopen", message: "De Tachograaf van dit voertuig is verlopen.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
-
-                    self.present(alert, animated: true)
-                }
+                UIApplication.shared.openURL(url)
             }
         }
       }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if keys[indexPath.row] == "kenteken" {
+            return 80
+        } else {
+            return 60
+        }
+    }
         
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
@@ -320,7 +363,7 @@ class dataTableView: UITableViewController {
         } else {
             cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cellId")
         }
-        
+                
         switch keys[indexPath.row] {
         case "datum eerste toelating":
              dateCell(cell: cell, index: indexPath.row)
@@ -364,8 +407,14 @@ class dataTableView: UITableViewController {
             cell.textLabel!.textAlignment = .center
             cell.textLabel!.text = "   " + KentekenFactory().format(values[indexPath.row]!.uppercased())
         default:
-            cell.textLabel?.text = keys[indexPath.row]
-            cell.detailTextLabel?.text = values[indexPath.row]
+            if indexPath.row >= keys.count && customCellsFilled < customCells && kentekenData.datum_tenaamstelling != nil{
+                customCells(cell: cell, index: indexPath.row)
+                customCellsFilled += 1
+                
+            } else {
+                cell.textLabel?.text = keys[indexPath.row]
+                cell.detailTextLabel?.text = values[indexPath.row]
+            }
         }
         
         return cell
@@ -395,5 +444,24 @@ class dataTableView: UITableViewController {
             
             cell.textLabel?.text = keys[index]
         }
+    }
+    
+    func customCells(cell: UITableViewCell, index: Int) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yy"
+        let date = dateFormatter.date(from:kentekenData.datum_eerste_toelating)
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "yyyy"
+        
+        let year = dateFormatterPrint.string(from: date!)
+        
+        let name = kentekenData.handelsbenaming!.replacingOccurrences(of: kentekenData.merk, with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
+        
+        let carsUrl = "https://www.autoscout24.nl/\(kentekenData.merk!)/\(name)";
+
+        cell.textLabel?.text = "Vergelijkbare auto's"
+        cell.detailTextLabel?.textColor = UIColor.link
+        cell.detailTextLabel?.text = carsUrl
     }
 }

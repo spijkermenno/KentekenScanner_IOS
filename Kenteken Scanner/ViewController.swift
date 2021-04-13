@@ -16,6 +16,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     var bannerView: GADBannerView!
     var remoteConfig: RemoteConfig!
     
+    var isSpinning = false
+    
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
     
@@ -164,7 +166,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
 
         self.present(alert, animated: true)
         print("presented alert")
-        self.removeSpinner()
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -201,31 +202,33 @@ extension UIStoryboard{
 var vSpinner : UIView?
 
 extension ViewController {
-    func showSpinner(onView : UIView) {
-        print("set spinner")
-
-        spinnerView = UIView.init(frame: onView.bounds)
-        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        ai = UIActivityIndicatorView.init(style: .large)
-        ai.startAnimating()
-        ai.center = spinnerView.center
+    func toggleSpinner(onView: UIView) {
+        print("Toggle spinner: \(isSpinning)")
         
-        DispatchQueue.main.async {
-            self.spinnerView.addSubview(self.ai)
-            onView.addSubview(self.spinnerView)
+        if isSpinning {
+            // remove spinner
+            DispatchQueue.main.async {
+                vSpinner?.removeFromSuperview()
+                vSpinner = nil
+                self.kentekenField.isEnabled = true
+                self.isSpinning = false
+            }
+        } else {
+            // place spinner
+            spinnerView = UIView.init(frame: onView.bounds)
+            spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+            ai = UIActivityIndicatorView.init(style: .large)
+            ai.startAnimating()
+            ai.center = spinnerView.center
+            
+            DispatchQueue.main.async {
+                self.kentekenField.isEnabled = false
+                self.spinnerView.addSubview(self.ai)
+                onView.addSubview(self.spinnerView)
+                self.isSpinning = true
+            }
+            vSpinner = spinnerView
         }
-        vSpinner = spinnerView
-    }
-    
-    func removeSpinner() {
-        print("remove spinner")
-        DispatchQueue.main.async {
-            vSpinner?.removeFromSuperview()
-            vSpinner = nil
-            print("spinner fixed")
-        }
-        print("spinner removed")
-
     }
 }
 

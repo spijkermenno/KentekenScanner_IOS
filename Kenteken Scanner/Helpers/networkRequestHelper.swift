@@ -11,8 +11,8 @@ class NetworkRequestHelper {
     var filling = false
     
     func kentekenRequest(kenteken: String, view: ViewController) {
-        view.showSpinner(onView: view.view)
-        //let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
+        print("req")
+        view.toggleSpinner(onView: view.view) // toggling the spinner on.
         let urlString : String = "https://mennospijker.nl/api/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
         
@@ -20,7 +20,8 @@ class NetworkRequestHelper {
    
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else {
-                view.removeSpinner()
+                print("guard err")
+                view.toggleSpinner(onView: view.view)
                 return
             }
             
@@ -48,7 +49,8 @@ class NetworkRequestHelper {
            
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else {
-                view.removeSpinner()
+                print("back guard error")
+                view.toggleSpinner(onView: view.view)
                 return
             }
             
@@ -68,39 +70,36 @@ class NetworkRequestHelper {
                 DispatchQueue.main.async {
                     view.createAlert(title: "Kenteken niet gevonden", message: "het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekend niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.", dismiss: true)
                     view.kentekenField.text = nil
-                    view.removeSpinner()
+                    print("error")
+                    view.toggleSpinner(onView: view.view)
                 }
-                print("show error finish")
             }
         }
-        print("end backup task")
 
         task.resume()
     }
     
     func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject]) {
-        if !filling {
-            filling = true
-            
-            var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
-            
-            if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
-                recents.remove(at: recents.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())!)
-            }
+        var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
         
-            recents.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
-                                
-            StorageHelper().saveToLocalStorage(arr: recents, storageType: StorageIdentifier.Recent)
-            
-            view.kentekenField.text = KentekenFactory().format(kenteken)
-            
-            let dataTableViewObj:dataTableView = dataTableView()
-            dataTableViewObj.loadData(object: dataObject.first!)
-            dataTableViewObj.setKenteken(kenteken_: kenteken)
-            dataTableViewObj.setContext(context_: view)
-            view.removeSpinner()
-            view.present(dataTableViewObj, animated: true, completion: nil)
+        if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
+            recents.remove(at: recents.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())!)
         }
+    
+        recents.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
+                            
+        StorageHelper().saveToLocalStorage(arr: recents, storageType: StorageIdentifier.Recent)
+        
+        view.kentekenField.text = KentekenFactory().format(kenteken)
+        
+        let dataTableViewObj:dataTableView = dataTableView()
+        dataTableViewObj.loadData(object: dataObject.first!)
+        dataTableViewObj.setKenteken(kenteken_: kenteken)
+        dataTableViewObj.setContext(context_: view)
+        view.present(dataTableViewObj, animated: true, completion: nil)
+        print("filltable")
+        // need to close spinner
+        view.isSpinning = true
+        view.toggleSpinner(onView: view.view)
     }
-
 }
