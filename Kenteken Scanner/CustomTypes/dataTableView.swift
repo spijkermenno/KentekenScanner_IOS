@@ -17,7 +17,7 @@ class dataTableView: UITableViewController {
     var kenteken: String!
     var context: ViewController!
     
-    let customCells = 1
+    var customCells = 0
     var customCellsFilled = 0
     var totalCells = 0
     
@@ -254,6 +254,9 @@ class dataTableView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if ["personenauto", "bedrijfsauto"].contains(kentekenData.voertuigsoort!.lowercased()) {
+            customCells = 1
+        }
         totalCells = keys.count + customCells + 1
         return keys.count + customCells + 1
     }
@@ -330,14 +333,12 @@ class dataTableView: UITableViewController {
             
             let name = kentekenData.handelsbenaming!.replacingOccurrences(of: kentekenData.merk, with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
             
-            let carsUrl = "https://www.autoscout24.nl/lst/\(kentekenData.merk!)/\(name)?desc=0&size=20&cy=NL&fregto=\(year)&fregfrom=\(year)";
+            let carsUrl = "https://www.gaspedaal.nl/\(kentekenData.merk!)/\(name)/\(kentekenData.brandstof_omschrijving!)?bmax=\(year)&bmin=\(year)"
+            //let carsUrl = "https://www.autoscout24.nl/lst/\(kentekenData.merk!)/\(name)?desc=0&size=20&cy=NL&fregto=\(year)&fregfrom=\(year)";
             
             guard let url = URL(string: carsUrl) else {
-                print(carsUrl)
                 return
             }
-            
-            print(url)
             
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -408,8 +409,13 @@ class dataTableView: UITableViewController {
             cell.textLabel!.text = "   " + KentekenFactory().format(values[indexPath.row]!.uppercased())
         default:
             if indexPath.row >= keys.count && customCellsFilled < customCells && kentekenData.datum_tenaamstelling != nil{
-                customCells(cell: cell, index: indexPath.row)
-                customCellsFilled += 1
+                if ["personenauto", "bedrijfsauto"].contains(kentekenData.voertuigsoort!.lowercased()) {
+                    customCells(cell: cell, index: indexPath.row)
+                    customCellsFilled += 1
+                } else {
+                    cell.isHidden = true
+                    cell.removeFromSuperview()
+                }
                 
             } else {
                 cell.textLabel?.text = keys[indexPath.row]
@@ -458,7 +464,7 @@ class dataTableView: UITableViewController {
         
         let name = kentekenData.handelsbenaming!.replacingOccurrences(of: kentekenData.merk, with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
         
-        let carsUrl = "https://www.autoscout24.nl/\(kentekenData.merk!)/\(name)";
+        let carsUrl = "https://www.gaspedaal.nl/\(kentekenData.merk!)/\(name)";
 
         cell.textLabel?.text = "Vergelijkbare auto's"
         cell.detailTextLabel?.textColor = UIColor.link

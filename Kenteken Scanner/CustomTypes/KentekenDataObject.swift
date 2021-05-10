@@ -12,6 +12,8 @@ struct kentekenDataObject: Decodable {
     // https://opendata.rdw.nl/resource/m9d7-ebf2.json
     
     var kenteken: String!
+    var merk: String!
+    var handelsbenaming: String!
     var vermogen_PK: String!
     var aantal_cilinders: String!
     var cilinderinhoud: String!
@@ -27,13 +29,10 @@ struct kentekenDataObject: Decodable {
     var brandstofverbruik_stad: String!
 
     var voertuigsoort: String!
-    var merk: String!
-    var handelsbenaming: String!
     var inrichting: String!
     var eerste_kleur: String!
     var tweede_kleur: String!
     var zuinigheidslabel: String!
-    var wacht_op_keuren: String!
     var wam_verzekerd: String!
     var europese_voertuigcategorie: String!
     var europese_voertuigcategorie_toevoeging: String!

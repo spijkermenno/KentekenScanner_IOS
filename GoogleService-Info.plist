@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>888526514980-g0j397ln2dpm450s4hkuf2fvr5ve2bvq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.888526514980-g0j397ln2dpm450s4hkuf2fvr5ve2bvq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>888526514980-jlkjm0tde05shjucfr7lt55plbkcespc.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBWMBt7LM0Ni5u4bYTHGjkUdeU-duY9yk0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>888526514980</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>mennospijker.nl.Kenteken-Scanner</string>
+	<key>PROJECT_ID</key>
+	<string>kenteken-scanner-fdcd5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kenteken-scanner-fdcd5.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:888526514980:ios:1dbf694cb7b13b4883e1b1</string>
+</dict>
+</plist>
