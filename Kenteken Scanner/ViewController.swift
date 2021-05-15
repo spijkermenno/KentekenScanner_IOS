@@ -39,7 +39,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.rootViewController = self
         
-        bannerView.load(GADRequest())
+        //bannerView.load(GADRequest())
         
         bannerView.isHidden = true
         
@@ -155,6 +155,9 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func createAlert(title: String, message: String, dismiss: Bool) {
+//        isSpinning = true
+//        toggleSpinner(onView: self.view)
+
         print("create alert")
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
