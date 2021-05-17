@@ -34,15 +34,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         view.addGestureRecognizer(tap)
         
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        addBannerViewToView(bannerView)
         
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-4928043878967484/9096304820"
         bannerView.rootViewController = self
         
-        //bannerView.load(GADRequest())
+        bannerView.load(GADRequest())
         
         bannerView.isHidden = true
-        
+                
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
         remoteConfig = RemoteConfig.remoteConfig()
@@ -191,6 +190,31 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                               constant: 0)
           ])
        }
+    
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("bannerViewDidReceiveAd")
+        addBannerViewToView(bannerView)
+    }
+
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+      print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+      print("bannerViewDidRecordImpression")
+    }
+
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+      print("bannerViewWillPresentScreen")
+    }
+
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+      print("bannerViewWillDIsmissScreen")
+    }
+
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+      print("bannerViewDidDismissScreen")
+    }
 
 }
 
