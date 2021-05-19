@@ -34,6 +34,7 @@
 		A9A1406F260B4EB800571D1C /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406B260B4EB800571D1C /* PreviewView.swift */; };
 		A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406C260B4EB800571D1C /* VisionViewController.swift */; };
 		A9A1408B260B50B700571D1C /* VisionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A14089260B50B700571D1C /* VisionViewController.storyboard */; };
+		A9EFFF6C2654FF55002A4B9F /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EFFF6B2654FF55002A4B9F /* AppTrackingTransparency.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		A9A1406B260B4EB800571D1C /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		A9A1406C260B4EB800571D1C /* VisionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionViewController.swift; sourceTree = "<group>"; };
 		A9A1408A260B50B700571D1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/VisionViewController.storyboard; sourceTree = "<group>"; };
+		A9EFFF6B2654FF55002A4B9F /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		DD5149D452FC3C01D92AF59D /* Pods-Kenteken ScannerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken ScannerTests.debug.xcconfig"; path = "Target Support Files/Pods-Kenteken ScannerTests/Pods-Kenteken ScannerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ECCA27C93B2A53723E2B2C3F /* Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig"; path = "Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				782D826DA705E05295F4080B /* Pods_Kenteken_Scanner.framework in Frameworks */,
+				A9EFFF6C2654FF55002A4B9F /* AppTrackingTransparency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +142,7 @@
 		9A5F48F8690C0EF03E797EBF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9EFFF6B2654FF55002A4B9F /* AppTrackingTransparency.framework */,
 				A4B91E2AE16768A0E10083C8 /* Pods_Kenteken_Scanner.framework */,
 				091A7E6E2C611B930F9DFEBB /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework */,
 				7DA15F59AF61C03555444160 /* Pods_Kenteken_ScannerTests.framework */,

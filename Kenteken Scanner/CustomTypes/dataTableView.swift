@@ -380,20 +380,20 @@ class dataTableView: UITableViewController {
             let value = values[indexPath.row]!
             let temp = value.split(separator: "\n")
             
-            cell.textLabel?.text = keys[indexPath.row]
-            cell.detailTextLabel!.text = String(temp[0])
+            cell.textLabel?.text = keys[indexPath.row]?.capitalizingFirstLetter()
+            cell.detailTextLabel!.text = String(temp[0]).capitalizingFirstLetter()
         case "brandstofverbruik stad":
             let value = values[indexPath.row]!
             let temp = value.split(separator: "\n")
             
-            cell.textLabel?.text = keys[indexPath.row]
-            cell.detailTextLabel!.text = String(temp[0])
+            cell.textLabel?.text = keys[indexPath.row]?.capitalizingFirstLetter()
+            cell.detailTextLabel!.text = String(temp[0]).capitalizingFirstLetter()
         case "brandstofverbruik gecombineerd":
             let value = values[indexPath.row]!
             let temp = value.split(separator: "\n")
             
-            cell.textLabel?.text = keys[indexPath.row]
-            cell.detailTextLabel!.text = String(temp[0])
+            cell.textLabel?.text = keys[indexPath.row]?.capitalizingFirstLetter()
+            cell.detailTextLabel!.text = String(temp[0]).capitalizingFirstLetter()
         case "kenteken":
             let img = UIImage(named: "kenteken-full-border.png")!
             
@@ -418,8 +418,8 @@ class dataTableView: UITableViewController {
                 }
                 
             } else {
-                cell.textLabel?.text = keys[indexPath.row]
-                cell.detailTextLabel?.text = values[indexPath.row]
+                cell.textLabel?.text = keys[indexPath.row]?.capitalizingFirstLetter()
+                cell.detailTextLabel?.text = values[indexPath.row]?.capitalizingFirstLetter()
             }
         }
         
@@ -448,7 +448,7 @@ class dataTableView: UITableViewController {
             
             cell.detailTextLabel?.text = dateFormatterPrint.string(from: date)
             
-            cell.textLabel?.text = keys[index]
+            cell.textLabel?.text = keys[index]?.capitalizingFirstLetter()
         }
     }
     
@@ -469,5 +469,15 @@ class dataTableView: UITableViewController {
         cell.textLabel?.text = "Vergelijkbare auto's"
         cell.detailTextLabel?.textColor = UIColor.link
         cell.detailTextLabel?.text = carsUrl
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+      return prefix(1).uppercased() + self.lowercased().dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+      self = self.capitalizingFirstLetter()
     }
 }

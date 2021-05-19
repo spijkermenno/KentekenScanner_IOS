@@ -8,6 +8,8 @@
 import UIKit
 import Firebase
 import GoogleMobileAds
+import AppTrackingTransparency
+import AdSupport
 
 class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate {
     var cameraViewController: VisionViewController!
@@ -20,6 +22,13 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
+    
+    func requestIDFA(bview: GADBannerView) {
+      ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+        // Tracking authorization completed. Start loading ads here.
+        bview.load(GADRequest())
+      })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +46,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         bannerView.adUnitID = "ca-app-pub-4928043878967484/9096304820"
         bannerView.rootViewController = self
-        
-        bannerView.load(GADRequest())
-        
+                
         bannerView.isHidden = true
+        
+        requestIDFA(bview: bannerView)
                 
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         

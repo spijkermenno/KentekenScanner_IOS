@@ -36,6 +36,15 @@
 	<string>ca-app-pub-4928043878967484~9706678918</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses the camera to to scan for licenceplates</string>
 	<key>SKAdNetworkItems</key>
@@ -215,5 +224,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Dit wordt gebruikt voor het verbeteren van je ervaring</string>
 </dict>
 </plist>
