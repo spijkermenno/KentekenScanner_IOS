@@ -47,6 +47,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses the camera to to scan for licenceplates</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Dit wordt gebruikt voor het verbeteren van je ervaring</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -224,7 +226,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Dit wordt gebruikt voor het verbeteren van je ervaring</string>
 </dict>
 </plist>
