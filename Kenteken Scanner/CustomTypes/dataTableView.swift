@@ -257,8 +257,8 @@ class dataTableView: UITableViewController {
         if ["personenauto", "bedrijfsauto"].contains(kentekenData.voertuigsoort!.lowercased()) {
             customCells = 1
         }
-        totalCells = keys.count + customCells + 1
-        return keys.count + customCells + 1
+        totalCells = keys.count + customCells + 2
+        return totalCells
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -319,7 +319,7 @@ class dataTableView: UITableViewController {
                     }
                 }
             }
-        } else {
+        } else if (indexPath.row == keys.count){
             let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
 
             let dateFormatter = DateFormatter()
@@ -416,6 +416,22 @@ class dataTableView: UITableViewController {
                     cell.isHidden = true
                     cell.removeFromSuperview()
                 }
+            }else if indexPath.row == keys.count + 1 {
+                let bView = GADBannerView(adSize: kGADAdSizeFluid)
+                
+                bView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
+                bView.rootViewController = self
+                
+                bView.load(GADRequest())
+                                
+                bView.translatesAutoresizingMaskIntoConstraints = false
+                
+                cell.addSubview(bView)
+
+                bView.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+                bView.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                
+                bView.isHidden = true
                 
             } else {
                 cell.textLabel?.text = keys[indexPath.row]?.capitalizingFirstLetter()

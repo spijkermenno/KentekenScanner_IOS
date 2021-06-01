@@ -68,7 +68,7 @@ class NetworkRequestHelper {
                 print("show error")
                 // no kenteken found, show dialog.
                 DispatchQueue.main.async {
-                    view.createAlert(title: "Kenteken niet gevonden", message: "het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekent niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.", dismiss: true)
+                    view.createAlert(title: "Kenteken niet gevonden", message: "Het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekent niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.", dismiss: true)
                     view.kentekenField.text = nil
                     print("error")
                     

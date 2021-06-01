@@ -41,17 +41,19 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
         
         bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
         bannerView.rootViewController = self
                 
-        bannerView.isHidden = true
+        bannerView.isHidden = false
         
         requestIDFA(bview: bannerView)
         
         bannerView.load(GADRequest())
-                
+        
+        addBannerViewToView(bannerView)
+        
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
         remoteConfig = RemoteConfig.remoteConfig()
@@ -203,7 +205,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
       print("bannerViewDidReceiveAd")
-        addBannerViewToView(bannerView)
     }
 
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
