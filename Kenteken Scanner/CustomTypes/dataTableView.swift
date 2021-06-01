@@ -85,9 +85,10 @@ class dataTableView: UITableViewController {
             var i = 0
             var location = 0
             var timeInSeconds: Int = 0
-        var date: Date
+            var date: Date
                     
             if let olddate = kentekenData?.vervaldatum_apk {
+                print("old date")
                 print(olddate)
                 let dateFormatter = DateFormatter()
                 //dateFormatter.dateFormat = "yyyyMMdd"
@@ -124,7 +125,22 @@ class dataTableView: UITableViewController {
                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.uuid])
             } else {
                 let ctx = self
-                let alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK een melding geven.", preferredStyle: .alert)
+                let alert: UIAlertController!
+
+                
+                if timeInSeconds < 0 {
+                    // les than 30 days.
+                    alert = UIAlertController(title: "Notificatie instellen niet mogelijk", message: "Het is helaas niet mogelijk om een APK alert in te stellen voor kenteken \(KentekenFactory().format(kenteken)). \n\n De APK verloopt binnen 30 dagen.", preferredStyle: .alert)
+                    
+                    let cancelAction = UIAlertAction(
+                        title: "Annuleer",
+                        style: .destructive) { (action) in
+                        alert.dismiss(animated: true, completion: nil)
+                    }
+                    
+                    alert.addAction(cancelAction)
+                } else {
+                alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK een melding geven.", preferredStyle: .alert)
                 
                 let cancelAction = UIAlertAction(
                     title: "Annuleer",
@@ -136,16 +152,16 @@ class dataTableView: UITableViewController {
                     title: "Aanmaken",
                     style: .default) { (action)
                     in
-                        if timeInSeconds > 0 {
-                            let uuid = ctx.context.createNotification(title: "APK Alert", description: "De APK van kenteken \(KentekenFactory().format(ctx.kenteken)) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
-                            alerts.append(NotificationObject(kenteken: ctx.kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
-                            StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
-                            button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                        let uuid = ctx.context.createNotification(title: "APK Alert", description: "De APK van kenteken \(KentekenFactory().format(ctx.kenteken)) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
+                        alerts.append(NotificationObject(kenteken: ctx.kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
+                        StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+                        button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                        
                     }
-            }
-                
-            alert.addAction(cancelAction)
-            alert.addAction(confirmAction)
+                    
+                    alert.addAction(cancelAction)
+                    alert.addAction(confirmAction)
+                }
 
             self.present(alert, animated: true)
         }

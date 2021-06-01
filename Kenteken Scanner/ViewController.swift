@@ -93,6 +93,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                 print("All set!")
             } else if let error = error {
                 print(error.localizedDescription)
+            } else {
+                print("aaaaaaaaaaaaa")
             }
         }
         
