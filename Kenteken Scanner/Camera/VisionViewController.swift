@@ -36,9 +36,7 @@ class VisionViewController: CameraViewController {
 	
 	// Vision recognition handler.
 	func recognizeTextHandler(request: VNRequest, error: Error?) {
-        let redBoxes = [CGRect]() // Shows all recognized text lines
-        let greenBoxes = [CGRect]() // Shows words that might be serials
-		
+	
 		guard let results = request.results as? [VNRecognizedTextObservation] else {
 			return
 		}
@@ -53,7 +51,7 @@ class VisionViewController: CameraViewController {
                 }
                 var query = ""
                 
-                if candidate.string.count == 3 {
+                if candidate.string.count == 3 || candidate.string.count == 2 || candidate.string.count == 4 {
                     if possibleKenteken != "" {
                         if KentekenFactory().getSidecode(possibleKenteken + candidate.string) != -2 {
                             query = possibleKenteken + candidate.string

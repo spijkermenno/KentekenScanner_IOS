@@ -26,7 +26,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     func requestIDFA(bview: GADBannerView) {
       ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
         // Tracking authorization completed. Start loading ads here.
-        bview.load(GADRequest())
       })
     }
     
@@ -44,12 +43,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         
-        bannerView.adUnitID = "ca-app-pub-4928043878967484/9096304820"
+        bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
         bannerView.rootViewController = self
                 
         bannerView.isHidden = true
         
         requestIDFA(bview: bannerView)
+        
+        bannerView.load(GADRequest())
                 
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         

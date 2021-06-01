@@ -48,7 +48,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses the camera to to scan for licenceplates</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>Dit wordt gebruikt voor het verbeteren van je ervaring</string>
+	<string>Wij gebruiken deze informatie voor het verbeteren van de gebruikerservaring, het bieden van gepersonaliseerde advertenties en het onderhouden van de applicatie.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
