@@ -29,6 +29,16 @@ class AnalyticsHelper {
         }
     }
     
+    func logEventMultipleItems(eventkey: String, items: [String: String]) {
+        if !DEBUG {
+            let cleanEventKey = eventkey.replacingOccurrences(of: "-", with: "_").replacingOccurrences(of: " ", with: "_")
+            print(cleanEventKey)
+            Analytics.logEvent(cleanEventKey, parameters: items)
+        }
+    }
+    
+    
+    
     func logError(eventkey: String) {
         if !DEBUG {
             let cleanEventKey = eventkey.replacingOccurrences(of: "-", with: "_").replacingOccurrences(of: " ", with: "_")

@@ -85,8 +85,9 @@ class dataTableView: UITableViewController {
             var i = 0
             var location = 0
             var timeInSeconds: Int = 0
-            var date: Date
-                    
+            var date: Date!
+            var notificationdate: Date!
+
             if let olddate = kentekenData?.vervaldatum_apk {
                 print("old date")
                 print(olddate)
@@ -96,7 +97,7 @@ class dataTableView: UITableViewController {
                 date = dateFormatter.date(from:olddate)!
                  
                 let timeInDays = 0 - (60 * 60 * 24 * 30.5)
-                let notificationdate = date.advanced(by: TimeInterval(timeInDays))
+                notificationdate = date.advanced(by: TimeInterval(timeInDays))
                 timeInSeconds = Int(Date().distance(to: notificationdate))
             }
             
@@ -127,7 +128,6 @@ class dataTableView: UITableViewController {
                 let ctx = self
                 let alert: UIAlertController!
 
-                
                 if timeInSeconds < 0 {
                     // les than 30 days.
                     alert = UIAlertController(title: "Notificatie instellen niet mogelijk", message: "Het is helaas niet mogelijk om een APK alert in te stellen voor kenteken \(KentekenFactory().format(kenteken)). \n\n De APK verloopt binnen 30 dagen.", preferredStyle: .alert)
@@ -140,7 +140,18 @@ class dataTableView: UITableViewController {
                     
                     alert.addAction(cancelAction)
                 } else {
-                alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK een melding geven.", preferredStyle: .alert)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-MM-yyyy hh:mm"
+                    
+                var dict = [String: String]()
+                dict["kenteken"] = kenteken
+                dict["notificationDate"] = dateFormatter.string(from: notificationdate)
+                    
+                    print(dict)
+                
+                AnalyticsHelper().logEventMultipleItems(eventkey: "apk_alert", items: dict);
+                    
+                alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK om 12:00 uur een melding geven.", preferredStyle: .alert)
                 
                 let cancelAction = UIAlertAction(
                     title: "Annuleer",
@@ -179,6 +190,10 @@ class dataTableView: UITableViewController {
             var notification: NotificationObject!
             
             for alert in alerts {
+                print(alert.kenteken)
+                print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+                print(alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+                
                 if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                     // kenteken allready in list.
                     inArray = true
@@ -190,6 +205,9 @@ class dataTableView: UITableViewController {
                 let ctx = self
                 UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
                     for request in requests {
+                        print(request.identifier)
+                        print(notification.uuid)
+                        print(request.identifier == notification.uuid)
                         if request.identifier == notification.uuid {
                             DispatchQueue.main.async {
                                 ctx.notificationButton.setImage(UIImage(systemName: "bell.fill")!.withRenderingMode(.alwaysOriginal), for: .normal)
