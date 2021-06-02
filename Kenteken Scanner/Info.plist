@@ -24,9 +24,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string>mennospijker.nl.Kenteken-Scanner</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>kentekenscanner</string>
+			</array>
 		</dict>
 		<dict/>
 	</array>
@@ -209,6 +211,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key></key>
+	<string></string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
