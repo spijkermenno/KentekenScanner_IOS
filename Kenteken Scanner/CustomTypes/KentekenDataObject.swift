@@ -19,6 +19,10 @@ struct kentekenDataObject: Decodable {
     var cilinderinhoud: String!
     var vervaldatum_apk: String!
     var vervaldatum_tachograaf: String!
+    var datum_tenaamstelling: String!
+    var datum_eerste_toelating: String!
+    var datum_eerste_afgifte_nederland: String!
+    var voertuig_geimporteerd: String!
     var catalogus_prijs: String!
     var laadvermogen: String!
     var lengte: String!
@@ -47,7 +51,6 @@ struct kentekenDataObject: Decodable {
     var openstaande_terugroepactie_indicator: String!
 
     // number values stored in strings.
-    var datum_tenaamstelling: String!
     var bruto_bpm: String!
     var aantal_zitplaatsen: String!
 
@@ -56,8 +59,6 @@ struct kentekenDataObject: Decodable {
     var massa_rijklaar: String!
     var maximum_massa_trekken_ongeremd: String!
     var maximum_trekken_massa_geremd: String!
-    var datum_eerste_toelating: String!
-    var datum_eerste_afgifte_nederland: String!
     var maximale_constructiesnelheid_brom_snorfiets: String!
     var oplegger_geremd: String!
     var aanhangwagen_autonoom_geremd: String!
