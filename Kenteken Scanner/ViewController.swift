@@ -86,7 +86,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
 
 
-    func createNotification(title: String, description: String, activationTimeFromNow: Double) -> String {
+    func createNotification(title: String, description: String, kenteken: String, apkdatum: Date, apkdatumString: String, notificatiedatum: String, activationTimeFromNow: Double) -> String {
         // Request permission to perform notifications
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
@@ -102,11 +102,17 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let notificationContent = UNMutableNotificationContent()
 
         let uuid = UUID().uuidString
+        var dict = [String: Any]()
+        
+        dict["kenteken"] = kenteken
+        dict["apkdatum"] = apkdatumString
+        dict["notificatiedatum"] = notificatiedatum
 
         // Add the content to the notification content
         notificationContent.title = title
         notificationContent.body = description
         notificationContent.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
+        notificationContent.userInfo = dict
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: activationTimeFromNow, repeats: false)
         
@@ -165,6 +171,12 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         vc.setContext(ctx_: self)
         cameraViewController = vc
         self.present(vc, animated: true, completion: nil)
+    }
+    @IBAction func notificationButton(_ sender: UIButton) {
+               
+        let dataTableViewObj:pendingNotificationTableViewController = pendingNotificationTableViewController()
+        dataTableViewObj.setContext(ctx_: self)
+        self.present(dataTableViewObj, animated: true, completion: nil)
     }
     
     func createAlert(title: String, message: String, dismiss: Bool) {

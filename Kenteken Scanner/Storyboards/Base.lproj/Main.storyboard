@@ -45,10 +45,11 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAr-i5-57D">
-                                <rect key="frame" x="62" y="142" width="50" height="50"/>
+                                <rect key="frame" x="60" y="166" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="4aQ-vH-WJ2"/>
-                                    <constraint firstAttribute="height" constant="50" id="Tcp-6C-uRA"/>
+                                    <constraint firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="height" multiplier="1:1" id="5bu-8I-qf8"/>
+                                    <constraint firstAttribute="height" constant="40" id="7Ck-uA-L3x"/>
+                                    <constraint firstAttribute="width" constant="40" id="Dat-iN-63V"/>
                                 </constraints>
                                 <state key="normal">
                                     <color key="titleShadowColor" name="AccentColor"/>
@@ -59,10 +60,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bqM-kl-kup">
-                                <rect key="frame" x="263" y="142" width="50" height="50"/>
+                                <rect key="frame" x="275" y="166" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="nZ4-AF-9Y9"/>
-                                    <constraint firstAttribute="height" constant="50" id="oA1-YZ-lod"/>
+                                    <constraint firstAttribute="width" constant="40" id="4qG-JY-D0z"/>
+                                    <constraint firstAttribute="width" secondItem="bqM-kl-kup" secondAttribute="height" multiplier="1:1" id="JoH-P8-v9U"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="ZpR-41-74c"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="hWU-JL-9th"/>
+                                    <constraint firstAttribute="height" constant="40" id="hoY-GJ-zdI"/>
                                 </constraints>
                                 <state key="normal">
                                     <imageReference key="image" image="camera" catalog="system" symbolScale="large" renderingMode="original"/>
@@ -72,10 +76,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ejz-uQ-eAU">
-                                <rect key="frame" x="162.5" y="142" width="50" height="50"/>
+                                <rect key="frame" x="140" y="166" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="3fL-T5-NYx"/>
-                                    <constraint firstAttribute="height" constant="50" id="ccM-NU-5pC"/>
+                                    <constraint firstAttribute="width" secondItem="Ejz-uQ-eAU" secondAttribute="height" multiplier="1:1" id="LVL-zU-Pvn"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="Sia-Pf-OVJ"/>
+                                    <constraint firstAttribute="height" constant="40" id="XjP-Pd-OJT"/>
+                                    <constraint firstAttribute="width" constant="40" id="cB3-ev-OVz"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="eJG-PL-VWB"/>
                                 </constraints>
                                 <state key="normal">
                                     <imageReference key="image" image="star" catalog="system" symbolScale="large" renderingMode="original"/>
@@ -84,18 +91,42 @@
                                     <action selector="FavoriteButton:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aYD-08-BnM"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQa-ul-dBG">
+                                <rect key="frame" x="195" y="166" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="4yW-Wh-704"/>
+                                    <constraint firstAttribute="height" constant="40" id="DCa-JA-eai"/>
+                                    <constraint firstAttribute="width" secondItem="FQa-ul-dBG" secondAttribute="height" multiplier="1:1" id="Rwb-gF-OrD"/>
+                                    <constraint firstAttribute="width" constant="40" id="T3s-S2-er5"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="qRX-mZ-2WP"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <imageReference key="image" image="bell.badge" catalog="system" symbolScale="large" renderingMode="original"/>
+                                </state>
+                                <connections>
+                                    <action selector="notificationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iaL-ee-nbs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="bqM-kl-kup" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="16" id="WeF-SC-XH2"/>
-                            <constraint firstItem="hAr-i5-57D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="62" id="Xng-D7-SSt"/>
-                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="c1Q-D5-qlC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqM-kl-kup" secondAttribute="trailing" constant="62" id="dJF-xs-Wwd"/>
-                            <constraint firstItem="hAr-i5-57D" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="16" id="eXi-ZR-6Nr"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="3Ht-wU-AVP"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="7tG-G6-FFN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqM-kl-kup" secondAttribute="trailing" constant="60" id="8sH-0b-GsT"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="Joe-ak-4HZ"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="leading" secondItem="hAr-i5-57D" secondAttribute="trailing" constant="40" id="SE0-CQ-mA2"/>
+                            <constraint firstItem="FQa-ul-dBG" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="Wxx-F5-EQk"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="aAd-qI-HlN"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="bdy-jf-wzA"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="leading" secondItem="FQa-ul-dBG" secondAttribute="trailing" constant="40" id="d6n-5X-wrZ"/>
+                            <constraint firstItem="FQa-ul-dBG" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="dDH-FQ-sxl"/>
+                            <constraint firstItem="hAr-i5-57D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="e4L-i2-ab6"/>
+                            <constraint firstItem="FQa-ul-dBG" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="fzK-BJ-4Zf"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="nqD-eQ-0P4"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="qxx-kq-9Fs"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tyG-wY-ipj"/>
-                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="top" secondItem="hAr-i5-57D" secondAttribute="top" id="xY9-qJ-VCh"/>
+                            <constraint firstItem="hAr-i5-57D" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="xQB-ae-rgc"/>
                         </constraints>
                     </view>
                     <connections>
@@ -129,6 +160,34 @@
             </objects>
             <point key="canvasLocation" x="850.72463768115949" y="77.678571428571431"/>
         </scene>
+        <!--Pending Notification Table View Controller-->
+        <scene sceneID="03E-go-cuY">
+            <objects>
+                <tableViewController id="7xU-M9-kxQ" customClass="pendingNotificationTableViewController" customModule="Kenteken_Scanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jUQ-hz-vtj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="a2D-Og-Irh">
+                                <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a2D-Og-Irh" id="94a-On-oUf">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7xU-M9-kxQ" id="H64-CD-2XW"/>
+                            <outlet property="delegate" destination="7xU-M9-kxQ" id="SCf-M2-yF9"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KaR-e6-AwJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2318" y="77"/>
+        </scene>
         <!--Kenteken Data Table View Controller-->
         <scene sceneID="wvm-Z2-b2V">
             <objects>
@@ -160,6 +219,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bell.badge" catalog="system" width="128" height="124"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="clock.arrow.circlepath" catalog="system" width="128" height="110"/>
         <image name="kenteken-blauw" width="37.5" height="56.5"/>

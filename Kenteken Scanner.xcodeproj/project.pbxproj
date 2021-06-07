@@ -27,6 +27,7 @@
 		A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */; };
 		A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */; };
 		A965019226498A4D0067DE62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A965019126498A4D0067DE62 /* GoogleService-Info.plist */; };
+		A96BEE7126690F7D00EF86A0 /* PendingNotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BEE7026690F7D00EF86A0 /* PendingNotificationTableViewController.swift */; };
 		A97624242611EBBE00565703 /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = A97624232611EBBE00565703 /* RemoteConfigDefaults.plist */; };
 		A97624292612109800565703 /* notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97624282612109800565703 /* notification.swift */; };
 		A9A1406D260B4EB800571D1C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A14069260B4EB800571D1C /* CameraViewController.swift */; };
@@ -85,6 +86,7 @@
 		A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenFactory.swift; sourceTree = "<group>"; };
 		A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenDataTableViewController.swift; sourceTree = "<group>"; };
 		A965019126498A4D0067DE62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A96BEE7026690F7D00EF86A0 /* PendingNotificationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingNotificationTableViewController.swift; sourceTree = "<group>"; };
 		A97624232611EBBE00565703 /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		A97624282612109800565703 /* notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notification.swift; sourceTree = "<group>"; };
 		A992BD1026676B7D00AD2CE8 /* Kenteken ScannerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Kenteken ScannerRelease.entitlements"; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				A94510292601005B00E6798C /* dataTableView.swift */,
 				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
 				A97624282612109800565703 /* notification.swift */,
+				A96BEE7026690F7D00EF86A0 /* PendingNotificationTableViewController.swift */,
 			);
 			path = CustomTypes;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */,
+				A96BEE7126690F7D00EF86A0 /* PendingNotificationTableViewController.swift in Sources */,
 				A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */,
 				A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */,
 				A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */,

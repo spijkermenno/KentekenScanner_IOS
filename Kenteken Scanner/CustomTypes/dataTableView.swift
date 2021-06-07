@@ -118,12 +118,30 @@ class dataTableView: UITableViewController {
             
             if inArray {
                 // remove from array and remove from notifcationcenter
+                let alert = UIAlertController(title: "Notificatie verwijderen", message: "Weet je zeker dat je de APK alert voor \(KentekenFactory().format(kenteken)) wilt verwijderen?", preferredStyle: .alert)
                 
-                print("remove from alerts")
-                alerts.remove(at: location)
-                StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
-                button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
-                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.uuid])
+                let cancelAction = UIAlertAction(
+                    title: "Annuleer",
+                    style: .default) { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                }
+                
+                let confirmAction = UIAlertAction(
+                    title: "Verwijder",
+                    style: .destructive) { (action)
+                    in
+                        // delete notification
+                    print("remove from alerts")
+                    alerts.remove(at: location)
+                    StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+                    button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.uuid])
+                }
+                
+                alert.addAction(cancelAction)
+                alert.addAction(confirmAction)
+                
+                self.present(alert, animated: true)
             } else {
                 let ctx = self
                 let alert: UIAlertController!
@@ -131,6 +149,7 @@ class dataTableView: UITableViewController {
                 if timeInSeconds < 0 {
                     // les than 30 days.
                     alert = UIAlertController(title: "Notificatie instellen niet mogelijk", message: "Het is helaas niet mogelijk om een APK alert in te stellen voor kenteken \(KentekenFactory().format(kenteken)). \n\n De APK verloopt binnen 30 dagen.", preferredStyle: .alert)
+                    
                     
                     let cancelAction = UIAlertAction(
                         title: "Annuleer",
@@ -143,31 +162,33 @@ class dataTableView: UITableViewController {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "dd-MM-yyyy hh:mm"
                     
-                var dict = [String: String]()
-                dict["kenteken"] = kenteken
-                dict["notificationDate"] = dateFormatter.string(from: notificationdate)
+                    let dateFormatter2 = DateFormatter()
+                    dateFormatter2.dateFormat = "dd-MM-yyyy"
+                    
+                    var dict = [String: String]()
+                    dict["kenteken"] = kenteken
+                    dict["notificationDate"] = dateFormatter.string(from: notificationdate)
                     
                     print(dict)
                 
-                AnalyticsHelper().logEventMultipleItems(eventkey: "apk_alert", items: dict);
-                    
-                alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK om 12:00 uur een melding geven.", preferredStyle: .alert)
-                
-                let cancelAction = UIAlertAction(
-                    title: "Annuleer",
-                    style: .destructive) { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                }
-
-                let confirmAction = UIAlertAction(
-                    title: "Aanmaken",
-                    style: .default) { (action)
-                    in
-                        let uuid = ctx.context.createNotification(title: "APK Alert", description: "De APK van kenteken \(KentekenFactory().format(ctx.kenteken)) verloopt bijna!", activationTimeFromNow: Double(timeInSeconds))
-                        alerts.append(NotificationObject(kenteken: ctx.kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
-                        StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
-                        button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                    AnalyticsHelper().logEventMultipleItems(eventkey: "apk_alert", items: dict);
                         
+                    alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK om 12:00 uur een melding geven.", preferredStyle: .alert)
+                    
+                    let cancelAction = UIAlertAction(
+                        title: "Annuleer",
+                        style: .destructive) { (action) in
+                        alert.dismiss(animated: true, completion: nil)
+                    }
+
+                    let confirmAction = UIAlertAction(
+                        title: "Aanmaken",
+                        style: .default) { (action)
+                        in
+                        let uuid = ctx.context.createNotification(title: "APK Alert", description: "De APK van kenteken \(KentekenFactory().format(ctx.kenteken)) verloopt bijna!", kenteken: self.kenteken, apkdatum: date, apkdatumString: dateFormatter2.string(from:date), notificatiedatum: dateFormatter2.string(from: notificationdate), activationTimeFromNow: Double(timeInSeconds))
+                            alerts.append(NotificationObject(kenteken: ctx.kenteken.replacingOccurrences(of: "-", with: "").uppercased(), uuid: uuid))
+                            StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
+                            button.setImage(UIImage(systemName: "bell.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
                     }
                     
                     alert.addAction(cancelAction)
