@@ -107,6 +107,13 @@
                                     <action selector="notificationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iaL-ee-nbs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FpD-G9-7PA">
+                                <rect key="frame" x="164.5" y="318.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="removeAdsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YeW-Ws-hZn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -115,6 +122,7 @@
                             <constraint firstItem="bqM-kl-kup" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="7tG-G6-FFN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqM-kl-kup" secondAttribute="trailing" constant="60" id="8sH-0b-GsT"/>
                             <constraint firstItem="Ejz-uQ-eAU" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="Joe-ak-4HZ"/>
+                            <constraint firstItem="FpD-G9-7PA" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="N4k-6s-DqE"/>
                             <constraint firstItem="Ejz-uQ-eAU" firstAttribute="leading" secondItem="hAr-i5-57D" secondAttribute="trailing" constant="40" id="SE0-CQ-mA2"/>
                             <constraint firstItem="FQa-ul-dBG" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="Wxx-F5-EQk"/>
                             <constraint firstItem="Ejz-uQ-eAU" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="aAd-qI-HlN"/>
@@ -127,6 +135,7 @@
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="qxx-kq-9Fs"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tyG-wY-ipj"/>
                             <constraint firstItem="hAr-i5-57D" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="xQB-ae-rgc"/>
+                            <constraint firstItem="FpD-G9-7PA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zn1-P0-3pN"/>
                         </constraints>
                     </view>
                     <connections>

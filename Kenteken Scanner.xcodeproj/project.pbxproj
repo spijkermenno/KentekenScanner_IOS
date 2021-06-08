@@ -35,6 +35,12 @@
 		A9A1406F260B4EB800571D1C /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406B260B4EB800571D1C /* PreviewView.swift */; };
 		A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1406C260B4EB800571D1C /* VisionViewController.swift */; };
 		A9A1408B260B50B700571D1C /* VisionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A14089260B50B700571D1C /* VisionViewController.storyboard */; };
+		A9D3BC3A266F49CA0035C34C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D3BC39266F49CA0035C34C /* StoreKit.framework */; };
+		A9D3BC3C266F51B50035C34C /* IAP_ProductIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D3BC3B266F51B50035C34C /* IAP_ProductIDs.plist */; };
+		A9D3BC3E266F51F10035C34C /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3BC3D266F51F10035C34C /* IAPManager.swift */; };
+		A9D3BC40266F5EC10035C34C /* model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3BC3F266F5EC10035C34C /* model.swift */; };
+		A9D3BC42266F5F180035C34C /* SettingsManageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3BC41266F5F180035C34C /* SettingsManageable.swift */; };
+		A9D3BC44266F5F510035C34C /* viewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3BC43266F5F510035C34C /* viewModel.swift */; };
 		A9EFFF6C2654FF55002A4B9F /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EFFF6B2654FF55002A4B9F /* AppTrackingTransparency.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +101,12 @@
 		A9A1406B260B4EB800571D1C /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		A9A1406C260B4EB800571D1C /* VisionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionViewController.swift; sourceTree = "<group>"; };
 		A9A1408A260B50B700571D1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/VisionViewController.storyboard; sourceTree = "<group>"; };
+		A9D3BC39266F49CA0035C34C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		A9D3BC3B266F51B50035C34C /* IAP_ProductIDs.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IAP_ProductIDs.plist; sourceTree = "<group>"; };
+		A9D3BC3D266F51F10035C34C /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
+		A9D3BC3F266F5EC10035C34C /* model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = model.swift; sourceTree = "<group>"; };
+		A9D3BC41266F5F180035C34C /* SettingsManageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManageable.swift; sourceTree = "<group>"; };
+		A9D3BC43266F5F510035C34C /* viewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewModel.swift; sourceTree = "<group>"; };
 		A9EFFF6B2654FF55002A4B9F /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		A9EFFF6D2655375F002A4B9F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
 		A9EFFF6E2655375F002A4B9F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/VisionViewController.strings; sourceTree = "<group>"; };
@@ -108,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9D3BC3A266F49CA0035C34C /* StoreKit.framework in Frameworks */,
 				782D826DA705E05295F4080B /* Pods_Kenteken_Scanner.framework in Frameworks */,
 				A9EFFF6C2654FF55002A4B9F /* AppTrackingTransparency.framework in Frameworks */,
 			);
@@ -148,6 +161,7 @@
 		9A5F48F8690C0EF03E797EBF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9D3BC39266F49CA0035C34C /* StoreKit.framework */,
 				A9EFFF6B2654FF55002A4B9F /* AppTrackingTransparency.framework */,
 				A4B91E2AE16768A0E10083C8 /* Pods_Kenteken_Scanner.framework */,
 				091A7E6E2C611B930F9DFEBB /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework */,
@@ -159,6 +173,8 @@
 		A9064E2526257799003E71D9 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				A9D3BC3F266F5EC10035C34C /* model.swift */,
+				A9D3BC41266F5F180035C34C /* SettingsManageable.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -188,6 +204,7 @@
 		A93E03A925FF97E90013F8FE /* Kenteken Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				A9D3BC3B266F51B50035C34C /* IAP_ProductIDs.plist */,
 				A992BD1026676B7D00AD2CE8 /* Kenteken ScannerRelease.entitlements */,
 				A9064E2526257799003E71D9 /* Objects */,
 				A98AC2B0260B4BF3008B4AE0 /* Camera */,
@@ -230,6 +247,7 @@
 				A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */,
 				A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */,
 				A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */,
+				A9D3BC3D266F51F10035C34C /* IAPManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -251,6 +269,7 @@
 				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
 				A97624282612109800565703 /* notification.swift */,
 				A96BEE7026690F7D00EF86A0 /* PendingNotificationTableViewController.swift */,
+				A9D3BC43266F5F510035C34C /* viewModel.swift */,
 			);
 			path = CustomTypes;
 			sourceTree = "<group>";
@@ -389,6 +408,7 @@
 				A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */,
 				A9A1408B260B50B700571D1C /* VisionViewController.storyboard in Resources */,
 				A93E03B425FF97E90013F8FE /* Assets.xcassets in Resources */,
+				A9D3BC3C266F51B50035C34C /* IAP_ProductIDs.plist in Resources */,
 				A93E03B225FF97E90013F8FE /* Main.storyboard in Resources */,
 				A965019226498A4D0067DE62 /* GoogleService-Info.plist in Resources */,
 			);
@@ -518,15 +538,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9D3BC3E266F51F10035C34C /* IAPManager.swift in Sources */,
 				A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */,
 				A96BEE7126690F7D00EF86A0 /* PendingNotificationTableViewController.swift in Sources */,
 				A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */,
 				A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */,
+				A9D3BC42266F5F180035C34C /* SettingsManageable.swift in Sources */,
 				A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */,
 				A97624292612109800565703 /* notification.swift in Sources */,
 				A9A1406D260B4EB800571D1C /* CameraViewController.swift in Sources */,
 				A9A1406F260B4EB800571D1C /* PreviewView.swift in Sources */,
 				A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */,
+				A9D3BC40266F5EC10035C34C /* model.swift in Sources */,
 				A9A1406E260B4EB800571D1C /* StringUtils.swift in Sources */,
 				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
 				A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */,
@@ -534,6 +557,7 @@
 				A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */,
 				A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */,
 				A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */,
+				A9D3BC44266F5F510035C34C /* viewModel.swift in Sources */,
 				A945102A2601005B00E6798C /* dataTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -725,14 +749,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1.2;
+				CURRENT_PROJECT_VERSION = 1.1.3;
 				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -748,14 +772,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken ScannerRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1.2;
+				CURRENT_PROJECT_VERSION = 1.1.3;
 				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

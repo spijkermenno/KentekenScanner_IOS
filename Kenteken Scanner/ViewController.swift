@@ -10,6 +10,7 @@ import Firebase
 import GoogleMobileAds
 import AppTrackingTransparency
 import AdSupport
+import StoreKit
 
 class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate {
     var cameraViewController: VisionViewController!
@@ -20,9 +21,11 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     var isSpinning = false
     
+    var viewModel = ViewModel()
+    
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
-    
+     
     func requestIDFA(bview: GADBannerView) {
       ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
         // Tracking authorization completed. Start loading ads here.
@@ -31,6 +34,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.delegate = self
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -41,18 +46,22 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
-        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+        print("are ads removed? \(viewModel.removedAds)")
         
-        bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
-        bannerView.rootViewController = self
-                
-        bannerView.isHidden = false
-        
-        requestIDFA(bview: bannerView)
-        
-        bannerView.load(GADRequest())
-        
-        addBannerViewToView(bannerView)
+        if !viewModel.removedAds {
+            bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+            
+            bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
+            bannerView.rootViewController = self
+                    
+            bannerView.isHidden = false
+            
+            requestIDFA(bview: bannerView)
+            
+            bannerView.load(GADRequest())
+            
+            addBannerViewToView(bannerView)
+        }
         
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
@@ -80,11 +89,16 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.viewDidSetup()
+    }
+    
     @objc func appMovedToBackground() {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
-
 
     func createNotification(title: String, description: String, kenteken: String, apkdatum: Date, apkdatumString: String, notificatiedatum: String, activationTimeFromNow: Double) -> String {
         // Request permission to perform notifications
@@ -240,7 +254,40 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
       print("bannerViewDidDismissScreen")
     }
-
+    @IBAction func removeAdsButton(_ sender: UIButton) {
+        showAlert(for: viewModel.getProductForItem(at: 0)!)
+    }
+    
+    func showSingleAlert(withMessage message: String) {
+            let alertController = UIAlertController(title: "KentekenScanner", message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
+    
+    func showAlert(for product: SKProduct) {
+        guard let price = IAPManager.shared.getPriceFormatted(for: product) else { return }
+        let alertController = UIAlertController(title: product.localizedTitle,
+                                                message: product.localizedDescription,
+                                                preferredStyle: .alert)
+     
+        alertController.addAction(UIAlertAction(title: "Koop nu voor \(price)", style: .default, handler: { (_) in
+            if !self.viewModel.purchase(product: product) {
+                self.showSingleAlert(withMessage: "In-App aankopen zijn niet toegestaan op dit apparaat.")
+            }
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Aankoop herstellen", style: .default, handler: { (_) in
+            print("restoring")
+            if SKPaymentQueue.canMakePayments() {
+                self.viewModel.restorePurchases()
+            } else {
+                self.showSingleAlert(withMessage: "In-App aankopen zijn niet toegestaan op dit apparaat.")
+            }
+        }))
+     
+        alertController.addAction(UIAlertAction(title: "Annuleren", style: .destructive, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension UIStoryboard{
@@ -284,3 +331,47 @@ extension ViewController {
     }
 }
 
+extension ViewController: ViewModelDelegate {
+    func toggleOverlay(shouldShow: Bool) {
+        isSpinning = !shouldShow
+        toggleSpinner(onView: view)
+    }
+    
+    func willStartLongProcess() {
+        isSpinning = false
+        toggleSpinner(onView: view)
+    }
+    
+    func didFinishLongProcess() {
+        isSpinning = true
+        toggleSpinner(onView: view)
+    }
+    
+    
+    func showIAPRelatedError(_ error: Error) {
+        let message = error.localizedDescription
+        
+        // In a real app you might want to check what exactly the
+        // error is and display a more user-friendly message.
+        // For example:
+        /*
+        switch error {
+        case .noProductIDsFound: message = NSLocalizedString("Unable to initiate in-app purchases.", comment: "")
+        case .noProductsFound: message = NSLocalizedString("Nothing was found to buy.", comment: "")
+        // Add more cases...
+        default: message = ""
+        }
+        */
+        
+        showSingleAlert(withMessage: message)
+    }
+    
+    func didFinishRestoringPurchasesWithZeroProducts() {
+        showSingleAlert(withMessage: "There are no purchased items to restore.")
+    }
+    
+    
+    func didFinishRestoringPurchasedProducts() {
+        showSingleAlert(withMessage: "All previous In-App Purchases have been restored!")
+    }
+}
