@@ -17,24 +17,40 @@ class NetworkRequestHelper {
         let url = URL(string: urlString)!
         
         view.kentekenField.text = KentekenFactory().format(kenteken)
+        
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 7.0
    
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard let data = data else {
-                print("guard err")
-                view.toggleSpinner(onView: view.view)
-                return
-            }
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             
-            let decoder = JSONDecoder()
-            if let dataObject = try? decoder.decode([kentekenDataObject].self, from: data) {
-                
-                if dataObject.first?.kenteken != nil {
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.backupKentekenRequest(kenteken: kenteken, view: view)
+                }
+                return
+            } else {
+            
+                guard let data = data else {
+                    print("guard err")
                     DispatchQueue.main.async {
-                        self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject)
+                        DispatchQueue.main.async {
+                            self.backupKentekenRequest(kenteken: kenteken, view: view)
+                        }
                     }
-                } else {
-                    DispatchQueue.main.async {
-                        self.backupKentekenRequest(kenteken: kenteken, view: view)
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                if let dataObject = try? decoder.decode([kentekenDataObject].self, from: data) {
+                    
+                    if dataObject.first?.kenteken != nil {
+                        DispatchQueue.main.async {
+                            self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: false)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.backupKentekenRequest(kenteken: kenteken, view: view)
+                        }
                     }
                 }
             }
@@ -62,7 +78,7 @@ class NetworkRequestHelper {
             if dataObject.count > 0 {
                 print("show data")
                 DispatchQueue.main.async {
-                    self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject)
+                    self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: true)
                 }
             } else {
                 print("show error")
@@ -82,7 +98,7 @@ class NetworkRequestHelper {
         task.resume()
     }
     
-    func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject]) {
+    func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) {
         var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
         
         if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
@@ -96,6 +112,11 @@ class NetworkRequestHelper {
         view.kentekenField.text = KentekenFactory().format(kenteken)
         
         let dataTableViewObj:dataTableView = dataTableView()
+        
+        if backuprequest {
+            dataTableViewObj.isBackupRequest()
+        }
+        
         dataTableViewObj.loadData(object: dataObject.first!)
         dataTableViewObj.setKenteken(kenteken_: kenteken)
         dataTableViewObj.setContext(context_: view)

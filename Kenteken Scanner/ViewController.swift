@@ -302,31 +302,34 @@ var vSpinner : UIView?
 
 extension ViewController {
     func toggleSpinner(onView: UIView) {
-        print("Toggle spinner: \(isSpinning)")
-        
-        if isSpinning {
-            // remove spinner
-            DispatchQueue.main.async {
-                vSpinner?.removeFromSuperview()
-                vSpinner = nil
-                self.kentekenField.isEnabled = true
-                self.isSpinning = false
-            }
-        } else {
-            // place spinner
-            spinnerView = UIView.init(frame: onView.bounds)
-            spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            ai = UIActivityIndicatorView.init(style: .large)
-            ai.startAnimating()
-            ai.center = spinnerView.center
+        DispatchQueue.main.async {
+                
+            print("Toggle spinner: \(self.isSpinning)")
             
-            DispatchQueue.main.async {
-                self.kentekenField.isEnabled = false
-                self.spinnerView.addSubview(self.ai)
-                onView.addSubview(self.spinnerView)
-                self.isSpinning = true
+            if self.isSpinning {
+                // remove spinner
+                DispatchQueue.main.async {
+                    vSpinner?.removeFromSuperview()
+                    vSpinner = nil
+                    self.kentekenField.isEnabled = true
+                    self.isSpinning = false
+                }
+            } else {
+                // place spinner
+                self.spinnerView = UIView.init(frame: onView.bounds)
+                self.spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+                self.ai = UIActivityIndicatorView.init(style: .large)
+                self.ai.startAnimating()
+                self.ai.center = self.spinnerView.center
+                
+                DispatchQueue.main.async {
+                    self.kentekenField.isEnabled = false
+                    self.spinnerView.addSubview(self.ai)
+                    onView.addSubview(self.spinnerView)
+                    self.isSpinning = true
+                }
+                vSpinner = self.spinnerView
             }
-            vSpinner = spinnerView
         }
     }
 }

@@ -21,6 +21,8 @@ class dataTableView: UITableViewController {
     var customCellsFilled = 0
     var totalCells = 0
     
+    var backupRequest = false
+    
     let cellIdentifier = "cellid"
     
     lazy var favoriteButton: UIButton = {
@@ -53,6 +55,10 @@ class dataTableView: UITableViewController {
     
     func setContext(context_: ViewController) {
         self.context = context_
+    }
+    
+    func isBackupRequest() {
+        backupRequest = true
     }
     
     @objc func favoriteTap(_ button: UIButton) {
@@ -93,7 +99,12 @@ class dataTableView: UITableViewController {
                 print(olddate)
                 let dateFormatter = DateFormatter()
                 //dateFormatter.dateFormat = "yyyyMMdd"
-                dateFormatter.dateFormat = "dd-MM-yy"
+                
+                if backupRequest {
+                    dateFormatter.dateFormat = "yyyyMMdd"
+                } else {
+                    dateFormatter.dateFormat = "dd-MM-yy"
+                }
                 date = dateFormatter.date(from:olddate)!
                  
                 let timeInDays = 0 - (60 * 60 * 24 * 30.5)
@@ -163,7 +174,12 @@ class dataTableView: UITableViewController {
                     dateFormatter.dateFormat = "dd-MM-yyyy hh:mm"
                     
                     let dateFormatter2 = DateFormatter()
-                    dateFormatter2.dateFormat = "dd-MM-yyyy"
+                    
+                    if backupRequest {
+                        dateFormatter2.dateFormat = "yyyyMMdd"
+                    } else {
+                        dateFormatter2.dateFormat = "dd-MM-yy"
+                    }
                     
                     var dict = [String: String]()
                     dict["kenteken"] = kenteken
@@ -345,7 +361,11 @@ class dataTableView: UITableViewController {
                 if let olddate = kentekenData?.vervaldatum_apk {
                     let dateFormatter = DateFormatter()
                     //dateFormatter.dateFormat = "yyyyMMdd"
-                    dateFormatter.dateFormat = "dd-MM-yy"
+                    if backupRequest {
+                        dateFormatter.dateFormat = "yyyyMMdd"
+                    } else {
+                        dateFormatter.dateFormat = "dd-MM-yy"
+                    }
                     date = dateFormatter.date(from:olddate)!
                     
                     if date < Date() {
@@ -363,7 +383,11 @@ class dataTableView: UITableViewController {
                 if let olddate = kentekenData?.vervaldatum_tachograaf {
                     let dateFormatter = DateFormatter()
                     //dateFormatter.dateFormat = "yyyyMMdd"
-                    dateFormatter.dateFormat = "dd-MM-yy"
+                    if backupRequest {
+                        dateFormatter.dateFormat = "yyyyMMdd"
+                    } else {
+                        dateFormatter.dateFormat = "dd-MM-yy"
+                    }
                     date = dateFormatter.date(from:olddate)!
                     
                     if date < Date() {
@@ -378,7 +402,11 @@ class dataTableView: UITableViewController {
             let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
 
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yy"
+            if backupRequest {
+                dateFormatter.dateFormat = "yyyyMMdd"
+            } else {
+                dateFormatter.dateFormat = "dd-MM-yy"
+            }
             let date = dateFormatter.date(from:kentekenData.datum_eerste_toelating)
             
             let dateFormatterPrint = DateFormatter()
@@ -471,23 +499,6 @@ class dataTableView: UITableViewController {
                     cell.isHidden = true
                     cell.removeFromSuperview()
                 }
-            }else if indexPath.row == keys.count + 1 {
-                let bView = GADBannerView(adSize: kGADAdSizeFluid)
-                
-                bView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
-                bView.rootViewController = self
-                
-                bView.load(GADRequest())
-                                
-                bView.translatesAutoresizingMaskIntoConstraints = false
-                
-                cell.addSubview(bView)
-
-                bView.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
-                bView.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
-                
-                bView.isHidden = true
-                
             } else {
                 cell.textLabel?.text = keys[indexPath.row]?.capitalizingFirstLetter()
                 cell.detailTextLabel?.text = values[indexPath.row]?.capitalizingFirstLetter()
@@ -503,8 +514,13 @@ class dataTableView: UITableViewController {
         var date: Date
                     
         if let olddate = values[index] {
+            print(olddate)
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yy"
+            if backupRequest {
+                dateFormatter.dateFormat = "yyyyMMdd"
+            } else {
+                dateFormatter.dateFormat = "dd-MM-yy"
+            }
             date = dateFormatter.date(from:olddate)!
             
             if keys[index] == "vervaldatum apk" && date < Date() {
@@ -525,7 +541,11 @@ class dataTableView: UITableViewController {
     
     func customCells(cell: UITableViewCell, index: Int) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yy"
+        if backupRequest {
+            dateFormatter.dateFormat = "yyyyMMdd"
+        } else {
+            dateFormatter.dateFormat = "dd-MM-yy"
+        }
         let date = dateFormatter.date(from:kentekenData.datum_eerste_toelating)
         
         let dateFormatterPrint = DateFormatter()
