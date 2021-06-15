@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Kenteken_Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" restorationIdentifier="KentekenHolder" translatesAutoresizingMaskIntoConstraints="NO" id="tnY-ia-yhp">
-                                <rect key="frame" x="42.5" y="62" width="290" height="64"/>
+                                <rect key="frame" x="62" y="106" width="290" height="64"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="00-XXX-0" textAlignment="center" minimumFontSize="17" background="kenteken-geel" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-Ll-YNd">
                                         <rect key="frame" x="40" y="-7" width="259" height="77"/>
@@ -45,12 +45,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAr-i5-57D">
-                                <rect key="frame" x="60" y="166" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="height" multiplier="1:1" id="5bu-8I-qf8"/>
-                                    <constraint firstAttribute="height" constant="40" id="7Ck-uA-L3x"/>
-                                    <constraint firstAttribute="width" constant="40" id="Dat-iN-63V"/>
-                                </constraints>
+                                <rect key="frame" x="40.000000000000007" y="210" width="79.666666666666686" height="24.666666666666657"/>
                                 <state key="normal">
                                     <color key="titleShadowColor" name="AccentColor"/>
                                     <imageReference key="image" image="clock.arrow.circlepath" catalog="system" symbolScale="large" renderingMode="original"/>
@@ -60,14 +55,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bqM-kl-kup">
-                                <rect key="frame" x="275" y="166" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="4qG-JY-D0z"/>
-                                    <constraint firstAttribute="width" secondItem="bqM-kl-kup" secondAttribute="height" multiplier="1:1" id="JoH-P8-v9U"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="ZpR-41-74c"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="hWU-JL-9th"/>
-                                    <constraint firstAttribute="height" constant="40" id="hoY-GJ-zdI"/>
-                                </constraints>
+                                <rect key="frame" x="294.33333333333331" y="210" width="79.666666666666686" height="24.666666666666657"/>
                                 <state key="normal">
                                     <imageReference key="image" image="camera" catalog="system" symbolScale="large" renderingMode="original"/>
                                 </state>
@@ -76,14 +64,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ejz-uQ-eAU">
-                                <rect key="frame" x="140" y="166" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Ejz-uQ-eAU" secondAttribute="height" multiplier="1:1" id="LVL-zU-Pvn"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="Sia-Pf-OVJ"/>
-                                    <constraint firstAttribute="height" constant="40" id="XjP-Pd-OJT"/>
-                                    <constraint firstAttribute="width" constant="40" id="cB3-ev-OVz"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="eJG-PL-VWB"/>
-                                </constraints>
+                                <rect key="frame" x="124.66666666666669" y="210" width="80" height="24.666666666666657"/>
                                 <state key="normal">
                                     <imageReference key="image" image="star" catalog="system" symbolScale="large" renderingMode="original"/>
                                 </state>
@@ -92,24 +73,17 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQa-ul-dBG">
-                                <rect key="frame" x="195" y="166" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="4yW-Wh-704"/>
-                                    <constraint firstAttribute="height" constant="40" id="DCa-JA-eai"/>
-                                    <constraint firstAttribute="width" secondItem="FQa-ul-dBG" secondAttribute="height" multiplier="1:1" id="Rwb-gF-OrD"/>
-                                    <constraint firstAttribute="width" constant="40" id="T3s-S2-er5"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="qRX-mZ-2WP"/>
-                                </constraints>
-                                <state key="normal" title="Button">
-                                    <imageReference key="image" image="bell.badge" catalog="system" symbolScale="large" renderingMode="original"/>
+                                <rect key="frame" x="209.66666666666666" y="210" width="79.666666666666657" height="24.666666666666657"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="bell" catalog="system" symbolScale="large" renderingMode="original"/>
                                 </state>
                                 <connections>
                                     <action selector="notificationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iaL-ee-nbs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FpD-G9-7PA">
-                                <rect key="frame" x="164.5" y="318.5" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FpD-G9-7PA">
+                                <rect key="frame" x="118" y="722" width="178" height="30"/>
+                                <state key="normal" title="Advertenties verwijderen?"/>
                                 <connections>
                                     <action selector="removeAdsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YeW-Ws-hZn"/>
                                 </connections>
@@ -118,28 +92,30 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="bqM-kl-kup" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="3Ht-wU-AVP"/>
-                            <constraint firstItem="bqM-kl-kup" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="7tG-G6-FFN"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqM-kl-kup" secondAttribute="trailing" constant="60" id="8sH-0b-GsT"/>
-                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="Joe-ak-4HZ"/>
-                            <constraint firstItem="FpD-G9-7PA" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="N4k-6s-DqE"/>
-                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="leading" secondItem="hAr-i5-57D" secondAttribute="trailing" constant="40" id="SE0-CQ-mA2"/>
-                            <constraint firstItem="FQa-ul-dBG" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="Wxx-F5-EQk"/>
-                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="aAd-qI-HlN"/>
-                            <constraint firstItem="bqM-kl-kup" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="bdy-jf-wzA"/>
-                            <constraint firstItem="bqM-kl-kup" firstAttribute="leading" secondItem="FQa-ul-dBG" secondAttribute="trailing" constant="40" id="d6n-5X-wrZ"/>
-                            <constraint firstItem="FQa-ul-dBG" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="dDH-FQ-sxl"/>
-                            <constraint firstItem="hAr-i5-57D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="e4L-i2-ab6"/>
-                            <constraint firstItem="FQa-ul-dBG" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="fzK-BJ-4Zf"/>
-                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="nqD-eQ-0P4"/>
+                            <constraint firstItem="hAr-i5-57D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="BAU-gh-Mvp"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="BJw-Xs-kEO"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="DB8-34-ctN"/>
+                            <constraint firstItem="FQa-ul-dBG" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="Ku0-zg-zxR"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="leading" secondItem="FQa-ul-dBG" secondAttribute="trailing" constant="5" id="NPb-wx-QlV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FpD-G9-7PA" secondAttribute="bottom" constant="110" id="ZoN-Fz-z9z"/>
+                            <constraint firstItem="FQa-ul-dBG" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="ee9-6Z-f8Y"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="iwW-ly-aQ6"/>
+                            <constraint firstItem="hAr-i5-57D" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="lat-cP-85b"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="mMB-eU-75V"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqM-kl-kup" secondAttribute="trailing" constant="40" id="nq4-cU-3XH"/>
+                            <constraint firstItem="bqM-kl-kup" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="qrp-6a-5Aa"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="62" id="qxx-kq-9Fs"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="leading" secondItem="hAr-i5-57D" secondAttribute="trailing" constant="5" id="tux-NZ-V8z"/>
+                            <constraint firstItem="FQa-ul-dBG" firstAttribute="leading" secondItem="Ejz-uQ-eAU" secondAttribute="trailing" constant="5" id="txk-7w-44T"/>
                             <constraint firstItem="tnY-ia-yhp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tyG-wY-ipj"/>
-                            <constraint firstItem="hAr-i5-57D" firstAttribute="top" secondItem="tnY-ia-yhp" secondAttribute="bottom" constant="40" id="xQB-ae-rgc"/>
+                            <constraint firstItem="Ejz-uQ-eAU" firstAttribute="width" secondItem="hAr-i5-57D" secondAttribute="width" id="vBp-H3-NVF"/>
+                            <constraint firstItem="FQa-ul-dBG" firstAttribute="height" secondItem="hAr-i5-57D" secondAttribute="height" id="vQn-Z1-tzi"/>
                             <constraint firstItem="FpD-G9-7PA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zn1-P0-3pN"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="kentekenField" destination="XIm-Ll-YNd" id="iBI-n2-pMi"/>
+                        <outlet property="removeAdsButton" destination="FpD-G9-7PA" id="Un5-C3-X4Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -151,7 +127,7 @@
             <objects>
                 <tableViewController id="VcL-lM-zTH" customClass="dataTableView" customModule="Kenteken_Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="eaX-0U-qF3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <connections>
@@ -174,15 +150,15 @@
             <objects>
                 <tableViewController id="7xU-M9-kxQ" customClass="pendingNotificationTableViewController" customModule="Kenteken_Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jUQ-hz-vtj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="a2D-Og-Irh">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="49" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a2D-Og-Irh" id="94a-On-oUf">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -202,16 +178,16 @@
             <objects>
                 <tableViewController id="YPw-EN-iRP" customClass="kentekenDataTableViewController" customModule="Kenteken_Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="IGf-Jl-srD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ftr-0O-y9W">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="49" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ftr-0O-y9W" id="Gdm-wg-uos">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -228,11 +204,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bell.badge" catalog="system" width="128" height="124"/>
+        <image name="bell" catalog="system" width="128" height="124"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="clock.arrow.circlepath" catalog="system" width="128" height="110"/>
-        <image name="kenteken-blauw" width="37.5" height="56.5"/>
-        <image name="kenteken-geel" width="185.5" height="55.5"/>
+        <image name="kenteken-blauw" width="25" height="37.666667938232422"/>
+        <image name="kenteken-geel" width="123.66666412353516" height="37"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

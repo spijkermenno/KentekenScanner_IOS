@@ -25,6 +25,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
+    
+    @IBOutlet var removeAdsButton: UIButton!
      
     func requestIDFA(bview: GADBannerView) {
       ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
@@ -80,6 +82,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                     DispatchQueue.main.async {
                         self.bannerView.isHidden = false
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        self.bannerView.isHidden = true
+                    }
                 }
             }
           } else {
@@ -88,11 +94,11 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
           }
         }
     }
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        viewModel.viewDidSetup()
+        //viewModel.viewDidSetup()
+        //removeAdsButton.isHidden = false
     }
     
     @objc func appMovedToBackground() {
@@ -233,6 +239,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
       print("bannerViewDidReceiveAd")
+        //removeAdsButton.isHidden = false
     }
 
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
@@ -353,6 +360,9 @@ extension ViewController: ViewModelDelegate {
     
     func showIAPRelatedError(_ error: Error) {
         let message = error.localizedDescription
+        removeAdsButton.isHidden = true
+        
+        print(error.localizedDescription)
         
         // In a real app you might want to check what exactly the
         // error is and display a more user-friendly message.
