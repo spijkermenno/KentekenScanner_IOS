@@ -23,6 +23,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     var viewModel = ViewModel()
     
+    var requestInterval: Int = 10
+    
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
     
@@ -93,6 +95,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             print("Error: \(error?.localizedDescription ?? "No error available.")")
           }
         }
+        
+        Messaging.messaging().token { token, error in
+          if let error = error {
+            print("Error fetching FCM registration token: \(error)")
+          } else if let token = token {
+            print("FCM registration token: \(token)")
+          }
+        }
     }
         
     override func viewDidAppear(_ animated: Bool) {
@@ -148,6 +158,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     @objc func runKentekenAPI() {
+        print("request")
+        
         let enteredKenteken : String = kentekenField.text!
         //check if valid kenteken
         kentekenField.text = KentekenFactory().format(enteredKenteken)
@@ -160,6 +172,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     // Searchfield on text change handler
     @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
+        print("request")
+
         let enteredKenteken : String = sender.text!
         //check if valid kenteken
         sender.text = KentekenFactory().format(enteredKenteken)
@@ -308,10 +322,10 @@ extension UIStoryboard{
 var vSpinner : UIView?
 
 extension ViewController {
+    
     func toggleSpinner(onView: UIView) {
-        DispatchQueue.main.async {
                 
-            print("Toggle spinner: \(self.isSpinning)")
+            print("Is spinning: \(self.isSpinning)")
             
             if self.isSpinning {
                 // remove spinner
@@ -338,7 +352,7 @@ extension ViewController {
                 vSpinner = self.spinnerView
             }
         }
-    }
+    
 }
 
 extension ViewController: ViewModelDelegate {

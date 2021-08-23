@@ -11,6 +11,7 @@ target 'Kenteken Scanner' do
   pod 'FirebaseAnalytics'
   pod 'Firebase/RemoteConfig'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'Firebase/Messaging'
 
   # add pods for any other desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods

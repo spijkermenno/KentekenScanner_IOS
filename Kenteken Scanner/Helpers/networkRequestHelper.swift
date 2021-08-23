@@ -4,14 +4,43 @@
 //
 //  Created by Menno Spijker on 22/03/2021.
 //
-
+import UIKit
+import StoreKit
 import Foundation
 
 class NetworkRequestHelper {
     var filling = false
+    var alert = false
     
     func kentekenRequest(kenteken: String, view: ViewController) {
         print("req")
+        
+        var amountRequests: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.CountRequests)
+        var rd: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.RequestsDone)
+        if rd == 0 {
+            rd = 1
+        }
+        
+        if rd >= 5 {
+            rd = 1
+        }
+        
+        print(amountRequests)
+        if amountRequests >= view.requestInterval * rd {
+            amountRequests = 1
+            self.alert = true
+            
+            rd += 1
+            
+            StorageHelper().saveToLocalStorage(amount: rd, storageType: StorageIdentifier.RequestsDone)
+
+            } else {
+                amountRequests += 1
+            }
+                        
+            StorageHelper().saveToLocalStorage(amount: amountRequests, storageType: StorageIdentifier.CountRequests)
+        
+        
         view.toggleSpinner(onView: view.view) // toggling the spinner on.
         let urlString : String = "https://mennospijker.nl/api/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
@@ -99,31 +128,62 @@ class NetworkRequestHelper {
     }
     
     func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) {
-        var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
         
+        if self.alert    {
+            let alert = UIAlertController(title: "Wat leuk dat je de app gebruikt!", message: "Support ons door een recensie achter te laten, een suggestie te geven of door eens een kijkje te nemen bij de advertentie!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Recensie plaatsen", style: .default, handler: {
+                                            (alert: UIAlertAction!) in
+                
+                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: scene)
+                    }
+                
+                self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
+
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: {
+                                            (alert: UIAlertAction!) in
+                self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
+            }))
+
+            view.present(alert, animated: true)
+            print("presented alert")
+            
+            self.alert = false
+        } else {
+            tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
+        }
+        // need to close spinner
+        view.isSpinning = true
+       view.toggleSpinner(onView: view.view)
+//
+    }
+    
+    func tableFilling(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) -> Void {
+        var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
+
         if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
             recents.remove(at: recents.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())!)
         }
-    
+
         recents.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
-                            
+
         StorageHelper().saveToLocalStorage(arr: recents, storageType: StorageIdentifier.Recent)
-        
+
         view.kentekenField.text = KentekenFactory().format(kenteken)
-        
+
         let dataTableViewObj:dataTableView = dataTableView()
-        
+
         if backuprequest {
             dataTableViewObj.isBackupRequest()
         }
-        
+
         dataTableViewObj.loadData(object: dataObject.first!)
         dataTableViewObj.setKenteken(kenteken_: kenteken)
         dataTableViewObj.setContext(context_: view)
         view.present(dataTableViewObj, animated: true, completion: nil)
         print("filltable")
-        // need to close spinner
-        view.isSpinning = true
-        view.toggleSpinner(onView: view.view)
     }
 }

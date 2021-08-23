@@ -13,6 +13,9 @@ class StorageHelper {
     let favoriteStorageIdentifier: String = "Favorite"
     let recentStorageIdentifier: String = "Recent"
     let alertStorageIdentifier: String = "Alert"
+    let CountRequestsStorageIdentifier: String = "Count"
+    let RequestsDoneStorageIdentifier: String = "Done"
+
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
@@ -22,6 +25,15 @@ class StorageHelper {
         } else if storageType == StorageIdentifier.Recent {
             defaults.set(arr, forKey: recentStorageIdentifier)
         }
+    }
+    
+    func saveToLocalStorage(amount: Int, storageType: StorageIdentifier) {
+        if storageType == StorageIdentifier.CountRequests {
+            defaults.set(amount, forKey: CountRequestsStorageIdentifier)
+        } else if storageType == StorageIdentifier.RequestsDone {
+            defaults.set(amount, forKey: RequestsDoneStorageIdentifier)
+        }
+        defaults.set(amount, forKey: CountRequestsStorageIdentifier)
     }
     
     func saveToLocalStorage(arr: [NotificationObject], storageType: StorageIdentifier) {
@@ -43,6 +55,21 @@ class StorageHelper {
             }
         }
         return []
+    }
+    
+    func retrieveFromLocalStorage(storageType: StorageIdentifier) -> Int {
+        if storageType == StorageIdentifier.CountRequests {
+            if let result = defaults.object(forKey: CountRequestsStorageIdentifier) as? Int {
+                return result
+            }
+        } else if storageType == StorageIdentifier.RequestsDone {
+            if let result = defaults.object(forKey: RequestsDoneStorageIdentifier) as? Int {
+                return result
+            }
+        }
+        
+        
+        return 0
     }
     
     func retrieveFromLocalStorage(storageType: StorageIdentifier) -> [NotificationObject] {
