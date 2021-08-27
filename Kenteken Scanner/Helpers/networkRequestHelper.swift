@@ -26,6 +26,7 @@ class NetworkRequestHelper {
         }
         
         print(amountRequests)
+        
         if amountRequests >= view.requestInterval * rd {
             amountRequests = 1
             self.alert = true
@@ -134,10 +135,13 @@ class NetworkRequestHelper {
             
             alert.addAction(UIAlertAction(title: "Recensie plaatsen", style: .default, handler: {
                                             (alert: UIAlertAction!) in
-                
-                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                DispatchQueue.main.async {
+
+                    if let scene = UIApplication.shared.connectedScenes
+                        .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
                         SKStoreReviewController.requestReview(in: scene)
                     }
+                }
                 
                 self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
 
