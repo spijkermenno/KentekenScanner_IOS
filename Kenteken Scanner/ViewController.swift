@@ -50,6 +50,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
+        // check if non consumable was bought.
+        
         print("are ads removed? \(viewModel.removedAds)")
         
         if !viewModel.removedAds {
@@ -75,6 +77,9 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         remoteConfig.configSettings = settings
         
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
+        
+        // checking if Google Ads are enabled in the remote config via Firebase.
+        // default value when Firebase does not respond is FALSE
         
         remoteConfig.fetch() { (status, error) -> Void in
           if status == .success {
@@ -123,8 +128,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                 print("All set!")
             } else if let error = error {
                 print(error.localizedDescription)
-            } else {
-                print("aaaaaaaaaaaaa")
             }
         }
         
@@ -157,32 +160,40 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         return uuid
     }
     
+    func checkKenteken(kenteken: String) {
+        // check if kenteken sidecode is not -2.
+        // -2 is the status code for no result.
+        
+        if KentekenFactory().getSidecode(kenteken) != -2 {
+            // Performing the API request.
+            NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self);
+            
+            // Logging the request to the firebase analytics.
+            AnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: kenteken);
+        }
+    }
+    
     @objc func runKentekenAPI() {
-        print("request")
+        print("request via runKentekenAPI")
         
         let enteredKenteken : String = kentekenField.text!
         //check if valid kenteken
         kentekenField.text = KentekenFactory().format(enteredKenteken)
         
-        if KentekenFactory().getSidecode(enteredKenteken) != -2 {
-            NetworkRequestHelper().kentekenRequest(kenteken: enteredKenteken, view: self);
-            AnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: enteredKenteken);
-        }
+        checkKenteken(kenteken: enteredKenteken)
     }
     
     // Searchfield on text change handler
     @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
-        print("request")
+        print("request via KentekenHandler")
 
         let enteredKenteken : String = sender.text!
         //check if valid kenteken
         sender.text = KentekenFactory().format(enteredKenteken)
         
-        if KentekenFactory().getSidecode(enteredKenteken) != -2 {
-            NetworkRequestHelper().kentekenRequest(kenteken: enteredKenteken, view: self);
-            AnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: enteredKenteken);
-        }
+        checkKenteken(kenteken: enteredKenteken)
     }
+    
     @IBAction func RecentButton(_ sender: Any, forEvent event: UIEvent) {
         AnalyticsHelper().logEvent(eventkey: "recent_load", key: "click", value: true)
         

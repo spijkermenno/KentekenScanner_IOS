@@ -16,6 +16,7 @@ class dataTableView: UITableViewController {
     var buttonOrder: CGFloat = 0
     var kenteken: String!
     var context: ViewController!
+    var model = Model()
     
     var customCells = 0
     var customCellsFilled = 0
@@ -63,21 +64,96 @@ class dataTableView: UITableViewController {
     
     @objc func favoriteTap(_ button: UIButton) {
         var favorites: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Favorite);
-        print(favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()))
-        if favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
-            print("remove from favorites")
+        
+//        print(favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()))
+
+        if favorites.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+        {
+            // finding the index of the item that should be removed.
             let index = favorites.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+            
+            // removing the favorite item with index
             favorites.remove(at: index!)
-            StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
-            button.setImage(UIImage(systemName: "star")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        } else {
-            favorites.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
-                                
+            
+            // saving the edited list of favorites to the localstorage
             StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
             
-            button.setImage(UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            // removing active star image
+            button.setImage(UIImage(systemName: "star")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            if context.viewModel.removedAds == false {
+                
+                if favorites.count == 5 {
+                    // None premium users can only safe 5 kentekens.
+                    // Request them to buy premium
+                    IAPManager.shared.getProducts { (result) in
+                        switch result {
+                            case .success(let products):
+                                let product = products.first!
+                                
+                                let alert = UIAlertController(title: "Oeps!", message: "Wil je meer dan vijf kentekens opslaan of voor meer dan twee auto's een APK alert instellen? \n\n Dit kan met een premium upgrade voor \(String(describing: IAPManager.shared.getPriceFormatted(for: product)!)).", preferredStyle: .alert)
+                                
+                                alert.addAction(
+                                    UIAlertAction(
+                                        title: "Sluiten",
+                                        style: .destructive,
+                                        handler: {(alert: UIAlertAction!) in
+                                            AnalyticsHelper().logEvent(eventkey: "LicencePlateListFull", key: "Weggeklikt", value: true);
+                                            return
+                                        }
+                                    )
+                                )
+
+                                alert.addAction(
+                                    UIAlertAction(
+                                        title: "Aankopen",
+                                        style: .default,
+                                        handler: {(alert: UIAlertAction!) in
+                                            // starting transaction
+                                            if !self.context.viewModel.purchase(product: product) {
+                                                self.context.showSingleAlert(withMessage: "In-App Purchases are not allowed in this device.")
+                                            } else {
+                                                self.context.bannerView.isHidden = true
+                                            }
+
+
+                                            AnalyticsHelper().logEvent(eventkey: "LicencePlateListFull", key: "Aankoop_klik", value: true);
+                                        }
+                                    )
+                                )
+                                
+                                DispatchQueue.main.async {
+                                    self.present(alert, animated: true)
+                                }
+                            case .failure(let error):
+                                self.context?.showIAPRelatedError(error)
+                                print("IAP ERROR")
+                        }
+                    }
+                } else {
+                // adding new favorite to the kenteken list
+                favorites.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
+                   
+                // saving the edited list with the new favorite added.
+                StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
+                
+                // activating the star button
+                button.setImage(UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
+            } else {
+                // adding new favorite to the kenteken list
+                favorites.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
+                   
+                // saving the edited list with the new favorite added.
+                StorageHelper().saveToLocalStorage(arr: favorites, storageType: StorageIdentifier.Favorite)
+                
+                // activating the star button
+                button.setImage(UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
         }
     }
+    
+    
     
     @objc func shareTap(_ button: UIButton) {
         let items = [URL(string: String("https://www.mennospijker.nl/api/kenteken/" + kenteken))!]

@@ -4,6 +4,7 @@ import StoreKit
 class Model {
     
     struct GameData: Codable, SettingsManageable {
+        
         var removedAds = false
     }
     

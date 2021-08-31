@@ -13,7 +13,7 @@ class NetworkRequestHelper {
     var alert = false
     
     func kentekenRequest(kenteken: String, view: ViewController) {
-        print("req")
+        print("API Request ...")
         
         var amountRequests: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.CountRequests)
         var rd: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.RequestsDone)
@@ -130,27 +130,43 @@ class NetworkRequestHelper {
     
     func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) {
         
-        if self.alert    {
-            let alert = UIAlertController(title: "Wat leuk dat je de app gebruikt!", message: "Support ons door een recensie achter te laten, een suggestie te geven of door eens een kijkje te nemen bij de advertentie!", preferredStyle: .alert)
+        if self.alert {
+            let alert = UIAlertController(
+                title: "Wat leuk dat je de app gebruikt!",
+                message: "Support ons door een recensie achter te laten, een suggestie te geven of door eens een kijkje te nemen bij de advertentie!",
+                preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: "Recensie plaatsen", style: .default, handler: {
-                                            (alert: UIAlertAction!) in
-                DispatchQueue.main.async {
+            
+            // asking for a reference in the app store
+            alert.addAction(
+                UIAlertAction(
+                    title: "Recensie plaatsen",
+                    style: .default,
+                    handler: {(alert: UIAlertAction!) in
+                        AnalyticsHelper().logEvent(eventkey: "usageAlert", key: "Recencie", value: true);
 
-                    if let scene = UIApplication.shared.connectedScenes
-                        .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                        SKStoreReviewController.requestReview(in: scene)
+                        DispatchQueue.main.async {
+                            if let scene = UIApplication.shared.connectedScenes
+                                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                                SKStoreReviewController.requestReview(in: scene)
+                            }
+                        }
+                        self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
                     }
-                }
-                
-                self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
-
-            }))
+                )
+            )
             
-            alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: {
-                                            (alert: UIAlertAction!) in
-                self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
-            }))
+            alert.addAction(
+                UIAlertAction(
+                    title: "Doorgaan",
+                    style: .cancel,
+                    handler: {(alert: UIAlertAction!) in
+                        AnalyticsHelper().logEvent(eventkey: "usageAlert", key: "Weggeklikt", value: true);
+
+                        self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
+                    }
+                )
+            )
 
             view.present(alert, animated: true)
             print("presented alert")

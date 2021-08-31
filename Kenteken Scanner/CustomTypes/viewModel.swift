@@ -20,7 +20,7 @@ class ViewModel {
     private let model = Model()
     
     var removedAds: Bool {
-        return model.gameData.removedAds
+        return StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.IAP)
     }
     
     
@@ -37,8 +37,10 @@ class ViewModel {
         // Update the proper game data depending on the keyword the
         // product identifier of the give product contains.
         print("purchase complete: \(product.productIdentifier)")
-        if product.productIdentifier.contains("remove_ads") {
+        if product.productIdentifier.contains("upgrade") {
             model.gameData.removedAds = true
+            
+            StorageHelper().saveToLocalStorage(bool: true, storageType: StorageIdentifier.IAP)
         }
         
         // Store changes.

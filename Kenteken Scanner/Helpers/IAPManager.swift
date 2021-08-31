@@ -174,11 +174,16 @@ extension IAPManager: SKProductsRequestDelegate {
         // Get the available products contained in the response.
         let products = response.products
 
+        print(products)
+        print(products.count)
+        
         // Check if there are any products available.
         if products.count > 0 {
+            print("products found. SUCCESS")
             // Call the following handler passing the received products.
             onRecieveProductsHandler?(.success(products))
         } else {
+            print("no products found. ERROR")
             // No products were found.
             onRecieveProductsHandler?(.failure(.noProductsFound))
         }

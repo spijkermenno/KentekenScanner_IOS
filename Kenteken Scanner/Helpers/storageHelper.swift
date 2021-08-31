@@ -15,9 +15,16 @@ class StorageHelper {
     let alertStorageIdentifier: String = "Alert"
     let CountRequestsStorageIdentifier: String = "Count"
     let RequestsDoneStorageIdentifier: String = "Done"
+    let IAPStorageIdentifier: String = "IAP"
 
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
+    
+    func saveToLocalStorage(bool: Bool, storageType: StorageIdentifier) {
+        if storageType == StorageIdentifier.IAP {
+            defaults.set(bool, forKey: IAPStorageIdentifier)
+        }
+    }
     
     func saveToLocalStorage(arr: [String], storageType: StorageIdentifier) {
         if storageType == StorageIdentifier.Favorite {
@@ -42,6 +49,15 @@ class StorageHelper {
         if storageType == StorageIdentifier.Alert {
             defaults.set(try? PropertyListEncoder().encode(arr), forKey: alertStorageIdentifier)
         }
+    }
+    
+    func retrieveFromLocalStorage(storageType: StorageIdentifier) -> Bool {
+        if storageType == StorageIdentifier.IAP {
+            if let result = defaults.object(forKey: IAPStorageIdentifier) as? Bool {
+                return result
+            }
+        }
+        return false
     }
     
     func retrieveFromLocalStorage(storageType: StorageIdentifier) -> [String] {
