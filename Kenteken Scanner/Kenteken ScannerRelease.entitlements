@@ -9,5 +9,7 @@
 		<string>applinks:www.mennospijker.nl</string>
 		<string>webcredentials:www.mennospijker.nl</string>
 	</array>
+	<key>com.apple.developer.siri</key>
+	<true/>
 </dict>
 </plist>

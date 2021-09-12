@@ -56,7 +56,7 @@ class kentekenDataTableViewController: UITableViewController {
     
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
         
-        let img = UIImage(named: "kenteken-full-border.png")!
+        let img = UIImage(named: "kentekenplaat")!
         
         let imgFrame = UIImageView(image: img)
     
@@ -65,7 +65,7 @@ class kentekenDataTableViewController: UITableViewController {
         cell.backgroundView = imgFrame
         
         cell.textLabel!.textAlignment = NSTextAlignment.center
-        cell.textLabel!.font = UIFont(name: "GillSans", size: 36)
+        cell.textLabel!.font = UIFont(name: "GillSans", size: 42)
         cell.textLabel!.text = "   " + KentekenFactory().format(kentekens[indexPath.row].uppercased())
         
         return cell

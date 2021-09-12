@@ -33,14 +33,22 @@ class ViewModel {
     
     // MARK: - Fileprivate Methods
     
-    fileprivate func updateGameDataWithPurchasedProduct(_ product: SKProduct) {
+    fileprivate func updateGameDataWithPurchasedProduct(_ product: SKProduct, _ context: ViewController) {
         // Update the proper game data depending on the keyword the
         // product identifier of the give product contains.
         print("purchase complete: \(product.productIdentifier)")
-        if product.productIdentifier.contains("upgrade") {
+        
+        if product.productIdentifier.contains("premiumUpgrade") {
             model.gameData.removedAds = true
             
             StorageHelper().saveToLocalStorage(bool: true, storageType: StorageIdentifier.IAP)
+            
+            let temp: Bool = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.IAP)
+            print("UPGRADE SUCCESFUL? \(temp)")
+            
+            AnalyticsHelper().logEvent(eventkey: "boughtPremiumUpgrade", key: "version", value: 1);
+            
+            context.checkPurchaseUpgrade()
         }
         
         // Store changes.
@@ -50,9 +58,18 @@ class ViewModel {
     }
     
     
-    fileprivate func restoreRemovedAds() {
+    fileprivate func restoreRemovedAds(_ context: ViewController) {
         // Mark all maps as unlocked.
         model.gameData.removedAds = true
+        
+        StorageHelper().saveToLocalStorage(bool: true, storageType: StorageIdentifier.IAP)
+        
+        let temp: Bool = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.IAP)
+        print("RESTORE SUCCESFUL? \(temp)")
+        
+        AnalyticsHelper().logEvent(eventkey: "restoredPremiumUpgrade", key: "version", value: 1);
+        
+        context.checkPurchaseUpgrade()
         
         // Save changes and update the UI.
         _ = model.gameData.update()
@@ -96,7 +113,7 @@ class ViewModel {
     }
     
     
-    func purchase(product: SKProduct) -> Bool {
+    func purchase(product: SKProduct, context: ViewController) -> Bool {
         if !IAPManager.shared.canMakePayments() {
             print("cannot make purchase")
             return false
@@ -113,7 +130,7 @@ class ViewModel {
                     //print(result)
                     
                     switch result {
-                    case .success(_): self.updateGameDataWithPurchasedProduct(product)
+                    case .success(_): self.updateGameDataWithPurchasedProduct(product, context)
                     case .failure(let error): self.delegate?.showIAPRelatedError(error)
                     }
                 }
@@ -124,19 +141,18 @@ class ViewModel {
     }
     
     
-    func restorePurchases() {
+    func restorePurchases(_ context: ViewController) {
         
         delegate?.willStartLongProcess()
         
         IAPManager.shared.restorePurchases { (result) in
-            print("0d0d0d0d0d00d0d0d0dd")
             DispatchQueue.main.async {
                 self.delegate?.didFinishLongProcess()
 
                 switch result {
                 case .success(let success):
                     if success {
-                        self.restoreRemovedAds()
+                        self.restoreRemovedAds(context)
                         self.delegate?.didFinishRestoringPurchasedProducts()
                     } else {
                         self.delegate?.didFinishRestoringPurchasesWithZeroProducts()

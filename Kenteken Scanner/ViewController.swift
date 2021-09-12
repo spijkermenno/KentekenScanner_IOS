@@ -14,7 +14,9 @@ import StoreKit
 
 class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate {
     var cameraViewController: VisionViewController!
+    
     @IBOutlet var kentekenField: UITextField!
+    @IBOutlet var europeStarsImages: UIImageView!
     
     var bannerView: GADBannerView!
     var remoteConfig: RemoteConfig!
@@ -29,11 +31,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     var ai: UIActivityIndicatorView!
     
     @IBOutlet var removeAdsButton: UIButton!
-     
-    func requestIDFA(bview: GADBannerView) {
-      ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-        // Tracking authorization completed. Start loading ads here.
-      })
+    
+    @objc func pushNotificationHandler(_ notification : NSNotification) {
+        let kenteken = notification.userInfo!["kenteken"]
+        checkKenteken(kenteken: kenteken as! String)
     }
     
     override func viewDidLoad() {
@@ -46,30 +47,22 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willEnterForegroundNotification, object: nil)
-
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(pushNotificationHandler(_:)) , name: NSNotification.Name(rawValue: "NewNotification"), object: nil)
+        
+        
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
-        // check if non consumable was bought.
+        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
         
-        print("are ads removed? \(viewModel.removedAds)")
-        
-        if !viewModel.removedAds {
-            bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
-            
-            bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
-            bannerView.rootViewController = self
-                    
-            bannerView.isHidden = false
-            
-            requestIDFA(bview: bannerView)
-            
-            bannerView.load(GADRequest())
-            
-            addBannerViewToView(bannerView)
-        }
+        checkPurchaseUpgrade()
         
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
+        
+        europeStarsImages.roundCorners(topLeft: 10, topRight: 0, bottomLeft: 10, bottomRight: 0)
+        
+        kentekenField.roundCorners(topLeft: 0, topRight: 10, bottomLeft: 0, bottomRight: 10)
         
         remoteConfig = RemoteConfig.remoteConfig()
         let settings = RemoteConfigSettings()
@@ -82,34 +75,101 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         // default value when Firebase does not respond is FALSE
         
         remoteConfig.fetch() { (status, error) -> Void in
-          if status == .success {
-            print("Config fetched!")
-            self.remoteConfig.activate() { (changed, error) in
-                if self.remoteConfig.configValue(forKey: "show_ads").stringValue == "true" {
-                    DispatchQueue.main.async {
-                        self.bannerView.isHidden = false
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.bannerView.isHidden = true
+            if status == .success {
+                print("Config fetched!")
+                self.remoteConfig.activate() { (changed, error) in
+                    if self.remoteConfig.configValue(forKey: "show_ads").stringValue == "true" {
+                        DispatchQueue.main.async {
+                            self.bannerView.isHidden = false
+                            self.removeAdsButton.isHidden = false
+
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.bannerView.isHidden = true
+                        }
                     }
                 }
+            } else {
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
             }
-          } else {
-            print("Config not fetched")
-            print("Error: \(error?.localizedDescription ?? "No error available.")")
-          }
         }
         
         Messaging.messaging().token { token, error in
-          if let error = error {
-            print("Error fetching FCM registration token: \(error)")
-          } else if let token = token {
-            print("FCM registration token: \(token)")
-          }
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                print("FCM registration token: \(token)")
+            }
+        }
+        
+        // testNotification()
+        
+        Analytics.setUserID(UUID().uuidString)
+        
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: ["notUsedAppNotification"])
+        
+        createNotUsedNotification()
+    }
+    
+    func testNotification() -> Void {
+        let notificationContent = UNMutableNotificationContent()
+        
+        let uuid = UUID().uuidString
+        var dict = [String: Any]()
+        
+        dict["kenteken"] = "31SLDL"
+        dict["apkdatum"] = "02-12-21"
+        dict["notificatiedatum"] = "01-11-21"
+        
+        // Add the content to the notification content
+        notificationContent.title = "test"
+        notificationContent.body = "nog een keer"
+        notificationContent.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
+        notificationContent.userInfo = dict
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "test notification", content: notificationContent, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error {
+                print("Notification Error: ", error)
+            }
         }
     }
+    
+    func requestIDFA(bview: GADBannerView) {
+        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+            // Tracking authorization completed. Start loading ads here.
+        })
+    }
+    
+    func checkPurchaseUpgrade() -> Void {
+        // check if non consumable was bought.
         
+        print("are ads removed? \(viewModel.removedAds)")
+        
+        if !viewModel.removedAds {
+            bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
+            bannerView.rootViewController = self
+            
+            bannerView.isHidden = false
+            //removeAdsButton.isHidden = false
+            
+            requestIDFA(bview: bannerView)
+            
+            bannerView.load(GADRequest())
+            
+            addBannerViewToView(bannerView)
+        } else {
+            bannerView.isHidden = true
+            removeAdsButton.isHidden = true
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //viewModel.viewDidSetup()
@@ -120,7 +180,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
-
+    
     func createNotification(title: String, description: String, kenteken: String, apkdatum: Date, apkdatumString: String, notificatiedatum: String, activationTimeFromNow: Double) -> String {
         // Request permission to perform notifications
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -133,14 +193,16 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         // Create new notifcation content instance
         let notificationContent = UNMutableNotificationContent()
-
+        
         let uuid = UUID().uuidString
         var dict = [String: Any]()
         
         dict["kenteken"] = kenteken
         dict["apkdatum"] = apkdatumString
         dict["notificatiedatum"] = notificatiedatum
-
+        
+        print(dict)
+        
         // Add the content to the notification content
         notificationContent.title = title
         notificationContent.body = description
@@ -148,6 +210,44 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         notificationContent.userInfo = dict
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: activationTimeFromNow, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: uuid, content: notificationContent, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error {
+                print("Notification Error: ", error)
+            }
+        }
+        
+        return uuid
+    }
+    
+    func createNotUsedNotification() -> String {
+        // Request permission to perform notifications
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Create new notifcation content instance
+        let notificationContent = UNMutableNotificationContent()
+        
+        let uuid = "notUsedAppNotification"
+        
+        // Add the content to the notification content
+        notificationContent.title = "Hey autofanaat!"
+        notificationContent.body = "Je hebt de app al een tijdje niet gebruikt, heb je geen vette auto's meer gespot?"
+        notificationContent.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber)
+        
+        let minute: Double = 60.0
+        let hour: Double = 60.0 * minute
+        let day: Double = 24.0 * hour
+        let week: Double = 7.0 * day
+        
+        let time: Double = 2.0 * week
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: time, repeats: false)
         
         let request = UNNotificationRequest(identifier: uuid, content: notificationContent, trigger: trigger)
         
@@ -186,7 +286,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     // Searchfield on text change handler
     @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
         print("request via KentekenHandler")
-
+        
         let enteredKenteken : String = sender.text!
         //check if valid kenteken
         sender.text = KentekenFactory().format(enteredKenteken)
@@ -218,25 +318,25 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         self.present(vc, animated: true, completion: nil)
     }
     @IBAction func notificationButton(_ sender: UIButton) {
-               
+        
         let dataTableViewObj:pendingNotificationTableViewController = pendingNotificationTableViewController()
         dataTableViewObj.setContext(ctx_: self)
         self.present(dataTableViewObj, animated: true, completion: nil)
     }
     
     func createAlert(title: String, message: String, dismiss: Bool) {
-//        isSpinning = true
-//        toggleSpinner(onView: self.view)
-
+        //        isSpinning = true
+        //        toggleSpinner(onView: self.view)
+        
         print("create alert")
-
+        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         if dismiss {
             print("alert dismiss true")
             alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
         }
-
+        
         self.present(alert, animated: true)
         print("presented alert")
     }
@@ -245,89 +345,127 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bannerView)
         view.addConstraints(
-          [NSLayoutConstraint(item: bannerView,
-                              attribute: .bottom,
-                              relatedBy: .equal,
-                              toItem: bottomLayoutGuide,
-                              attribute: .top,
-                              multiplier: 1,
-                              constant: 0),
-           NSLayoutConstraint(item: bannerView,
-                              attribute: .centerX,
-                              relatedBy: .equal,
-                              toItem: view,
-                              attribute: .centerX,
-                              multiplier: 1,
-                              constant: 0)
-          ])
-       }
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
+    }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-      print("bannerViewDidReceiveAd")
-        //removeAdsButton.isHidden = false
+        print("bannerViewDidReceiveAd")
     }
-
+    
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-      print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+        print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
-
+    
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
-      print("bannerViewDidRecordImpression")
+        print("bannerViewDidRecordImpression")
     }
-
+    
     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-      print("bannerViewWillPresentScreen")
+        print("bannerViewWillPresentScreen")
     }
-
+    
     func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-      print("bannerViewWillDIsmissScreen")
+        print("bannerViewWillDIsmissScreen")
     }
-
+    
     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-      print("bannerViewDidDismissScreen")
+        print("bannerViewDidDismissScreen")
     }
+    
+    func openPurchaseRequest(_ context: Any) -> Void {
+        IAPManager.shared.getProducts { (result) in
+            switch result {
+            case .success(let products):
+                let product = products.first!
+                
+                let alert = UIAlertController(title: "Oeps!", message: "Wil je advertenties verwijderen, meer dan vijf kentekens opslaan of voor meer dan twee auto's een APK alert instellen? \n\n Dit kan met een premium upgrade voor \(IAPManager.shared.getPriceFormatted(for: product)!).", preferredStyle: .alert)
+                
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Sluiten",
+                        style: .destructive,
+                        handler: {(alert: UIAlertAction!) in
+                            return
+                        }
+                    )
+                )
+                
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Aankoop herstellen",
+                        style: .default,
+                        handler: {(alert: UIAlertAction!) in
+                            self.viewModel.restorePurchases(self)
+                        }
+                    )
+                )
+                
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Aankopen",
+                        style: .default,
+                        handler: {(alert: UIAlertAction!) in
+                            // starting transaction
+                            if !self.viewModel.purchase(product: product, context: self) {
+                                self.showSingleAlert(withMessage: "In-App aankopen zijn niet toegestaan op dit apparaat.")
+                            } else {
+                                self.checkPurchaseUpgrade()
+                            }
+                        }
+                    )
+                )
+                
+                DispatchQueue.main.async {
+                    if let ctx = context as? ViewController {
+                        ctx.present(alert, animated: true)
+                    } else if let ctx = context as? dataTableView {
+                        ctx.present(alert, animated: true)
+                    }
+                }
+            case .failure(let error):
+                print("IAP ERROR")
+                DispatchQueue.main.async {
+                    if let ctx = context as? dataTableView {
+                        ctx.showIAPRelatedError(error)
+                    } else {
+                        self.showIAPRelatedError(error)
+                    }
+                }
+            }
+        }
+    }
+    
     @IBAction func removeAdsButton(_ sender: UIButton) {
-        showAlert(for: viewModel.getProductForItem(at: 0)!)
+        openPurchaseRequest(self)
     }
     
     func showSingleAlert(withMessage message: String) {
-            let alertController = UIAlertController(title: "KentekenScanner", message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
-        }
-    
-    func showAlert(for product: SKProduct) {
-        guard let price = IAPManager.shared.getPriceFormatted(for: product) else { return }
-        let alertController = UIAlertController(title: product.localizedTitle,
-                                                message: product.localizedDescription,
-                                                preferredStyle: .alert)
-     
-        alertController.addAction(UIAlertAction(title: "Koop nu voor \(price)", style: .default, handler: { (_) in
-            if !self.viewModel.purchase(product: product) {
-                self.showSingleAlert(withMessage: "In-App aankopen zijn niet toegestaan op dit apparaat.")
-            }
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Aankoop herstellen", style: .default, handler: { (_) in
-            print("restoring")
-            if SKPaymentQueue.canMakePayments() {
-                self.viewModel.restorePurchases()
-            } else {
-                self.showSingleAlert(withMessage: "In-App aankopen zijn niet toegestaan op dit apparaat.")
-            }
-        }))
-     
-        alertController.addAction(UIAlertAction(title: "Annuleren", style: .destructive, handler: nil))
+        let alertController = UIAlertController(title: "KentekenScanner", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
 }
 
 extension UIStoryboard{
-   class func load(_ storyboard: String) -> UIViewController{
-    print("ext: load")
-
-      return UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: storyboard)
-   }
+    class func load(_ storyboard: String) -> UIViewController{
+        print("ext: load")
+        
+        return UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: storyboard)
+    }
 }
 
 var vSpinner : UIView?
@@ -335,35 +473,34 @@ var vSpinner : UIView?
 extension ViewController {
     
     func toggleSpinner(onView: UIView) {
-                
-            print("Is spinning: \(self.isSpinning)")
-            
-            if self.isSpinning {
-                // remove spinner
-                DispatchQueue.main.async {
-                    vSpinner?.removeFromSuperview()
-                    vSpinner = nil
-                    self.kentekenField.isEnabled = true
-                    self.isSpinning = false
-                }
-            } else {
-                // place spinner
-                self.spinnerView = UIView.init(frame: onView.bounds)
-                self.spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-                self.ai = UIActivityIndicatorView.init(style: .large)
-                self.ai.startAnimating()
-                self.ai.center = self.spinnerView.center
-                
-                DispatchQueue.main.async {
-                    self.kentekenField.isEnabled = false
-                    self.spinnerView.addSubview(self.ai)
-                    onView.addSubview(self.spinnerView)
-                    self.isSpinning = true
-                }
-                vSpinner = self.spinnerView
+        
+        print("Is spinning: \(self.isSpinning)")
+        
+        if self.isSpinning {
+            // remove spinner
+            DispatchQueue.main.async {
+                vSpinner?.removeFromSuperview()
+                vSpinner = nil
+                self.kentekenField.isEnabled = true
+                self.isSpinning = false
             }
+        } else {
+            // place spinner
+            self.spinnerView = UIView.init(frame: onView.bounds)
+            self.spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+            self.ai = UIActivityIndicatorView.init(style: .large)
+            self.ai.startAnimating()
+            self.ai.center = self.spinnerView.center
+            
+            DispatchQueue.main.async {
+                self.kentekenField.isEnabled = false
+                self.spinnerView.addSubview(self.ai)
+                onView.addSubview(self.spinnerView)
+                self.isSpinning = true
+            }
+            vSpinner = self.spinnerView
         }
-    
+    }
 }
 
 extension ViewController: ViewModelDelegate {
@@ -389,18 +526,6 @@ extension ViewController: ViewModelDelegate {
         
         print(error.localizedDescription)
         
-        // In a real app you might want to check what exactly the
-        // error is and display a more user-friendly message.
-        // For example:
-        /*
-        switch error {
-        case .noProductIDsFound: message = NSLocalizedString("Unable to initiate in-app purchases.", comment: "")
-        case .noProductsFound: message = NSLocalizedString("Nothing was found to buy.", comment: "")
-        // Add more cases...
-        default: message = ""
-        }
-        */
-        
         showSingleAlert(withMessage: message)
     }
     
@@ -411,5 +536,69 @@ extension ViewController: ViewModelDelegate {
     
     func didFinishRestoringPurchasedProducts() {
         showSingleAlert(withMessage: "All previous In-App Purchases have been restored!")
+    }
+}
+
+extension UIView{
+    func roundCorners(topLeft: CGFloat = 0, topRight: CGFloat = 0, bottomLeft: CGFloat = 0, bottomRight: CGFloat = 0) {//(topLeft: CGFloat, topRight: CGFloat, bottomLeft: CGFloat, bottomRight: CGFloat) {
+        let topLeftRadius = CGSize(width: topLeft, height: topLeft)
+        let topRightRadius = CGSize(width: topRight, height: topRight)
+        let bottomLeftRadius = CGSize(width: bottomLeft, height: bottomLeft)
+        let bottomRightRadius = CGSize(width: bottomRight, height: bottomRight)
+        let maskPath = UIBezierPath(shouldRoundRect: bounds, topLeftRadius: topLeftRadius, topRightRadius: topRightRadius, bottomLeftRadius: bottomLeftRadius, bottomRightRadius: bottomRightRadius)
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        layer.mask = shape
+    }
+}
+
+extension UIBezierPath {
+    convenience init(shouldRoundRect rect: CGRect, topLeftRadius: CGSize = .zero, topRightRadius: CGSize = .zero, bottomLeftRadius: CGSize = .zero, bottomRightRadius: CGSize = .zero){
+        
+        self.init()
+        
+        let path = CGMutablePath()
+        
+        let topLeft = rect.origin
+        let topRight = CGPoint(x: rect.maxX, y: rect.minY)
+        let bottomRight = CGPoint(x: rect.maxX, y: rect.maxY)
+        let bottomLeft = CGPoint(x: rect.minX, y: rect.maxY)
+        
+        if topLeftRadius != .zero{
+            path.move(to: CGPoint(x: topLeft.x+topLeftRadius.width, y: topLeft.y))
+        } else {
+            path.move(to: CGPoint(x: topLeft.x, y: topLeft.y))
+        }
+        
+        if topRightRadius != .zero{
+            path.addLine(to: CGPoint(x: topRight.x-topRightRadius.width, y: topRight.y))
+            path.addCurve(to:  CGPoint(x: topRight.x, y: topRight.y+topRightRadius.height), control1: CGPoint(x: topRight.x, y: topRight.y), control2:CGPoint(x: topRight.x, y: topRight.y+topRightRadius.height))
+        } else {
+            path.addLine(to: CGPoint(x: topRight.x, y: topRight.y))
+        }
+        
+        if bottomRightRadius != .zero{
+            path.addLine(to: CGPoint(x: bottomRight.x, y: bottomRight.y-bottomRightRadius.height))
+            path.addCurve(to: CGPoint(x: bottomRight.x-bottomRightRadius.width, y: bottomRight.y), control1: CGPoint(x: bottomRight.x, y: bottomRight.y), control2: CGPoint(x: bottomRight.x-bottomRightRadius.width, y: bottomRight.y))
+        } else {
+            path.addLine(to: CGPoint(x: bottomRight.x, y: bottomRight.y))
+        }
+        
+        if bottomLeftRadius != .zero{
+            path.addLine(to: CGPoint(x: bottomLeft.x+bottomLeftRadius.width, y: bottomLeft.y))
+            path.addCurve(to: CGPoint(x: bottomLeft.x, y: bottomLeft.y-bottomLeftRadius.height), control1: CGPoint(x: bottomLeft.x, y: bottomLeft.y), control2: CGPoint(x: bottomLeft.x, y: bottomLeft.y-bottomLeftRadius.height))
+        } else {
+            path.addLine(to: CGPoint(x: bottomLeft.x, y: bottomLeft.y))
+        }
+        
+        if topLeftRadius != .zero{
+            path.addLine(to: CGPoint(x: topLeft.x, y: topLeft.y+topLeftRadius.height))
+            path.addCurve(to: CGPoint(x: topLeft.x+topLeftRadius.width, y: topLeft.y) , control1: CGPoint(x: topLeft.x, y: topLeft.y) , control2: CGPoint(x: topLeft.x+topLeftRadius.width, y: topLeft.y))
+        } else {
+            path.addLine(to: CGPoint(x: topLeft.x, y: topLeft.y))
+        }
+        
+        path.closeSubpath()
+        cgPath = path
     }
 }

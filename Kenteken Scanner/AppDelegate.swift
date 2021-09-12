@@ -22,7 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
             Messaging.messaging().delegate = self
 
+        
+        
             if #available(iOS 10.0, *) {
+                print("if")
               // For iOS 10 display notification (sent via APNS)
               UNUserNotificationCenter.current().delegate = self
 
@@ -32,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 completionHandler: { _, _ in }
               )
             } else {
+                print("else")
               let settings: UIUserNotificationSettings =
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
               application.registerUserNotificationSettings(settings)
@@ -64,6 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
   // Receive displayed notifications for iOS 10 devices.
@@ -78,11 +84,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // [START_EXCLUDE]
     // Print message ID.
     if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
+      //print("Message ID: \(messageID)")
     }
     // [END_EXCLUDE]
     // Print full message.
-    print(userInfo)
+    //print(userInfo)
 
     // Change this to your preferred presentation option
     completionHandler([[.banner, .sound]])
@@ -93,18 +99,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                               withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo
 
-    // [START_EXCLUDE]
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
+    print("NOTIFICATIE ONTVANGEN")
+    
+    let kenteken = userInfo["kenteken"] as? String
+    
+    if kenteken != nil {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NewNotification") , object: nil, userInfo: response.notification.request.content.userInfo)
+    } else {
+        completionHandler()
     }
-    // [END_EXCLUDE]
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // Messaging.messaging().appDidReceiveMessage(userInfo)
-    // Print full message.
-    print(userInfo)
 
-    completionHandler()
+    
+//    ViewController().checkKenteken(kenteken: kenteken)
+//
+//    completionHandler()
   }
 }
 
@@ -112,7 +121,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
   // [START refresh_token]
   func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-    print("Firebase registration token: \(String(describing: fcmToken))")
+    //print("Firebase registration token: \(String(describing: fcmToken))")
 
     let dataDict: [String: String] = ["token": fcmToken ?? ""]
     NotificationCenter.default.post(
