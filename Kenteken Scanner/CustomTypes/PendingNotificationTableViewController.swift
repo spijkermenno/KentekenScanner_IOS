@@ -23,8 +23,42 @@ class pendingNotificationTableViewController: UITableViewController {
         
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests(completionHandler: { requests in
-            for request in requests {
-                    self.alerts.append(request.content)
+            var error: Bool = false
+            
+            if (requests.count == 0) {
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: {
+                             self.ctx?.createAlert(title: "Geen data", message: "Er zijn nog geen notificaties ingesteld.", dismiss: true)
+                        }
+                    )
+                }
+            } else {
+
+                for request in requests {
+                                
+                    if request.content.userInfo["notificatiedatum"] != nil {
+                        self.alerts.append(request.content)
+                    } else {
+                        error = true
+                    }
+                }
+                    
+                if error {
+                    var kentekens: String = ""
+                    for request in requests {
+                        let string = request.content.body.replacingOccurrences(of: "De APK van kenteken ", with: "").replacingOccurrences(of: " verloopt bijna!", with: "")
+                        kentekens += "\(string) \n"
+                    }
+                    
+                    
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: {() -> Void in
+                        
+                            
+                            self.ctx?.createAlert(title: "Er heeft zich een fout voorgedaan", message: "Er is iets misgegaan tijdens het ophalen van de geplande notificaties. \n\n De data kan niet volledig weergegeven worden. \n\n Om deze fout in de toekomst te voorkomen moeten de APK-alerts opnieuw worden ingesteld. \n\n Dit betreft de volgende kentekens: \n\n \(kentekens)", dismiss: true)
+                        })
+                    }
+                }
             }
         })
     }

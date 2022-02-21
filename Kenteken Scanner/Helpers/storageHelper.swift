@@ -13,8 +13,18 @@ class StorageHelper {
     let favoriteStorageIdentifier: String = "Favorite"
     let recentStorageIdentifier: String = "Recent"
     let alertStorageIdentifier: String = "Alert"
+    let CountRequestsStorageIdentifier: String = "Count"
+    let RequestsDoneStorageIdentifier: String = "Done"
+    let IAPStorageIdentifier: String = "IAP"
+
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
+    
+    func saveToLocalStorage(bool: Bool, storageType: StorageIdentifier) {
+        if storageType == StorageIdentifier.IAP {
+            defaults.set(bool, forKey: IAPStorageIdentifier)
+        }
+    }
     
     func saveToLocalStorage(arr: [String], storageType: StorageIdentifier) {
         if storageType == StorageIdentifier.Favorite {
@@ -24,12 +34,30 @@ class StorageHelper {
         }
     }
     
+    func saveToLocalStorage(amount: Int, storageType: StorageIdentifier) {
+        if storageType == StorageIdentifier.CountRequests {
+            defaults.set(amount, forKey: CountRequestsStorageIdentifier)
+        } else if storageType == StorageIdentifier.RequestsDone {
+            defaults.set(amount, forKey: RequestsDoneStorageIdentifier)
+        }
+        defaults.set(amount, forKey: CountRequestsStorageIdentifier)
+    }
+    
     func saveToLocalStorage(arr: [NotificationObject], storageType: StorageIdentifier) {
         print(arr)
         print(storageType)
         if storageType == StorageIdentifier.Alert {
             defaults.set(try? PropertyListEncoder().encode(arr), forKey: alertStorageIdentifier)
         }
+    }
+    
+    func retrieveFromLocalStorage(storageType: StorageIdentifier) -> Bool {
+        if storageType == StorageIdentifier.IAP {
+            if let result = defaults.object(forKey: IAPStorageIdentifier) as? Bool {
+                return result
+            }
+        }
+        return false
     }
     
     func retrieveFromLocalStorage(storageType: StorageIdentifier) -> [String] {
@@ -43,6 +71,21 @@ class StorageHelper {
             }
         }
         return []
+    }
+    
+    func retrieveFromLocalStorage(storageType: StorageIdentifier) -> Int {
+        if storageType == StorageIdentifier.CountRequests {
+            if let result = defaults.object(forKey: CountRequestsStorageIdentifier) as? Int {
+                return result
+            }
+        } else if storageType == StorageIdentifier.RequestsDone {
+            if let result = defaults.object(forKey: RequestsDoneStorageIdentifier) as? Int {
+                return result
+            }
+        }
+        
+        
+        return 0
     }
     
     func retrieveFromLocalStorage(storageType: StorageIdentifier) -> [NotificationObject] {

@@ -64,15 +64,23 @@ class VisionViewController: CameraViewController {
                 }
                             
                 if query != "" && KentekenFactory().getSidecode(query) != -2 {
-                    print("execution: \(query) - \(KentekenFactory().getSidecode(query))")
+                    //print("execution: \(query) - \(KentekenFactory().getSidecode(query))")
                     let kenteken: String = query
-                    print("valid kenteken: " + KentekenFactory().format(kenteken))
+                    //print("valid kenteken: " + KentekenFactory().format(kenteken))
 
                     DispatchQueue.main.async {
                         self.previewView.session?.stopRunning()
                         self.dismiss(animated: true, completion: nil)
                         self.networkReqHandler.kentekenRequest(kenteken: kenteken, view: self.ctx)
-                        AnalyticsHelper().logEvent(eventkey: "camera-search", key: "kenteken", value: kenteken);
+                        
+                        AnalyticsHelper().logEventMultipleItems(
+                            eventkey: "search",
+                            items: [
+                                "type" : "camera",
+                                "kenteken" : kenteken,
+                                "uuid" : UUID().uuidString
+                            ]
+                        )
                     }
                 }
             }

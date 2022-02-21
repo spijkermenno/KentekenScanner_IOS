@@ -23,9 +23,6 @@ class kentekenDataTableViewController: UITableViewController {
 
         kentekens = StorageHelper().retrieveFromLocalStorage(storageType: storageType)
         
-        print(kentekens)
-        print(kentekens.count)
-        
         if kentekens.count == 0 {
             DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: {
@@ -47,7 +44,7 @@ class kentekenDataTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+        
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kentekens.count
     }
@@ -56,7 +53,7 @@ class kentekenDataTableViewController: UITableViewController {
     
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
         
-        let img = UIImage(named: "kenteken-full-border.png")!
+        let img = UIImage(named: "kentekenplaat")!
         
         let imgFrame = UIImageView(image: img)
     
@@ -65,22 +62,35 @@ class kentekenDataTableViewController: UITableViewController {
         cell.backgroundView = imgFrame
         
         cell.textLabel!.textAlignment = NSTextAlignment.center
-        cell.textLabel!.font = UIFont(name: "GillSans", size: 36)
+        cell.textLabel!.font = UIFont(name: "GillSans", size: 42)
         cell.textLabel!.text = "   " + KentekenFactory().format(kentekens[indexPath.row].uppercased())
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("click")
         dismiss(animated: true, completion: nil)
         
         NetworkRequestHelper().kentekenRequest(kenteken: kentekens[indexPath.row], view: ctx!)
         
         if storageType == StorageIdentifier.Favorite {
-            AnalyticsHelper().logEvent(eventkey: "favorite_search", key: "kenteken", value: kentekens[indexPath.row])
+            AnalyticsHelper().logEventMultipleItems(
+                eventkey: "search",
+                items: [
+                    "type" : "favorite",
+                    "kenteken" : kentekens[indexPath.row],
+                    "uuid" : UUID().uuidString
+                ]
+            )
         } else {
-            AnalyticsHelper().logEvent(eventkey: "recent_search", key: "kenteken", value: kentekens[indexPath.row])
+            AnalyticsHelper().logEventMultipleItems(
+                eventkey: "search",
+                items: [
+                    "type" : "recent",
+                    "kenteken" : kentekens[indexPath.row],
+                    "uuid" : UUID().uuidString
+                ]
+            )
         }
     }
 }

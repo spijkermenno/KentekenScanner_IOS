@@ -8,5 +8,5 @@
 import Foundation
 
 enum StorageIdentifier {
-    case Favorite, Recent, Alert
+    case Favorite, Recent, Alert, CountRequests, RequestsDone, IAP
 }
