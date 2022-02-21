@@ -154,8 +154,8 @@ class dataTableView: UITableViewController {
         var notificationdate: Date!
         
         if let olddate = kentekenData?.vervaldatum_apk {
-            print("old date")
-            print(olddate)
+            //print("old date")
+            //print(olddate)
             let dateFormatter = DateFormatter()
             //dateFormatter.dateFormat = "yyyyMMdd"
             
@@ -171,12 +171,12 @@ class dataTableView: UITableViewController {
             timeInSeconds = Int(Date().distance(to: notificationdate))
         }
         
-        print(StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert) as [NotificationObject])
+        //print(StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert) as [NotificationObject])
         
         var alerts: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert);
         for alert in alerts {
-            print(alert.kenteken)
-            print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+            //print(alert.kenteken)
+            //print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
             if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                 // kenteken allready in list.
                 inArray = true
@@ -201,7 +201,7 @@ class dataTableView: UITableViewController {
                 style: .destructive) { (action)
                 in
                     // delete notification
-                print("remove from alerts")
+                //print("remove from alerts")
                 alerts.remove(at: location)
                 StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
                 button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -244,7 +244,7 @@ class dataTableView: UITableViewController {
                 dict["kenteken"] = kenteken
                 dict["notificationDate"] = dateFormatter.string(from: notificationdate)
                 
-                print(dict)
+                //print(dict)
             
                 AnalyticsHelper().logEventMultipleItems(eventkey: "apk_alert", items: dict);
                     
@@ -282,7 +282,7 @@ class dataTableView: UITableViewController {
         let notifications: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert)
         
         for alert in notifications {
-            print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+            //print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
             if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                 // kenteken allready in list.
                 inArray = true
@@ -322,9 +322,9 @@ class dataTableView: UITableViewController {
             var notification: NotificationObject!
             
             for alert in alerts {
-                print(alert.kenteken)
-                print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
-                print(alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+                //print(alert.kenteken)
+                //print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
+                //print(alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased())
                 
                 if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                     // kenteken allready in list.
@@ -337,9 +337,9 @@ class dataTableView: UITableViewController {
                 let ctx = self
                 UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
                     for request in requests {
-                        print(request.identifier)
-                        print(notification.uuid)
-                        print(request.identifier == notification.uuid)
+                        //print(request.identifier)
+                        //print(notification.uuid)
+                        //print(request.identifier == notification.uuid)
                         if request.identifier == notification.uuid {
                             DispatchQueue.main.async {
                                 ctx.notificationButton.setImage(UIImage(systemName: "bell.fill")!.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -610,7 +610,7 @@ class dataTableView: UITableViewController {
         var date: Date
                     
         if let olddate = values[index] {
-            print(olddate)
+            //print(olddate)
             let dateFormatter = DateFormatter()
             if backupRequest {
                 dateFormatter.dateFormat = "yyyyMMdd"

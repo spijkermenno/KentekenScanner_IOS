@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import GoogleMobileAds
+import AppTrackingTransparency
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GADMobileAds.sharedInstance().start(completionHandler: nil)
                     
             Messaging.messaging().delegate = self
-
-        
         
             if #available(iOS 10.0, *) {
                 print("if")

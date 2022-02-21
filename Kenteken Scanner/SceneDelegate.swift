@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import AppTrackingTransparency
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -29,6 +29,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+        print("ATT REQ")
+        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+            print("Status code:")
+            switch(status) {
+            case ATTrackingManager.AuthorizationStatus.authorized:
+                print("authorized")
+            case .notDetermined:
+                print("notDetermined")
+            case .restricted:
+                print("restricted")
+            case .denied:
+                print("denied")
+            @unknown default:
+                print("unknown")
+            }
+            // Tracking authorization completed. Start loading ads here.
+        })
+        
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

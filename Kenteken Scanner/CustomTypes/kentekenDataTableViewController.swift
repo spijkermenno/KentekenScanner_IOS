@@ -23,9 +23,6 @@ class kentekenDataTableViewController: UITableViewController {
 
         kentekens = StorageHelper().retrieveFromLocalStorage(storageType: storageType)
         
-        print(kentekens)
-        print(kentekens.count)
-        
         if kentekens.count == 0 {
             DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: {
@@ -47,7 +44,7 @@ class kentekenDataTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+        
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kentekens.count
     }
@@ -72,15 +69,28 @@ class kentekenDataTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("click")
         dismiss(animated: true, completion: nil)
         
         NetworkRequestHelper().kentekenRequest(kenteken: kentekens[indexPath.row], view: ctx!)
         
         if storageType == StorageIdentifier.Favorite {
-            AnalyticsHelper().logEvent(eventkey: "favorite_search", key: "kenteken", value: kentekens[indexPath.row])
+            AnalyticsHelper().logEventMultipleItems(
+                eventkey: "search",
+                items: [
+                    "type" : "favorite",
+                    "kenteken" : kentekens[indexPath.row],
+                    "uuid" : UUID().uuidString
+                ]
+            )
         } else {
-            AnalyticsHelper().logEvent(eventkey: "recent_search", key: "kenteken", value: kentekens[indexPath.row])
+            AnalyticsHelper().logEventMultipleItems(
+                eventkey: "search",
+                items: [
+                    "type" : "recent",
+                    "kenteken" : kentekens[indexPath.row],
+                    "uuid" : UUID().uuidString
+                ]
+            )
         }
     }
 }

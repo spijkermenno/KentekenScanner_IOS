@@ -15,6 +15,7 @@ struct kentekenDataObject: Decodable {
     var merk: String!
     var handelsbenaming: String!
     var vermogen_PK: String!
+    var vermogen_KW: String!
     var aantal_cilinders: String!
     var cilinderinhoud: String!
     var vervaldatum_apk: String!
@@ -71,14 +72,12 @@ struct kentekenDataObject: Decodable {
     var afstand_voorzijde_voertuig_tot_hart_koppeling: String!
     var afwijkende_maximum_snelheid: String!
     var technische_max_massa_voertuig: String!
-    var volgnummer_wijziging_eu_typegoedkeuring: String!
     var vermogen_massarijklaar: String!
     var wielbasis: String!
     var taxi_indicator: String!
     var maximum_massa_samenstelling: String!
     var aantal_rolstoelplaatsen: String!
     var maximum_ondersteunende_snelheid: String!
-    var vermogen_KW: String!
 
     // voertuig assen
     // https://opendata.rdw.nl/resource/3huj-srit.json
@@ -93,27 +92,23 @@ struct kentekenDataObject: Decodable {
     // voertuig brandstof
     // https://opendata.rdw.nl/resource/8ys7-d773.json
     
-    var brandstof_volgnummer: String!
     var co2_uitstoot_gecombineerd: String!
     
     // voertuig carrosserie
     // https://opendata.rdw.nl/resource/vezc-m2t6.json
     
-    var carrosserie_volgnummer: String!
     var carrosserietype: String!
     var type_carrosserie_europese_omschrijving: String!
     
     // voertuig carrosserie specifiek
     // https://opendata.rdw.nl/resource/jhie-znh9.json
     
-    var carrosserie_voertuig_nummer_code_volgnummer: String!
     var carrosseriecode: String!
     var carrosserie_voertuig_nummer_europese_omschrijving: String!
     
     // voertuig voertuigklasse
     // https://opendata.rdw.nl/resource/kmfi-hrps.json
     
-    var carrosserie_klasse_volgnummer: String!
     var voertuigklasse: String!
     var voertuigklasse_omschrijving: String!
 }

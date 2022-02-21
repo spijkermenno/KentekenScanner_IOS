@@ -17,40 +17,45 @@ class NetworkRequestHelper {
         
         var amountRequests: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.CountRequests)
         var rd: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.RequestsDone)
+        print(rd)
+        print(view.interstitial)
         if rd == 0 {
             rd = 1
         }
         
         if rd >= 5 {
             rd = 1
+        
+            view.showInterstitial()
         }
+    
         
         print(amountRequests)
         
         if amountRequests >= view.requestInterval * rd {
             amountRequests = 1
             self.alert = true
-            
-            rd += 1
-            
-            StorageHelper().saveToLocalStorage(amount: rd, storageType: StorageIdentifier.RequestsDone)
-
-            } else {
-                amountRequests += 1
-            }
-                        
-            StorageHelper().saveToLocalStorage(amount: amountRequests, storageType: StorageIdentifier.CountRequests)
+        } else {
+            amountRequests += 1
+        }
+        
+        rd += 1
+        StorageHelper().saveToLocalStorage(amount: rd, storageType: StorageIdentifier.RequestsDone)
+        
+        StorageHelper().saveToLocalStorage(amount: amountRequests, storageType: StorageIdentifier.CountRequests)
         
         
         view.toggleSpinner(onView: view.view) // toggling the spinner on.
-        let urlString : String = "https://mennospijker.nl/api/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
+        let urlString : String = "https://kenteken-scanner.nl/api/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
+        
+        print(url)
         
         view.kentekenField.text = KentekenFactory().format(kenteken)
         
         var request = URLRequest(url: url)
         request.timeoutInterval = 7.0
-   
+        
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             
             if error != nil {
@@ -59,7 +64,7 @@ class NetworkRequestHelper {
                 }
                 return
             } else {
-            
+                
                 guard let data = data else {
                     print("guard err")
                     DispatchQueue.main.async {
@@ -74,7 +79,7 @@ class NetworkRequestHelper {
                 if let dataObject = try? decoder.decode([kentekenDataObject].self, from: data) {
                     
                     if dataObject.first?.kenteken != nil {
-                        DispatchQueue.main.async {
+                        DispatchQueue.main.sync {
                             self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: false)
                         }
                     } else {
@@ -92,7 +97,7 @@ class NetworkRequestHelper {
         print("BACKUP REQUEST")
         let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
-           
+        
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else {
                 print("back guard error")
@@ -120,11 +125,11 @@ class NetworkRequestHelper {
                     
                     view.isSpinning = true
                     view.toggleSpinner(onView: view.view)
-
+                    
                 }
             }
         }
-
+        
         task.resume()
     }
     
@@ -144,7 +149,7 @@ class NetworkRequestHelper {
                     style: .default,
                     handler: {(alert: UIAlertAction!) in
                         AnalyticsHelper().logEvent(eventkey: "usageAlert", key: "Recencie", value: true);
-
+                        
                         DispatchQueue.main.async {
                             if let scene = UIApplication.shared.connectedScenes
                                 .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
@@ -158,18 +163,51 @@ class NetworkRequestHelper {
             
             alert.addAction(
                 UIAlertAction(
+                    title: "Premium aanschaffen",
+                    style: .default,
+                    handler: {(alert: UIAlertAction!) in
+                        AnalyticsHelper().logEvent(eventkey: "usageAlert", key: "premium", value: true);
+                        
+                        DispatchQueue.main.async {
+                            IAPManager.shared.getProducts { (result) in
+                                switch result {
+                                case .success(let products):
+                                    let product = products.first!
+                                    
+                                    if !view.viewModel.purchase(product: product, context: view) {
+                                        view.showSingleAlert(withMessage: "In-App aankopen zijn niet toegestaan op dit apparaat.")
+                                    } else {
+                                        view.checkPurchaseUpgrade()
+                                    }
+                                case .failure(_):
+                                    print("failure")
+                                    DispatchQueue.main.async {
+                                        view.createAlert(title: "Oeps", message: "Er is iets mis gegaan, probeer het later nog eens!", dismiss: true)
+                                    }
+                                }
+                            }
+                        }
+                        //self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
+                    }
+                )
+            )
+            
+            alert.addAction(
+                UIAlertAction(
                     title: "Doorgaan",
                     style: .cancel,
                     handler: {(alert: UIAlertAction!) in
                         AnalyticsHelper().logEvent(eventkey: "usageAlert", key: "Weggeklikt", value: true);
-
+                        
                         self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
                     }
                 )
             )
-
-            view.present(alert, animated: true)
-            print("presented alert")
+            
+            if !view.viewModel.removedAds {
+                view.present(alert, animated: true)
+                print("presented alert")
+            }
             
             self.alert = false
         } else {
@@ -177,33 +215,32 @@ class NetworkRequestHelper {
         }
         // need to close spinner
         view.isSpinning = true
-       view.toggleSpinner(onView: view.view)
-//
+        view.toggleSpinner(onView: view.view)
+        //
     }
     
     func tableFilling(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) -> Void {
         var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
-
+        
         if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
             recents.remove(at: recents.firstIndex(of: kenteken.replacingOccurrences(of: "-", with: "").uppercased())!)
         }
-
+        
         recents.insert(kenteken.replacingOccurrences(of: "-", with: "").uppercased(), at: 0);
-
+        
         StorageHelper().saveToLocalStorage(arr: recents, storageType: StorageIdentifier.Recent)
-
+        
         view.kentekenField.text = KentekenFactory().format(kenteken)
-
+        
         let dataTableViewObj:dataTableView = dataTableView()
-
+        
         if backuprequest {
             dataTableViewObj.isBackupRequest()
         }
-
+        
         dataTableViewObj.loadData(object: dataObject.first!)
         dataTableViewObj.setKenteken(kenteken_: kenteken)
         dataTableViewObj.setContext(context_: view)
         view.present(dataTableViewObj, animated: true, completion: nil)
-        print("filltable")
     }
 }

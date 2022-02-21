@@ -11,8 +11,9 @@ import GoogleMobileAds
 import AppTrackingTransparency
 import AdSupport
 import StoreKit
+import IntentsUI
 
-class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate, GADFullScreenContentDelegate {
     var cameraViewController: VisionViewController!
     
     @IBOutlet var kentekenField: UITextField!
@@ -30,12 +31,42 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
     
+    var interstitial: GADInterstitialAd?
+
     @IBOutlet var removeAdsButton: UIButton!
     
     @objc func pushNotificationHandler(_ notification : NSNotification) {
         let kenteken = notification.userInfo!["kenteken"]
         checkKenteken(kenteken: kenteken as! String)
     }
+    
+    func loadInterstitial() {
+        let request = GADRequest()
+            GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
+                                        request: request,
+                              completionHandler: { [self] ad, error in
+                                if let error = error {
+                                  print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                                  return
+                                }
+                                print("Inter loaded")
+                                interstitial = ad
+                                interstitial?.fullScreenContentDelegate = self
+                
+                              }
+            )
+        
+  }
+    
+    func showInterstitial() {
+            print("show ad")
+            if interstitial != nil {
+                interstitial!.present(fromRootViewController: self)
+            } else {
+                    print("Ad wasn't ready")
+            }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,9 +86,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         view.addGestureRecognizer(tap)
         
         bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
-        
-        checkPurchaseUpgrade()
-        
+                
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
         europeStarsImages.roundCorners(topLeft: 10, topRight: 0, bottomLeft: 10, bottomRight: 0)
@@ -81,12 +110,13 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                     if self.remoteConfig.configValue(forKey: "show_ads").stringValue == "true" {
                         DispatchQueue.main.async {
                             self.bannerView.isHidden = false
-                            self.removeAdsButton.isHidden = false
+                            //self.removeAdsButton.isHidden = false
 
                         }
                     } else {
                         DispatchQueue.main.async {
                             self.bannerView.isHidden = true
+                            self.removeAdsButton.isHidden = true
                         }
                     }
                 }
@@ -112,6 +142,9 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         center.removePendingNotificationRequests(withIdentifiers: ["notUsedAppNotification"])
         
         createNotUsedNotification()
+        
+        checkPurchaseUpgrade()
+
     }
     
     func testNotification() -> Void {
@@ -142,9 +175,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func requestIDFA(bview: GADBannerView) {
-        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-            // Tracking authorization completed. Start loading ads here.
-        })
+        
     }
     
     func checkPurchaseUpgrade() -> Void {
@@ -157,13 +188,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             bannerView.rootViewController = self
             
             bannerView.isHidden = false
-            //removeAdsButton.isHidden = false
-            
-            requestIDFA(bview: bannerView)
+            removeAdsButton.isHidden = false
             
             bannerView.load(GADRequest())
             
             addBannerViewToView(bannerView)
+            
+            print("INTERSTITIAL")
+            loadInterstitial()
         } else {
             bannerView.isHidden = true
             removeAdsButton.isHidden = true
@@ -172,8 +204,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //viewModel.viewDidSetup()
-        //removeAdsButton.isHidden = false
     }
     
     @objc func appMovedToBackground() {
@@ -363,7 +393,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("bannerViewDidReceiveAd")
     }
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
@@ -371,19 +400,15 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
-        print("bannerViewDidRecordImpression")
     }
     
     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-        print("bannerViewWillPresentScreen")
     }
     
     func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-        print("bannerViewWillDIsmissScreen")
     }
     
     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-        print("bannerViewDidDismissScreen")
     }
     
     func openPurchaseRequest(_ context: Any) -> Void {
