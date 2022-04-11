@@ -42,7 +42,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     func loadInterstitial() {
         let request = GADRequest()
-            GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
+            GADInterstitialAd.load(withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
                                         request: request,
                               completionHandler: { [self] ad, error in
                                 if let error = error {

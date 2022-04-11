@@ -610,15 +610,19 @@ class dataTableView: UITableViewController {
         var date: Date
                     
         if let olddate = values[index] {
-            //print(olddate)
             let dateFormatter = DateFormatter()
-            if backupRequest {
-                dateFormatter.dateFormat = "yyyyMMdd"
-            } else {
-                dateFormatter.dateFormat = "dd-MM-yy"
-            }
-            date = dateFormatter.date(from:olddate)!
+
             
+            if backupRequest || keys[index] == "vervaldatum tachograaf" {
+                print("backup")
+                dateFormatter.dateFormat = "yyyyMMdd"
+                date = dateFormatter.date(from:olddate)!
+            } else {
+                print("normal")
+                dateFormatter.dateFormat = "dd-MM-yy"
+                date = dateFormatter.date(from:olddate)!
+            }
+                        
             if keys[index] == "vervaldatum apk" && date < Date() {
                 cell.textLabel?.textColor = UIColor.red
             }

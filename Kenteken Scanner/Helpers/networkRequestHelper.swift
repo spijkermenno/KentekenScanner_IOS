@@ -14,35 +14,34 @@ class NetworkRequestHelper {
     
     func kentekenRequest(kenteken: String, view: ViewController) {
         print("API Request ...")
+        print(view.viewModel.removedAds)
         
-        var amountRequests: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.CountRequests)
-        var rd: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.RequestsDone)
-        print(rd)
-        print(view.interstitial)
-        if rd == 0 {
-            rd = 1
+        if view.viewModel.removedAds == false {
+            var amountRequests: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.CountRequests)
+            var rd: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.RequestsDone)
+            
+            print(rd)
+            
+            if rd == 0 {
+                rd = 1
+            } else if rd >= 15 {
+                rd = 1
+                view.showInterstitial()
+            }
+
+            
+            if amountRequests >= view.requestInterval * rd {
+                amountRequests = 1
+                self.alert = true
+            } else {
+                amountRequests += 1
+            }
+            
+            rd += 1
+            
+            StorageHelper().saveToLocalStorage(amount: rd, storageType: StorageIdentifier.RequestsDone)
+            StorageHelper().saveToLocalStorage(amount: amountRequests, storageType: StorageIdentifier.CountRequests)
         }
-        
-        if rd >= 5 {
-            rd = 1
-        
-            view.showInterstitial()
-        }
-    
-        
-        print(amountRequests)
-        
-        if amountRequests >= view.requestInterval * rd {
-            amountRequests = 1
-            self.alert = true
-        } else {
-            amountRequests += 1
-        }
-        
-        rd += 1
-        StorageHelper().saveToLocalStorage(amount: rd, storageType: StorageIdentifier.RequestsDone)
-        
-        StorageHelper().saveToLocalStorage(amount: amountRequests, storageType: StorageIdentifier.CountRequests)
         
         
         view.toggleSpinner(onView: view.view) // toggling the spinner on.
