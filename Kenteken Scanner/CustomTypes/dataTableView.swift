@@ -139,7 +139,7 @@ class dataTableView: UITableViewController {
     
     
     @objc func shareTap(_ button: UIButton) {
-        let items = [URL(string: String("https://www.mennospijker.nl/api/kenteken/" + kenteken))!]
+        let items = [URL(string: String("https://www.kenteken-scanner.nl/api/kenteken/" + kenteken))!]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
     }
@@ -314,7 +314,10 @@ class dataTableView: UITableViewController {
             .filter({$0.isKeyWindow}).first {
             view.addSubview(favoriteButton)
             view.addSubview(notificationButton)
-            view.addSubview(shareButton)
+            
+            if UIDevice.current.userInterfaceIdiom != .pad {
+                view.addSubview(shareButton)
+            }
             
             let alerts = StorageHelper().retrieveFromLocalStorage(storageType:StorageIdentifier.Alert) as [NotificationObject]
             
@@ -361,7 +364,9 @@ class dataTableView: UITableViewController {
                 self.createButton(button: favoriteButton, icon: UIImage(systemName: "star")!)
             }
             
-            self.createButton(button: shareButton, icon: UIImage(systemName: "square.and.arrow.up")!)
+            if UIDevice.current.userInterfaceIdiom != .pad {
+                self.createButton(button: shareButton, icon: UIImage(systemName: "square.and.arrow.up")!)
+            }
         }
         buttonOrder = 0
     }

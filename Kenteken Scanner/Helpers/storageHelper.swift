@@ -16,6 +16,7 @@ class StorageHelper {
     let CountRequestsStorageIdentifier: String = "Count"
     let RequestsDoneStorageIdentifier: String = "Done"
     let IAPStorageIdentifier: String = "IAP"
+    let ShowAdStorageIdentifier: String = "ShowAd"
 
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
@@ -23,6 +24,10 @@ class StorageHelper {
     func saveToLocalStorage(bool: Bool, storageType: StorageIdentifier) {
         if storageType == StorageIdentifier.IAP {
             defaults.set(bool, forKey: IAPStorageIdentifier)
+        }
+        
+        if storageType == StorageIdentifier.ShowInter {
+            defaults.set(bool, forKey: ShowAdStorageIdentifier)
         }
     }
     
@@ -51,9 +56,16 @@ class StorageHelper {
         }
     }
     
+    
     func retrieveFromLocalStorage(storageType: StorageIdentifier) -> Bool {
         if storageType == StorageIdentifier.IAP {
             if let result = defaults.object(forKey: IAPStorageIdentifier) as? Bool {
+                return result
+            }
+        }
+        
+        if storageType == StorageIdentifier.ShowInter {
+            if let result = defaults.object(forKey: ShowAdStorageIdentifier) as? Bool {
                 return result
             }
         }

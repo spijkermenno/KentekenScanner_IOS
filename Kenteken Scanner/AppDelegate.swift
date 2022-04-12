@@ -83,14 +83,19 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // [START_EXCLUDE]
     // Print message ID.
     if let messageID = userInfo[gcmMessageIDKey] {
-      //print("Message ID: \(messageID)")
+      print("Message ID: \(messageID)")
     }
     // [END_EXCLUDE]
     // Print full message.
     //print(userInfo)
 
     // Change this to your preferred presentation option
-    completionHandler([[.banner, .sound]])
+      if #available(iOS 14.0, *) {
+          completionHandler([[.banner, .sound]])
+      } else {
+          // Fallback on earlier versions
+          completionHandler([[.alert, .sound]])
+      }
   }
 
   func userNotificationCenter(_ center: UNUserNotificationCenter,

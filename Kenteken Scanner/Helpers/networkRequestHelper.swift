@@ -11,6 +11,7 @@ import Foundation
 class NetworkRequestHelper {
     var filling = false
     var alert = false
+    var showAd = false
     
     func kentekenRequest(kenteken: String, view: ViewController) {
         print("API Request ...")
@@ -20,17 +21,10 @@ class NetworkRequestHelper {
             var amountRequests: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.CountRequests)
             var rd: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.RequestsDone)
             
+            print("RD = ")
             print(rd)
             
-            if rd == 0 {
-                rd = 1
-            } else if rd >= 15 {
-                rd = 1
-                view.showInterstitial()
-            }
-
-            
-            if amountRequests >= view.requestInterval * rd {
+            if amountRequests > 20 {
                 amountRequests = 1
                 self.alert = true
             } else {
@@ -39,11 +33,29 @@ class NetworkRequestHelper {
             
             rd += 1
             
+            if rd == 0 {
+                rd = 1
+            } else if rd >= 10 {
+                rd = 1
+                //view.showInterstitial()
+                view.dismiss(animated: true, completion: {
+                    view.actualKenteken = kenteken
+                    view.showInterstitial()
+                    
+                    StorageHelper().saveToLocalStorage(amount: rd, storageType: StorageIdentifier.RequestsDone)
+                    StorageHelper().saveToLocalStorage(amount: amountRequests, storageType: StorageIdentifier.CountRequests)
+                    
+                    return
+                })
+            }
+            
             StorageHelper().saveToLocalStorage(amount: rd, storageType: StorageIdentifier.RequestsDone)
             StorageHelper().saveToLocalStorage(amount: amountRequests, storageType: StorageIdentifier.CountRequests)
         }
-        
-        
+        actualRequest(kenteken: kenteken, view: view)
+    }
+    
+    func actualRequest(kenteken: String, view: ViewController) {
         view.toggleSpinner(onView: view.view) // toggling the spinner on.
         let urlString : String = "https://kenteken-scanner.nl/api/kenteken/" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
@@ -133,7 +145,6 @@ class NetworkRequestHelper {
     }
     
     func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) {
-        
         if self.alert {
             let alert = UIAlertController(
                 title: "Wat leuk dat je de app gebruikt!",
@@ -152,7 +163,12 @@ class NetworkRequestHelper {
                         DispatchQueue.main.async {
                             if let scene = UIApplication.shared.connectedScenes
                                 .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                                SKStoreReviewController.requestReview(in: scene)
+                                if #available(iOS 14.0, *) {
+                                    SKStoreReviewController.requestReview(in: scene)
+                                } else {
+                                    // Fallback on earlier versions
+                                    print("Low iOS")
+                                }
                             }
                         }
                         self.tableFilling(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: backuprequest)
@@ -242,4 +258,5 @@ class NetworkRequestHelper {
         dataTableViewObj.setContext(context_: view)
         view.present(dataTableViewObj, animated: true, completion: nil)
     }
+    
 }

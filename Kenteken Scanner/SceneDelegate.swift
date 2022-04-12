@@ -31,22 +31,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         
         print("ATT REQ")
-        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-            print("Status code:")
-            switch(status) {
-            case ATTrackingManager.AuthorizationStatus.authorized:
-                print("authorized")
-            case .notDetermined:
-                print("notDetermined")
-            case .restricted:
-                print("restricted")
-            case .denied:
-                print("denied")
-            @unknown default:
-                print("unknown")
-            }
-            // Tracking authorization completed. Start loading ads here.
-        })
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                print("Status code:")
+                switch(status) {
+                case ATTrackingManager.AuthorizationStatus.authorized:
+                    print("authorized")
+                case .notDetermined:
+                    print("notDetermined")
+                case .restricted:
+                    print("restricted")
+                case .denied:
+                    print("denied")
+                @unknown default:
+                    print("unknown")
+                }
+                // Tracking authorization completed. Start loading ads here.
+            })
+        } else {
+            // Fallback on earlier versions
+        }
         
     }
 

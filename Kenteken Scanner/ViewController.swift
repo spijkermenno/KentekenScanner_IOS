@@ -26,13 +26,17 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     var viewModel = ViewModel()
     
+    var interstitialShowing = false
+    
     var requestInterval: Int = 10
     
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
     
-    var interstitial: GADInterstitialAd?
-
+    var interstitial: GADInterstitialAd!
+    
+    var actualKenteken: String!
+    
     @IBOutlet var removeAdsButton: UIButton!
     
     @objc func pushNotificationHandler(_ notification : NSNotification) {
@@ -42,29 +46,30 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     func loadInterstitial() {
         let request = GADRequest()
-            GADInterstitialAd.load(withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
-                                        request: request,
-                              completionHandler: { [self] ad, error in
-                                if let error = error {
-                                  print("Failed to load interstitial ad with error: \(error.localizedDescription)")
-                                  return
-                                }
-                                print("Inter loaded")
-                                interstitial = ad
-                                interstitial?.fullScreenContentDelegate = self
-                
-                              }
-            )
+        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
+                               request: request,
+                               completionHandler: { [self] ad, error in
+            if let error = error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                return
+            }
+            print("Inter loaded")
+            
+            interstitial = ad!
+            interstitial.fullScreenContentDelegate = self
+            
+        }
+        )
         
-  }
+    }
     
     func showInterstitial() {
-            print("show ad")
-            if interstitial != nil {
-                interstitial!.present(fromRootViewController: self)
-            } else {
-                    print("Ad wasn't ready")
-            }
+        if interstitial != nil {
+            self.interstitialShowing = true
+            interstitial.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+        }
     }
     
     
@@ -85,8 +90,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
+        //self.showInter = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.ShowInter)
+        
         bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
-                
+        
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
         europeStarsImages.roundCorners(topLeft: 10, topRight: 0, bottomLeft: 10, bottomRight: 0)
@@ -111,7 +118,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                         DispatchQueue.main.async {
                             self.bannerView.isHidden = false
                             //self.removeAdsButton.isHidden = false
-
+                            
                         }
                     } else {
                         DispatchQueue.main.async {
@@ -125,6 +132,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                 print("Error: \(error?.localizedDescription ?? "No error available.")")
             }
         }
+
         
         Messaging.messaging().token { token, error in
             if let error = error {
@@ -141,10 +149,12 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: ["notUsedAppNotification"])
         
-        createNotUsedNotification()
+        let uuid = createNotUsedNotification()
+        
+        print(uuid)
         
         checkPurchaseUpgrade()
-
+        
     }
     
     func testNotification() -> Void {
@@ -175,7 +185,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func requestIDFA(bview: GADBannerView) {
-        
+     
     }
     
     func checkPurchaseUpgrade() -> Void {
@@ -355,20 +365,19 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func createAlert(title: String, message: String, dismiss: Bool) {
-        //        isSpinning = true
-        //        toggleSpinner(onView: self.view)
-        
         print("create alert")
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
+        print(message)
+        
         if dismiss {
-            print("alert dismiss true")
+            print("alert dismissable")
             alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
         }
         
         self.present(alert, animated: true)
-        print("presented alert")
+        print("alert is presented")
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -409,6 +418,24 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+    }
+    
+    /// Tells the delegate that the ad failed to present full screen content.
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+    }
+    
+    /// Tells the delegate that the ad will present full screen content.
+    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad will present full screen content.")
+    }
+    
+    /// Tells the delegate that the ad dismissed full screen content.
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
+        self.interstitialShowing = false
+        
+        NetworkRequestHelper().actualRequest(kenteken: actualKenteken, view: self)
     }
     
     func openPurchaseRequest(_ context: Any) -> Void {
