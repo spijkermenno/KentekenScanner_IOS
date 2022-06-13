@@ -64,11 +64,15 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func showInterstitial() {
-        if interstitial != nil {
-            self.interstitialShowing = true
-            interstitial.present(fromRootViewController: self)
+        if !viewModel.removedAds {
+            if interstitial != nil {
+                self.interstitialShowing = true
+                interstitial.present(fromRootViewController: self)
+            } else {
+                print("Ad wasn't ready")
+            }
         } else {
-            print("Ad wasn't ready")
+            print("ads removed")
         }
     }
     
@@ -89,8 +93,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-        
-        //self.showInter = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.ShowInter)
         
         bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
         
@@ -132,7 +134,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                 print("Error: \(error?.localizedDescription ?? "No error available.")")
             }
         }
-
+        
         
         Messaging.messaging().token { token, error in
             if let error = error {
@@ -149,12 +151,18 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: ["notUsedAppNotification"])
         
-        let uuid = createNotUsedNotification()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.requestIDFA()
+        }
         
-        print(uuid)
-        
-        checkPurchaseUpgrade()
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            
+            let uuid = self.createNotUsedNotification()
+            
+            print(uuid)
+            
+            self.checkPurchaseUpgrade()
+        }
     }
     
     func testNotification() -> Void {
@@ -184,8 +192,27 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         }
     }
     
-    func requestIDFA(bview: GADBannerView) {
-     
+    func requestIDFA() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                print("Status code:")
+                switch(status) {
+                case ATTrackingManager.AuthorizationStatus.authorized:
+                    print("authorized")
+                case .notDetermined:
+                    print("notDetermined")
+                case .restricted:
+                    print("restricted")
+                case .denied:
+                    print("denied")
+                @unknown default:
+                    print("unknown")
+                }
+                // Tracking authorization completed. Start loading ads here.
+            })
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func checkPurchaseUpgrade() -> Void {
@@ -330,6 +357,12 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let enteredKenteken : String = sender.text!
         //check if valid kenteken
         sender.text = KentekenFactory().format(enteredKenteken)
+        
+        print(enteredKenteken)
+        if enteredKenteken.uppercased() == "MENNO" {
+            loadInterstitial()
+            showInterstitial()
+        }
         
         checkKenteken(kenteken: enteredKenteken)
     }

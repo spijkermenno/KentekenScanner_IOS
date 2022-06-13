@@ -11,6 +11,7 @@ struct kentekenDataObject: Decodable {
     // voertuig algemeen
     // https://opendata.rdw.nl/resource/m9d7-ebf2.json
     
+    var imageURL: String!
     var kenteken: String!
     var merk: String!
     var handelsbenaming: String!

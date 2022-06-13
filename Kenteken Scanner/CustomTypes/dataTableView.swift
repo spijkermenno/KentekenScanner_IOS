@@ -34,6 +34,14 @@ class dataTableView: UITableViewController {
         return button
     }()
     
+    lazy var cameraButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .init(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.66)
+        button.addTarget(self, action: #selector(cameraTap(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var shareButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -142,6 +150,10 @@ class dataTableView: UITableViewController {
         let items = [URL(string: String("https://www.kenteken-scanner.nl/api/kenteken/" + kenteken))!]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
+    }
+    
+    @objc func cameraTap(_ button: UIButton) {
+        print("show image screen")
     }
     
     func createAPKAlert(_ button: UIButton) -> Void {
@@ -314,6 +326,7 @@ class dataTableView: UITableViewController {
             .filter({$0.isKeyWindow}).first {
             view.addSubview(favoriteButton)
             view.addSubview(notificationButton)
+            view.addSubview(cameraButton)
             
             if UIDevice.current.userInterfaceIdiom != .pad {
                 view.addSubview(shareButton)
@@ -325,9 +338,6 @@ class dataTableView: UITableViewController {
             var notification: NotificationObject!
             
             for alert in alerts {
-                //print(alert.kenteken)
-                //print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
-                //print(alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased())
                 
                 if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                     // kenteken allready in list.
@@ -367,6 +377,9 @@ class dataTableView: UITableViewController {
             if UIDevice.current.userInterfaceIdiom != .pad {
                 self.createButton(button: shareButton, icon: UIImage(systemName: "square.and.arrow.up")!)
             }
+            
+            self.createButton(button: cameraButton, icon: UIImage(systemName: "camera")!)
+
         }
         buttonOrder = 0
     }
@@ -436,6 +449,7 @@ class dataTableView: UITableViewController {
         favoriteButton.removeFromSuperview()
         shareButton.removeFromSuperview()
         notificationButton.removeFromSuperview()
+        cameraButton.removeFromSuperview()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt
@@ -534,11 +548,19 @@ class dataTableView: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if keys[indexPath.row] == "kenteken" {
             return 80
+        } else if keys[indexPath.row] == "imageURL" {
+            let imageURL = values[indexPath.row]!
+            if imageURL == "" {return 0}
+            return 160
         } else {
             return 60
         }
     }
-        
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
 
@@ -549,6 +571,27 @@ class dataTableView: UITableViewController {
         }
                 
         switch keys[indexPath.row] {
+            
+        case "imageURL" :
+            let imageURL = values[indexPath.row]!
+            
+                do {
+                    let url = URL(string: "https://" + imageURL)!
+                    let data = try Data(contentsOf : url)
+                    let image = UIImage(data : data)
+                    
+                    let bounds = UIScreen.main.bounds
+                    let width = bounds.size.width - 20
+
+                    let view = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: 160))
+                    view.image = image
+                    view.contentMode = .scaleAspectFit
+                    
+                    cell.backgroundColor = .lightGray
+                    cell.addSubview(view)
+                } catch {
+                    print(error)
+                }
         case "datum eerste toelating":
              dateCell(cell: cell, index: indexPath.row)
         case "datum eerste afgifte nederland":
