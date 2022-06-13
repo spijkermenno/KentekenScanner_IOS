@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 
+
 class dataTableView: UITableViewController {
     var kentekenData: kentekenDataObject!
     var keys = [Int: String]()
@@ -18,6 +19,8 @@ class dataTableView: UITableViewController {
     var context: ViewController!
     var model = Model()
     
+    var imagePicker: ImagePicker!
+    
     var customCells = 0
     var customCellsFilled = 0
     var totalCells = 0
@@ -25,6 +28,11 @@ class dataTableView: UITableViewController {
     var backupRequest = false
     
     let cellIdentifier = "cellid"
+    var ctx: ViewController!
+    
+    func setContext(context: ViewController) {
+        self.ctx = context
+    }
     
     lazy var favoriteButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -154,6 +162,11 @@ class dataTableView: UITableViewController {
     
     @objc func cameraTap(_ button: UIButton) {
         print("show image screen")
+        
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.imagePicker.present(from: button)
+        
+
     }
     
     func createAPKAlert(_ button: UIButton) -> Void {
@@ -452,9 +465,20 @@ class dataTableView: UITableViewController {
         cameraButton.removeFromSuperview()
     }
     
+    var imageRowHeightBig = false
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt
          indexPath: IndexPath) {
         if keys.count > indexPath.row {
+            if keys[indexPath.row]!.contains("imageURL") {
+                if imageRowHeightBig {
+                    imageRowHeightBig = false
+                } else {
+                    imageRowHeightBig = true
+                }
+                tableView.reloadData()
+            }
+            
             if keys[indexPath.row]!.contains("brandstofverbruik") {
                 let value = values[indexPath.row]!
                 let temp = value.split(separator: "\n")
@@ -551,6 +575,7 @@ class dataTableView: UITableViewController {
         } else if keys[indexPath.row] == "imageURL" {
             let imageURL = values[indexPath.row]!
             if imageURL == "" {return 0}
+            if imageRowHeightBig {return 320}
             return 160
         } else {
             return 60
@@ -581,11 +606,14 @@ class dataTableView: UITableViewController {
                     let image = UIImage(data : data)
                     
                     let bounds = UIScreen.main.bounds
-                    let width = bounds.size.width - 20
+                    let width = bounds.size.width
+                    var height = 160
+                    if imageRowHeightBig {height = 320}
 
-                    let view = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: 160))
+                    let view = UIImageView(frame: CGRect(x: 0, y: 0, width: Int(width), height: height))
                     view.image = image
-                    view.contentMode = .scaleAspectFit
+                    view.contentMode = .scaleAspectFill
+                    view.clipsToBounds = true
                     
                     cell.backgroundColor = .lightGray
                     cell.addSubview(view)
@@ -716,5 +744,26 @@ extension String {
 
     mutating func capitalizeFirstLetter() {
       self = self.capitalizingFirstLetter()
+    }
+}
+
+extension dataTableView: ImagePickerDelegate {
+
+    func didSelect(image: UIImage?) {
+        print("image selected.")
+        
+        let request = ImageUploader(uploadImage: image!, number: 1, kenteken: kenteken)
+        request.uploadImage { (result) in
+            switch result {
+            case .success(let value):
+                assert(value.statusCode == 200)
+                DispatchQueue.main.async {
+                    self.dismiss(animated: false)
+                    NetworkRequestHelper().kentekenRequest(kenteken: self.kenteken, view: self.ctx)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

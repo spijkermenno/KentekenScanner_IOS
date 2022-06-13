@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key></key>
-	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -51,6 +49,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) gebruikt de camera om kentekens te scannen.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>KentekenScanner wilt toegang tot je foto bibliotheek om foto's toe te voegen aan kentekens.</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Wij gebruiken deze informatie voor het verbeteren van de gebruikerservaring, het bieden van gepersonaliseerde advertenties en het onderhouden van de applicatie.</string>
 	<key>SKAdNetworkItems</key>

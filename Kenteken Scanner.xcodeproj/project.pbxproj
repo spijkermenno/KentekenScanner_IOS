@@ -20,6 +20,9 @@
 		A93E03CD25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */; };
 		A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */; };
 		A945102A2601005B00E6798C /* dataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94510292601005B00E6798C /* dataTableView.swift */; };
+		A957296828574EFA0097BAB5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A957296728574EFA0097BAB5 /* ImagePicker.swift */; };
+		A957296A2857547D0097BAB5 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95729692857547D0097BAB5 /* ImageUploader.swift */; };
+		A957296C285755310097BAB5 /* ResponseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A957296B285755310097BAB5 /* ResponseResult.swift */; };
 		A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */; };
 		A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */; };
 		A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */; };
@@ -101,6 +104,9 @@
 		A93E03CE25FF97EA0013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KentekenDataObject.swift; sourceTree = "<group>"; };
 		A94510292601005B00E6798C /* dataTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTableView.swift; sourceTree = "<group>"; };
+		A957296728574EFA0097BAB5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		A95729692857547D0097BAB5 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
+		A957296B285755310097BAB5 /* ResponseResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseResult.swift; sourceTree = "<group>"; };
 		A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageHelper.swift; sourceTree = "<group>"; };
 		A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = analyticsHelper.swift; sourceTree = "<group>"; };
 		A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageTypeEnum.swift; sourceTree = "<group>"; };
@@ -289,6 +295,9 @@
 				A97624282612109800565703 /* notification.swift */,
 				A96BEE7026690F7D00EF86A0 /* PendingNotificationTableViewController.swift */,
 				A9D3BC43266F5F510035C34C /* viewModel.swift */,
+				A957296728574EFA0097BAB5 /* ImagePicker.swift */,
+				A95729692857547D0097BAB5 /* ImageUploader.swift */,
+				A957296B285755310097BAB5 /* ResponseResult.swift */,
 			);
 			path = CustomTypes;
 			sourceTree = "<group>";
@@ -565,11 +574,13 @@
 				A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */,
 				A9D3BC42266F5F180035C34C /* SettingsManageable.swift in Sources */,
 				A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */,
+				A957296828574EFA0097BAB5 /* ImagePicker.swift in Sources */,
 				A97624292612109800565703 /* notification.swift in Sources */,
 				A9A1406D260B4EB800571D1C /* CameraViewController.swift in Sources */,
 				A9A1406F260B4EB800571D1C /* PreviewView.swift in Sources */,
 				A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */,
 				A9D3BC40266F5EC10035C34C /* model.swift in Sources */,
+				A957296A2857547D0097BAB5 /* ImageUploader.swift in Sources */,
 				A9A1406E260B4EB800571D1C /* StringUtils.swift in Sources */,
 				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
 				A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */,
@@ -577,6 +588,7 @@
 				A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */,
 				A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */,
 				A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */,
+				A957296C285755310097BAB5 /* ResponseResult.swift in Sources */,
 				A9D3BC44266F5F510035C34C /* viewModel.swift in Sources */,
 				A945102A2601005B00E6798C /* dataTableView.swift in Sources */,
 			);
@@ -771,7 +783,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken Scanner.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -779,7 +791,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 10704;
+				MARKETING_VERSION = 10800;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -798,7 +810,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken ScannerRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -806,7 +818,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 10704;
+				MARKETING_VERSION = 10800;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

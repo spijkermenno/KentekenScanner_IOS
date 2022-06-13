@@ -12,6 +12,8 @@ target 'Kenteken Scanner' do
   pod 'Firebase/RemoteConfig'
   pod 'Google-Mobile-Ads-SDK'
   pod 'Firebase/Messaging'
+  pod 'MMUploadImage', :git => 
+'https://github.com/MihaelIsaev/UploadImage.git', :branch => 'master'
 
   # add pods for any other desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods

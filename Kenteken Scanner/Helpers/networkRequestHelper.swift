@@ -248,6 +248,7 @@ class NetworkRequestHelper {
         view.kentekenField.text = KentekenFactory().format(kenteken)
         
         let dataTableViewObj:dataTableView = dataTableView()
+        dataTableViewObj.setContext(context: view)
         
         if backuprequest {
             dataTableViewObj.isBackupRequest()
