@@ -83,7 +83,6 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.3.1):
     - GoogleUtilities/Logger
-  - MMUploadImage (2.0.8)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
@@ -96,7 +95,6 @@ DEPENDENCIES:
   - Firebase/RemoteConfig
   - FirebaseAnalytics
   - Google-Mobile-Ads-SDK
-  - MMUploadImage (from `https://github.com/MihaelIsaev/UploadImage.git`, branch `master`)
 
 SPEC REPOS:
   trunk:
@@ -117,16 +115,6 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
 
-EXTERNAL SOURCES:
-  MMUploadImage:
-    :branch: master
-    :git: https://github.com/MihaelIsaev/UploadImage.git
-
-CHECKOUT OPTIONS:
-  MMUploadImage:
-    :commit: d83d6b1e755250f6b5108bd5e1e11439cd2e5387
-    :git: https://github.com/MihaelIsaev/UploadImage.git
-
 SPEC CHECKSUMS:
   Firebase: d59ad4129167f9f0d2a4f6c1f0c462254b6002c8
   FirebaseABTesting: 44acbfc9db915bca8f111ebae342da6fd4f1cc55
@@ -142,10 +130,9 @@ SPEC CHECKSUMS:
   GoogleDataTransport: b006084b73915a42c28a3466961a4edda3065da6
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
-  MMUploadImage: 4f6908431ddfd7c27b2df4cb189517d5d9cefc82
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
 
-PODFILE CHECKSUM: 93f773578d9c9f1f7a6c648849c93bf226793c60
+PODFILE CHECKSUM: 6692827b7f6a487560f0f59fcf48905119ef1e9f
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

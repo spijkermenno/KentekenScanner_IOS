@@ -74,11 +74,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>MMUploadImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Kenteken Scanner-Kenteken ScannerUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>

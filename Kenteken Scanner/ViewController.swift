@@ -435,10 +435,12 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        self.removeAdsButton.isHidden = false
     }
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+        self.removeAdsButton.isHidden = true
     }
     
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
