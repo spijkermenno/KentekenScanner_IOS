@@ -94,7 +94,6 @@ class pendingNotificationTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("click")
         dismiss(animated: true, completion: nil)
         
         NetworkRequestHelper().kentekenRequest(kenteken: alerts[indexPath.row].userInfo["kenteken"] as! String, view: ctx!)

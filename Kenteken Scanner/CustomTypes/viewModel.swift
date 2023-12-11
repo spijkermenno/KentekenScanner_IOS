@@ -36,7 +36,6 @@ class ViewModel {
     fileprivate func updateGameDataWithPurchasedProduct(_ product: SKProduct, _ context: ViewController) {
         // Update the proper game data depending on the keyword the
         // product identifier of the give product contains.
-        print("purchase complete: \(product.productIdentifier)")
         
         if product.productIdentifier.contains("premiumUpgrade") {
             model.gameData.removedAds = true
@@ -44,7 +43,6 @@ class ViewModel {
             StorageHelper().saveToLocalStorage(bool: true, storageType: StorageIdentifier.IAP)
             
             let temp: Bool = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.IAP)
-            print("UPGRADE SUCCESFUL? \(temp)")
             
             AnalyticsHelper().logEvent(eventkey: "boughtPremiumUpgrade", key: "version", value: 1);
             
@@ -65,7 +63,6 @@ class ViewModel {
         StorageHelper().saveToLocalStorage(bool: true, storageType: StorageIdentifier.IAP)
         
         let temp: Bool = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.IAP)
-        print("RESTORE SUCCESFUL? \(temp)")
         
         AnalyticsHelper().logEvent(eventkey: "restoredPremiumUpgrade", key: "version", value: 1);
         
@@ -98,7 +95,6 @@ class ViewModel {
     
     func viewDidSetup() {
         delegate?.willStartLongProcess()
-        print("request................")
         
         IAPManager.shared.getProducts { (result) in
             DispatchQueue.main.async {
@@ -115,19 +111,13 @@ class ViewModel {
     
     func purchase(product: SKProduct, context: ViewController) -> Bool {
         if !IAPManager.shared.canMakePayments() {
-            print("cannot make purchase")
             return false
         } else {
             delegate?.willStartLongProcess()
-            
-            print("viewmodel purchase()")
-            
+                        
             IAPManager.shared.buy(product: product) { (result) in
-                print("test")
                 DispatchQueue.main.async {
                     self.delegate?.didFinishLongProcess()
-
-                    //print(result)
                     
                     switch result {
                     case .success(_): self.updateGameDataWithPurchasedProduct(product, context)

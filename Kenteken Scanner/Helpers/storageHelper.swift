@@ -49,8 +49,6 @@ class StorageHelper {
     }
     
     func saveToLocalStorage(arr: [NotificationObject], storageType: StorageIdentifier) {
-        print(arr)
-        print(storageType)
         if storageType == StorageIdentifier.Alert {
             defaults.set(try? PropertyListEncoder().encode(arr), forKey: alertStorageIdentifier)
         }

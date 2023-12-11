@@ -10,9 +10,10 @@ import Firebase
 
 
 class dataTableView: UITableViewController {
-    var kentekenData: kentekenDataObject!
+    var kentekenData: KentekenDataObject!
     var keys = [Int: String]()
     var values = [Int: String]()
+    var vermogenValues = [Int: [PowerData]]()
     var switchCells = [UITableViewCell: String]()
     var buttonOrder: CGFloat = 0
     var kenteken: String!
@@ -161,8 +162,6 @@ class dataTableView: UITableViewController {
     }
     
     @objc func cameraTap(_ button: UIButton) {
-        print("show image screen")
-        
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         self.imagePicker.present(from: button)
         
@@ -178,11 +177,8 @@ class dataTableView: UITableViewController {
         var date: Date!
         var notificationdate: Date!
         
-        if let olddate = kentekenData?.vervaldatum_apk {
-            //print("old date")
-            //print(olddate)
+        if let olddate = kentekenData?.vervaldatumApk {
             let dateFormatter = DateFormatter()
-            //dateFormatter.dateFormat = "yyyyMMdd"
             
             if backupRequest {
                 dateFormatter.dateFormat = "yyyyMMdd"
@@ -196,12 +192,9 @@ class dataTableView: UITableViewController {
             timeInSeconds = Int(Date().distance(to: notificationdate))
         }
         
-        //print(StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert) as [NotificationObject])
         
         var alerts: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert);
         for alert in alerts {
-            //print(alert.kenteken)
-            //print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
             if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                 // kenteken allready in list.
                 inArray = true
@@ -226,7 +219,6 @@ class dataTableView: UITableViewController {
                 style: .destructive) { (action)
                 in
                     // delete notification
-                //print("remove from alerts")
                 alerts.remove(at: location)
                 StorageHelper().saveToLocalStorage(arr: alerts, storageType: StorageIdentifier.Alert)
                 button.setImage(UIImage(systemName: "bell")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -268,9 +260,7 @@ class dataTableView: UITableViewController {
                 var dict = [String: String]()
                 dict["kenteken"] = kenteken
                 dict["notificationDate"] = dateFormatter.string(from: notificationdate)
-                
-                //print(dict)
-            
+                            
                 AnalyticsHelper().logEventMultipleItems(eventkey: "apk_alert", items: dict);
                     
                 alert = UIAlertController(title: "Notificatie instellen", message: "Weet je zeker dat je een APK alert aan wilt zetten voor kenteken \(KentekenFactory().format(kenteken))? \n\n Deze functie zal 30 dagen voor de vervaldatum van de APK om 12:00 uur een melding geven.", preferredStyle: .alert)
@@ -307,7 +297,6 @@ class dataTableView: UITableViewController {
         let notifications: [NotificationObject] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Alert)
         
         for alert in notifications {
-            //print(kenteken.replacingOccurrences(of: "-", with: "").uppercased())
             if alert.kenteken == kenteken.replacingOccurrences(of: "-", with: "").uppercased() {
                 // kenteken allready in list.
                 inArray = true
@@ -363,9 +352,6 @@ class dataTableView: UITableViewController {
                 let ctx = self
                 UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
                     for request in requests {
-                        //print(request.identifier)
-                        //print(notification.uuid)
-                        //print(request.identifier == notification.uuid)
                         if request.identifier == notification.uuid {
                             DispatchQueue.main.async {
                                 ctx.notificationButton.setImage(UIImage(systemName: "bell.fill")!.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -375,7 +361,7 @@ class dataTableView: UITableViewController {
                 })
             }
             
-            if kentekenData.vervaldatum_apk == nil {
+            if kentekenData.vervaldatumApk == nil {
                 notificationButton.isHidden = true
             } else {
                 self.createButton(button: notificationButton, icon: UIImage(systemName: "bell")!)
@@ -422,7 +408,7 @@ class dataTableView: UITableViewController {
         buttonOrder += 1
     }
     
-    func loadData(object: kentekenDataObject) {
+    func loadData(object: KentekenDataObject) {
         kentekenData = object
         
         let mir = Mirror(reflecting: kentekenData!)
@@ -430,18 +416,38 @@ class dataTableView: UITableViewController {
         var i: Int = 0
         mir.children.forEach{child in
             let key: String = child.label ?? "Geen data beschikbaar"
-            var value: String = "Geen data beschikbaar"
             
-            if let val: String = child.value as? String {
-                value = val
-            }
-        
-            if value != "Geen data beschikbaar" {
-                keys[i] = key.replacingOccurrences(of: "_", with: " ")
-                values[i] = value
-                i += 1
-            }
             
+            if key == "vermogen" {
+                var value: [PowerData] = []
+                
+                print("vermogen mir")
+                
+                if let val: [PowerData] = child.value as? [PowerData] {
+                    value = val
+                }
+                
+                if !value.isEmpty {
+                    
+                    print("vermogen not null :D ")
+                    keys[i] = key.replacingOccurrences(of: "_", with: " ")
+                    vermogenValues[i] = value
+                    i += 1
+                }
+                
+            } else {
+                var value: String = "Geen data beschikbaar"
+                
+                if let val: String = child.value as? String {
+                    value = val
+                }
+            
+                if value != "Geen data beschikbaar" {
+                    keys[i] = key.replacingOccurrences(of: "_", with: " ")
+                    values[i] = value
+                    i += 1
+                }
+            }
         }
     }
     
@@ -451,7 +457,7 @@ class dataTableView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if ["personenauto", "bedrijfsauto"].contains(kentekenData.voertuigsoort!.lowercased()) {
+        if ["personenauto", "bedrijfsauto"].contains(kentekenData.voertuigsoort?.lowercased()) {
             customCells = 1
         }
         totalCells = keys.count + customCells + 2
@@ -496,7 +502,7 @@ class dataTableView: UITableViewController {
             if keys[indexPath.row] == "vervaldatum apk" {
                 var date: Date
                             
-                if let olddate = kentekenData?.vervaldatum_apk {
+                if let olddate = kentekenData?.vervaldatumApk {
                     let dateFormatter = DateFormatter()
                     //dateFormatter.dateFormat = "yyyyMMdd"
                     if backupRequest {
@@ -515,27 +521,27 @@ class dataTableView: UITableViewController {
                 }
             }
             
-            if keys[indexPath.row] == "vervaldatum tachograaf" {
-                var date: Date
-                            
-                if let olddate = kentekenData?.vervaldatum_tachograaf {
-                    let dateFormatter = DateFormatter()
-                    //dateFormatter.dateFormat = "yyyyMMdd"
-                    if backupRequest {
-                        dateFormatter.dateFormat = "yyyyMMdd"
-                    } else {
-                        dateFormatter.dateFormat = "dd-MM-yy"
-                    }
-                    date = dateFormatter.date(from:olddate)!
-                    
-                    if date < Date() {
-                        let alert = UIAlertController(title: "Tachograaf verlopen", message: "De Tachograaf van dit voertuig is verlopen.", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
-
-                        self.present(alert, animated: true)
-                    }
-                }
-            }
+//            if keys[indexPath.row] == "vervaldatum tachograaf" {
+//                var date: Date
+//                            
+//                if let olddate = kentekenData?.v {
+//                    let dateFormatter = DateFormatter()
+//                    //dateFormatter.dateFormat = "yyyyMMdd"
+//                    if backupRequest {
+//                        dateFormatter.dateFormat = "yyyyMMdd"
+//                    } else {
+//                        dateFormatter.dateFormat = "dd-MM-yy"
+//                    }
+//                    date = dateFormatter.date(from:olddate)!
+//                    
+//                    if date < Date() {
+//                        let alert = UIAlertController(title: "Tachograaf verlopen", message: "De Tachograaf van dit voertuig is verlopen.", preferredStyle: .alert)
+//                        alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
+//
+//                        self.present(alert, animated: true)
+//                    }
+//                }
+//            }
         } else if (indexPath.row == keys.count){
             _ = tableView.cellForRow(at: indexPath)! as UITableViewCell
 
@@ -545,26 +551,28 @@ class dataTableView: UITableViewController {
             } else {
                 dateFormatter.dateFormat = "dd-MM-yy"
             }
-            let date = dateFormatter.date(from:kentekenData.datum_eerste_toelating)
             
-            let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "yyyy"
-            
-            let year = dateFormatterPrint.string(from: date!)
-            
-            let name = kentekenData.handelsbenaming!.replacingOccurrences(of: kentekenData.merk, with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
-            
-            let carsUrl = "https://www.gaspedaal.nl/\(kentekenData.merk!)/\(name)/\(kentekenData.brandstof_omschrijving!)?bmax=\(year)&bmin=\(year)"
-            //let carsUrl = "https://www.autoscout24.nl/lst/\(kentekenData.merk!)/\(name)?desc=0&size=20&cy=NL&fregto=\(year)&fregfrom=\(year)";
-            
-            guard let url = URL(string: carsUrl) else {
-                return
-            }
-            
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
+            if kentekenData.datumEersteToelating != nil {
+                let date = dateFormatter.date(from:kentekenData.datumEersteToelating!)
+                
+                let dateFormatterPrint = DateFormatter()
+                dateFormatterPrint.dateFormat = "yyyy"
+                
+                let year = dateFormatterPrint.string(from: date!)
+                
+                let name = kentekenData.handelsbenaming?.replacingOccurrences(of: kentekenData.merk ?? "onbekend", with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
+                
+//                let carsUrl = "https://www.gaspedaal.nl/\(kentekenData.merk ?? "onbekend")/\(name ?? "onbekend")/\(kentekenData.vermogen?.first?.brandstofOmschrijving ?? "benzine")?bmax=\(year)&bmin=\(year)"
+//                
+//                guard let url = URL(string: carsUrl) else {
+//                    return
+//                }
+//                
+//                if #available(iOS 10.0, *) {
+//                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//                } else {
+//                    UIApplication.shared.openURL(url)
+//                }
             }
         }
       }
@@ -595,6 +603,8 @@ class dataTableView: UITableViewController {
             cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cellId")
         }
                 
+        print(keys[indexPath.row])
+        
         switch keys[indexPath.row] {
             
         case "imageURL" :
@@ -620,6 +630,33 @@ class dataTableView: UITableViewController {
                 } catch {
                     print(error)
                 }
+        case "vermogen":
+            print("vermogen...")
+            
+            let vermogenArray = kentekenData.vermogen
+        
+            
+            print(vermogenArray)
+            if(vermogenArray == nil || vermogenArray?.isEmpty == true) {
+                cell.textLabel?.text = "Power information not available"
+                cell.detailTextLabel?.text = nil
+            } else {
+                if let unwrappedVermogenArray = vermogenArray {
+                    for vermogenData in unwrappedVermogenArray {
+                        let newCell = UITableViewCell(style: .subtitle, reuseIdentifier: "vermogen")
+                        
+                        let brandstofOmschrijving = vermogenData.brandstofOmschrijving
+                        let vermogenValue = vermogenData.vermogen_kw
+                        let vermogenValuePk = round((vermogenValue ?? 0) * 1.35962)
+                        
+                        newCell.textLabel?.text = brandstofOmschrijving
+                        newCell.detailTextLabel?.text = "Vermogen: \(vermogenValue ?? 0) kW / \(vermogenValuePk) Pk"
+                        
+                        tableView.insertRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+
         case "datum eerste toelating":
              dateCell(cell: cell, index: indexPath.row)
         case "datum eerste afgifte nederland":
@@ -663,8 +700,8 @@ class dataTableView: UITableViewController {
             cell.textLabel!.textAlignment = .center
             cell.textLabel!.text = "   " + KentekenFactory().format(values[indexPath.row]!.uppercased())
         default:
-            if indexPath.row >= keys.count && customCellsFilled < customCells && kentekenData.datum_tenaamstelling != nil{
-                if ["personenauto", "bedrijfsauto"].contains(kentekenData.voertuigsoort!.lowercased()) {
+            if indexPath.row >= keys.count && customCellsFilled < customCells && kentekenData.datumTenaamstelling != nil{
+                if ["personenauto", "bedrijfsauto"].contains(kentekenData.voertuigsoort?.lowercased()) {
                     customCells(cell: cell, index: indexPath.row)
                     customCellsFilled += 1
                 } else {
@@ -690,11 +727,9 @@ class dataTableView: UITableViewController {
 
             
             if backupRequest || keys[index] == "vervaldatum tachograaf" {
-                print("backup")
                 dateFormatter.dateFormat = "yyyyMMdd"
                 date = dateFormatter.date(from:olddate)!
             } else {
-                print("normal")
                 dateFormatter.dateFormat = "dd-MM-yy"
                 date = dateFormatter.date(from:olddate)!
             }
@@ -722,14 +757,13 @@ class dataTableView: UITableViewController {
         } else {
             dateFormatter.dateFormat = "dd-MM-yy"
         }
-        _ = dateFormatter.date(from:kentekenData.datum_eerste_toelating)
         
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = "yyyy"
                 
-        let name = kentekenData.handelsbenaming!.replacingOccurrences(of: kentekenData.merk, with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
+        let name = kentekenData.handelsbenaming?.replacingOccurrences(of: kentekenData.merk ?? "onbekend", with: "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "-")
         
-        let carsUrl = "https://www.gaspedaal.nl/\(kentekenData.merk!)/\(name)";
+        let carsUrl = "https://www.gaspedaal.nl/\(kentekenData.merk ?? "onbekend")/\(name ?? "onbekend")";
 
         cell.textLabel?.text = "Vergelijkbare auto's"
         cell.detailTextLabel?.textColor = UIColor.link
@@ -749,9 +783,7 @@ extension String {
 
 extension dataTableView: ImagePickerDelegate {
 
-    func didSelect(image: UIImage?) {
-        print("image selected.")
-        
+    func didSelect(image: UIImage?) {        
         let request = ImageUploader(uploadImage: image!, number: 1, kenteken: kenteken)
         request.uploadImage { (result) in
             switch result {

@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Messaging.messaging().delegate = self
         
             if #available(iOS 10.0, *) {
-                print("if")
               // For iOS 10 display notification (sent via APNS)
               UNUserNotificationCenter.current().delegate = self
 
@@ -37,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               )
                 }
             } else {
-                print("else")
               let settings: UIUserNotificationSettings =
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
               application.registerUserNotificationSettings(settings)
@@ -106,7 +104,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                               withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo
 
-    print("NOTIFICATIE ONTVANGEN")
     
     let kenteken = userInfo["kenteken"] as? String
     
@@ -128,7 +125,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
   // [START refresh_token]
   func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-    //print("Firebase registration token: \(String(describing: fcmToken))")
+    print("Firebase registration token: \(String(describing: fcmToken))")
 
     let dataDict: [String: String] = ["token": fcmToken ?? ""]
     NotificationCenter.default.post(

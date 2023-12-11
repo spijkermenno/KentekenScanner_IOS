@@ -22,17 +22,14 @@ open class ImagePicker: NSObject {
         self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.image"]
         
-        print("%")
     }
 
     private func action(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
         guard UIImagePickerController.isSourceTypeAvailable(type) else {
-            print("@")
             return nil
         }
         
         return UIAlertAction(title: title, style: .default) {_ in
-            print("!_")
             
             self.pickerController.sourceType = type
             self.presentationController?.present(self.pickerController, animated: true)
@@ -61,14 +58,11 @@ open class ImagePicker: NSObject {
             alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
         }
         
-        print("-")
-
         self.presentationController?.present(alertController, animated: true)
     }
 
     private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
         controller.dismiss(animated: true, completion: nil)
-        print("?")
         if image != nil {
             self.delegate?.didSelect(image: image)
         }
@@ -78,7 +72,6 @@ open class ImagePicker: NSObject {
 extension ImagePicker: UIImagePickerControllerDelegate {
 
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("!!")
         self.pickerController(picker, didSelect: nil)
     }
 
@@ -105,7 +98,6 @@ func cropImage(image: UIImage, to aspectRatio: CGFloat,completion: @escaping (UI
         } else if imageAspectRatio < aspectRatio {
             newSize.width = image.size.height / aspectRatio
         } else {
-            print("?!?!?!")
             completion (image)
         }
         
@@ -116,8 +108,6 @@ func cropImage(image: UIImage, to aspectRatio: CGFloat,completion: @escaping (UI
         
         let croppedImage = UIImage(cgImage: cgCroppedImage, scale: image.scale, orientation: image.imageOrientation)
         
-        print("jaaaaaaa")
-
         completion(croppedImage)
 }
 

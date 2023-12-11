@@ -131,22 +131,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AD1C6043-2B7F-4117-B426-AC032B3B2C4F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Kenteken Scanner/SceneDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "sceneDidBecomeActive(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D12B0B65-35A9-44D7-A410-365D163E08D0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -154,8 +138,8 @@
             filePath = "Kenteken Scanner/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "application(_:didDiscardSceneSessions:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,10 +154,90 @@
             filePath = "Kenteken Scanner/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "596"
-            endingLineNumber = "596"
+            startingLineNumber = "595"
+            endingLineNumber = "595"
             landmarkName = "toggleOverlay(shouldShow:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5eeae4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.ViewController.toggleOverlay(shouldShow: Swift.Bool) -&gt; ()"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "595"
+                  endingLineNumber = "595"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5eeae4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.ViewController.toggleOverlay(shouldShow: Swift.Bool) -&gt; ()"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "595"
+                  endingLineNumber = "595"
+                  offsetFromSymbolStart = "140">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C27F95C4-5E30-4582-951B-EA0155B772A5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Kenteken Scanner/CustomTypes/dataTableView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "722"
+            endingLineNumber = "722"
+            landmarkName = "dateCell(cell:index:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C27F95C4-5E30-4582-951B-EA0155B772A5 - 383195c6983fbb9c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.dataTableView.dateCell(cell: __C.UITableViewCell, index: Swift.Int) -&gt; ()"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/CustomTypes/dataTableView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "721"
+                  endingLineNumber = "721"
+                  offsetFromSymbolStart = "380">
+               </Location>
+               <Location
+                  uuid = "C27F95C4-5E30-4582-951B-EA0155B772A5 - 383195c6983fbb18"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.dataTableView.dateCell(cell: __C.UITableViewCell, index: Swift.Int) -&gt; ()"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/CustomTypes/dataTableView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "725"
+                  endingLineNumber = "725"
+                  offsetFromSymbolStart = "380">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

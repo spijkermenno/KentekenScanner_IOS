@@ -64,9 +64,7 @@ class VisionViewController: CameraViewController {
                 }
                             
                 if query != "" && KentekenFactory().getSidecode(query) != -2 {
-                    //print("execution: \(query) - \(KentekenFactory().getSidecode(query))")
                     let kenteken: String = query
-                    //print("valid kenteken: " + KentekenFactory().format(kenteken))
 
                     DispatchQueue.main.async {
                         self.previewView.session?.stopRunning()

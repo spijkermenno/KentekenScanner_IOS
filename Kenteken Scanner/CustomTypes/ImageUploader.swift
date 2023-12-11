@@ -43,11 +43,9 @@ final class ImageUploader {
             let statusCode = (urlResponse as? HTTPURLResponse)?.statusCode ?? 0
             if let data = data, case (200..<300) = statusCode {
                 do {
-                    print("success")
                     let value = try Response(from: data, statusCode: statusCode)
                     completionHandler(.success(value))
                 } catch {
-                    print("error")
                     let _error = ResponseError(statusCode: statusCode, error: AnyError(error))
                     completionHandler(.failure(_error))
                 }

@@ -168,7 +168,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     func testNotification() -> Void {
         let notificationContent = UNMutableNotificationContent()
         
-        let uuid = UUID().uuidString
         var dict = [String: Any]()
         
         dict["kenteken"] = "31SLDL"

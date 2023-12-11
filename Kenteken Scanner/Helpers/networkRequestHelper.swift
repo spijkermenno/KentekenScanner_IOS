@@ -20,10 +20,7 @@ class NetworkRequestHelper {
         if view.viewModel.removedAds == false {
             var amountRequests: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.CountRequests)
             var rd: Int = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.RequestsDone)
-            
-            print("RD = ")
-            print(rd)
-            
+                        
             if amountRequests > 20 {
                 amountRequests = 1
                 self.alert = true
@@ -77,7 +74,6 @@ class NetworkRequestHelper {
             } else {
                 
                 guard let data = data else {
-                    print("guard err")
                     DispatchQueue.main.async {
                         DispatchQueue.main.async {
                             self.backupKentekenRequest(kenteken: kenteken, view: view)
@@ -87,7 +83,7 @@ class NetworkRequestHelper {
                 }
                 
                 let decoder = JSONDecoder()
-                if let dataObject = try? decoder.decode([kentekenDataObject].self, from: data) {
+                if let dataObject = try? decoder.decode([KentekenDataObject].self, from: data) {
                     
                     if dataObject.first?.kenteken != nil {
                         DispatchQueue.main.sync {
@@ -105,29 +101,24 @@ class NetworkRequestHelper {
     }
     
     func backupKentekenRequest(kenteken: String, view: ViewController) {
-        print("BACKUP REQUEST")
         let urlString : String = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=" + kenteken.replacingOccurrences(of: "-", with: "").uppercased()
         let url = URL(string: urlString)!
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else {
-                print("back guard error")
                 view.toggleSpinner(onView: view.view)
                 return
             }
             
             let decoder = JSONDecoder()
-            let dataObject = try! decoder.decode([kentekenDataObject].self, from: data)
+            let dataObject = try! decoder.decode([KentekenDataObject].self, from: data)
             
-            print(dataObject)
             
             if dataObject.count > 0 {
-                print("show data")
                 DispatchQueue.main.async {
                     self.fillTable(kenteken: kenteken, view: view, dataObject: dataObject, backuprequest: true)
                 }
             } else {
-                print("show error")
                 // no kenteken found, show dialog.
                 DispatchQueue.main.async {
                     view.createAlert(title: "Kenteken niet gevonden", message: "Het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekent niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.", dismiss: true)
@@ -144,7 +135,7 @@ class NetworkRequestHelper {
         task.resume()
     }
     
-    func fillTable(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) {
+    func fillTable(kenteken: String, view: ViewController, dataObject: [KentekenDataObject], backuprequest: Bool ) {
         if self.alert {
             let alert = UIAlertController(
                 title: "Wat leuk dat je de app gebruikt!",
@@ -167,7 +158,6 @@ class NetworkRequestHelper {
                                     SKStoreReviewController.requestReview(in: scene)
                                 } else {
                                     // Fallback on earlier versions
-                                    print("Low iOS")
                                 }
                             }
                         }
@@ -221,7 +211,6 @@ class NetworkRequestHelper {
             
             if !view.viewModel.removedAds {
                 view.present(alert, animated: true)
-                print("presented alert")
             }
             
             self.alert = false
@@ -234,7 +223,7 @@ class NetworkRequestHelper {
         //
     }
     
-    func tableFilling(kenteken: String, view: ViewController, dataObject: [kentekenDataObject], backuprequest: Bool ) -> Void {
+    func tableFilling(kenteken: String, view: ViewController, dataObject: [KentekenDataObject], backuprequest: Bool ) -> Void {
         var recents: [String] = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.Recent);
         
         if recents.contains(kenteken.replacingOccurrences(of: "-", with: "").uppercased()) {
