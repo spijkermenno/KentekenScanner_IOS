@@ -70,13 +70,15 @@ class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, 
         
             cell.backgroundView = imgFrame
             
+            cell.textLabel!.textColor = .black
+        
             cell.textLabel!.textAlignment = NSTextAlignment.center
             cell.textLabel!.font = UIFont(name: "GillSans", size: 36)
             cell.textLabel!.textAlignment = .center
             cell.textLabel!.text = "   " + KentekenFactory().format(value.uppercased())
         } else {
             cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 17)
-            cell.textLabel!.textColor = .blue
+            cell.textLabel!.textColor = .systemBlue
             
             cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 15)
             

@@ -9,9 +9,9 @@ import Foundation
 
 struct GekentekendeVoertuig: Decodable {
     let kenteken: String
-    let voertuigsoort: String
-    let merk: String
-    let handelsbenaming: String
+    let voertuigsoort: String?
+    let merk: String?
+    let handelsbenaming: String?
     let vervaldatum_apk: Int?
     let datum_tenaamstelling: Int?
     let bruto_bpm: Double?
@@ -128,15 +128,198 @@ struct GekentekendeVoertuig: Decodable {
         return list
     }
     
+    func getCarInformation() -> [KeyValuePair] {
+        func formatNumberToEuro(_ amount: Int) -> String? {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .currency
+            numberFormatter.currencyCode = "EUR"
+
+             numberFormatter.locale = Locale(identifier: "nl_NL")
+
+            let formattedAmount = numberFormatter.string(from: NSNumber(value: amount))
+            return formattedAmount
+        }
+        
+        func formatNumberToEuro(_ amount: Double) -> String? {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .currency
+            numberFormatter.currencyCode = "EUR"
+
+            numberFormatter.locale = Locale(identifier: "nl_NL")
+
+            let formattedAmount = numberFormatter.string(from: NSNumber(value: amount))
+            return formattedAmount
+        }
+        
+        var list: [KeyValuePair] = []
+        
+        if let unwrapped = merk {
+            list.append(KeyValuePair(id: "merk", key: "Merk", value: unwrapped))
+        }
+        
+        if let unwrapped = handelsbenaming {
+            list.append(KeyValuePair(id: "handelsbenaming", key: "Handelsbenaming", value: unwrapped))
+        }
+        
+        var unwrappedType = type ?? "N/A"
+        var unwrappedVariant = variant ?? "N/A"
+        var unwrappedUitvoering = uitvoering ?? "N/A"
+        
+        if type != nil || variant != nil || uitvoering != nil {
+            list.append(KeyValuePair(id: "type_variant_uitvoering", key: "Type, Variant & Uitvoering", value: "\(unwrappedType), \(unwrappedVariant) & \(unwrappedUitvoering)"))
+        }
+        
+        if let unwrapped = eerste_kleur {
+            list.append(KeyValuePair(id: "eerste_kleur", key: "Eerste kleur", value: unwrapped))
+        }
+        
+        if let unwrapped = tweede_kleur {
+            list.append(KeyValuePair(id: "tweede_kleur", key: "Tweede kleur", value: unwrapped))
+        }
+        
+        if let unwrapped = catalogusprijs {
+            if unwrapped > 0.0 {
+                let value = formatNumberToEuro(unwrapped) ?? "Niet beschikbaar"
+                list.append(KeyValuePair(id: "catalogusprijs", key: "Catalogusprijs", value: "\(value)"))
+            }
+        }
+        
+        if let unwrapped = aantal_deuren {
+            if unwrapped > 0 {
+                list.append(KeyValuePair(id: "aantal_deuren", key: "Aantal deuren", value: "\(unwrapped)"))
+            }
+        }
+        
+        if let unwrapped = aantal_wielen {
+            if unwrapped > 0 {
+                list.append(KeyValuePair(id: "aantal_wielen", key: "Aantal wielen", value: "\(unwrapped)"))
+            }
+        }
+        
+        if let unwrapped = lengte {
+            if unwrapped > 0 {
+                list.append(KeyValuePair(id: "lengte", key: "Lengte", value: "\(Int(unwrapped)) cm"))
+            }
+        }
+        
+        if let unwrapped = breedte {
+            if unwrapped > 0 {
+                list.append(KeyValuePair(id: "breedte", key: "Breedte", value: "\(Int(unwrapped)) cm"))
+            }
+        }
+        
+        if let unwrapped = tellerstandoordeel {
+            list.append(KeyValuePair(id: "tellerstandoordeel", key: "Tellerstandoordeel", value: unwrapped))
+        }
+        
+        if let unwrapped = zuinigheidsclassificatie {
+            var value = "Klasse \(unwrapped)"
+            
+            if let emissieGegevens = emissie_gegevens {
+                if !emissieGegevens.isEmpty {
+                    let uitlaatemissieniveau = emissieGegevens.first?.uitlaatemissieniveau
+                    
+                    if let unwrappedUitlaatemissieniveau = uitlaatemissieniveau {
+                        value += " - \(unwrappedUitlaatemissieniveau)"
+                    }
+                }
+            }
+            
+            list.append(KeyValuePair(id: "zuinigheidsclassificatie", key: "Energie klasse (zuinigheidsclassificatie)", value: value))
+        }
+        
+        return list
+    }
+    
+    func getDates() -> [KeyValuePair] {
+        var list: [KeyValuePair] = []
+        
+        if let unwrapped = vervaldatum_apk {
+            var datum = formatDate(String(unwrapped)) ?? "N/A"
+            
+            list.append(KeyValuePair(id: "vervaldatum_apk", key: "Verval datum APK", value: datum))
+        }
+        
+        if let unwrapped = vervaldatum_tachograaf {
+            var datum = formatDate(String(unwrapped)) ?? "N/A"
+            
+            list.append(KeyValuePair(id: "vervaldatum_tachograaf", key: "Verval datum tachograaf", value: datum))
+        }
+        
+        if let unwrapped = datum_tenaamstelling {
+            var datum = formatDate(String(unwrapped)) ?? "N/A"
+            
+            list.append(KeyValuePair(id: "datum_tenaamstelling", key: "Datum tenaamstelling", value: datum))
+        }
+        
+        var datumEersteToelating: String?
+        var datumEersteTenaamstellingInNederland: String?
+        
+        if let unwrapped = datum_eerste_toelating {
+            datumEersteToelating = String(unwrapped)
+            
+            var datum = formatDate(datumEersteToelating!) ?? "N/A"
+            
+            list.append(KeyValuePair(id: "datum_eerste_toelating", key: "Datum eerste toelating", value: datum))
+        }
+        
+        if let unwrapped = datum_eerste_tenaamstelling_in_nederland {
+            datumEersteTenaamstellingInNederland = String(unwrapped)
+            
+            var datum = formatDate(datumEersteTenaamstellingInNederland!) ?? "N/A"
+            
+            list.append(KeyValuePair(id: "datum_eerste_tenaamstelling_in_nederland", key: "Datum eerste tenaamstelling in Nederland", value: datum))
+            
+            if datumEersteToelating != nil {
+                if isDateBefore(datumEersteToelating!, before: datumEersteTenaamstellingInNederland!) {
+                    list.append(KeyValuePair(id: "geimporteerd", key: "Geïmporteerd", value: "Ja, op \(datum)"))
+                } else {
+                    list.append(KeyValuePair(id: "geimporteerd", key: "Geïmporteerd", value: "Nee"))
+                }
+            }
+        }
+        
+        return list
+    }
+    
+    func isDateBefore(_ dateStr1: String, before dateStr2: String, format: String = "yyyyMMdd") -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+
+        if let date1 = dateFormatter.date(from: dateStr1),
+           let date2 = dateFormatter.date(from: dateStr2) {
+            return date1 < date2
+        }
+
+        return false // Return false if there are any issues with date conversion
+    }
+    
     func generateKeyValueArray() -> [KeyValuePair] {
         var list: [KeyValuePair] = []
         
         list.append(getKenteken())
         
+        list += getCarInformation()
         list += getEngineSpecifics()
         list += getEmissieGegevens()
+        list += getDates()
         
         return list
+    }
+    
+    func formatDate(_ inputDateString: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyyMMdd"
+
+        if let date = inputFormatter.date(from: inputDateString) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "dd MMMM yyyy"
+            outputFormatter.locale = Locale(identifier: "nl_NL")
+
+            return outputFormatter.string(from: date)
+        }
+
+        return nil
     }
 }
 

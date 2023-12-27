@@ -90,7 +90,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         NotificationCenter.default.addObserver(self, selector: #selector(pushNotificationHandler(_:)) , name: NSNotification.Name(rawValue: "NewNotification"), object: nil)
         
-        
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
@@ -98,6 +97,11 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray2.withAlphaComponent(0.5),
+        ]
+        kentekenField.attributedPlaceholder = NSAttributedString(string: "00-XXX-0", attributes: placeholderAttributes)
+
         europeStarsImages.roundCorners(topLeft: 10, topRight: 0, bottomLeft: 10, bottomRight: 0)
         
         kentekenField.roundCorners(topLeft: 0, topRight: 10, bottomLeft: 0, bottomRight: 10)
@@ -144,7 +148,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             }
         }
         
-        // testNotification()
+         //testNotification()
         
         Analytics.setUserID(UUID().uuidString)
         
@@ -350,6 +354,11 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                     }
                 case .failure(let error):
                     print("Error: \(error)")
+                    self.createAlert(
+                        title: "Kenteken niet gevonden",
+                        message: "Het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekent niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.",
+                        dismiss: true
+                    )
                 }
             }
             
@@ -427,8 +436,9 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
         }
         
-        self.present(alert, animated: true)
-        print("alert is presented")
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
