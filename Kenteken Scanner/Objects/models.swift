@@ -85,12 +85,35 @@ struct GekentekendeVoertuig: Decodable {
     let carrosserie_gegevens: [CarrosserieGegevens]?
     let emissie_gegevens: [EmissieGegevens]?
     
-    func getKenteken() -> KeyValuePair? {
+    func getKenteken() -> KeyValuePair {
         return KeyValuePair(
             id: "kenteken",
             key: "kenteken",
             value: kenteken
         )
+    }
+    
+    func getEngineSpecifics() -> [KeyValuePair] {
+        var list: [KeyValuePair] = []
+        var cilinderInhoud: Double?
+        
+        if let unwrapped = cilinderinhoud {
+            cilinderInhoud = unwrapped
+            list.append(KeyValuePair(id: "cilinderinhoud", key: "Cilinderinhoud", value: "\(Int(unwrapped))cc"))
+        }
+        
+        if let unwrapped = aantal_cilinders {
+            if let unwrappedCilinderInhoud = cilinderInhoud {
+                if unwrapped > 1 {
+                    let calculation = Int(unwrappedCilinderInhoud) / unwrapped
+                    list.append(KeyValuePair(id: "inhoud_per_cilinder", key: "Inhoud per cilinder (berekend)", value: "\(calculation)cc"))
+                }
+            }
+            
+            list.append(KeyValuePair(id: "aantal_cilinders", key: "Aantal cilinders", value: "\(unwrapped)"))
+        }
+        
+        return list
     }
     
     func getEmissieGegevens() -> [KeyValuePair] {
@@ -108,12 +131,10 @@ struct GekentekendeVoertuig: Decodable {
     func generateKeyValueArray() -> [KeyValuePair] {
         var list: [KeyValuePair] = []
         
-        if let unwrapped = getKenteken() { list.append(unwrapped) }
+        list.append(getKenteken())
         
-        let unwrappedEmissieGegevens = getEmissieGegevens()
-        unwrappedEmissieGegevens.forEach { item in
-            list.append(item)
-        }
+        list += getEngineSpecifics()
+        list += getEmissieGegevens()
         
         return list
     }
