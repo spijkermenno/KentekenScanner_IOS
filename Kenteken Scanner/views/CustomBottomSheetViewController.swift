@@ -103,4 +103,19 @@ class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, 
             return 60
         }
     }
+    
+    func showSingleAlert(withMessage message: String) {
+        let alertController = UIAlertController(title: "KentekenScanner", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showIAPRelatedError(_ error: Error) {
+        let message = error.localizedDescription
+        (parent as? ViewController)?.removeAdsButton.isHidden = true
+        
+        print(error.localizedDescription)
+        
+        showSingleAlert(withMessage: message)
+    }
 }

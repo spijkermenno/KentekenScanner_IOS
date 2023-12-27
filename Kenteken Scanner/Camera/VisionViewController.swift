@@ -18,7 +18,6 @@ class VisionViewController: CameraViewController {
 	let numberTracker = StringTracker()
     var ctx: ViewController!
     var requesting = false
-    let networkReqHandler = NetworkRequestHelper()
 	
 	override func viewDidLoad() {
 		// Set up vision request before letting ViewController set up the camera

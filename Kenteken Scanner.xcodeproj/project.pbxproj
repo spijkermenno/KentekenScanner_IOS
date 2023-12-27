@@ -16,10 +16,6 @@
 		A93E03B225FF97E90013F8FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93E03B025FF97E90013F8FE /* Main.storyboard */; };
 		A93E03B425FF97E90013F8FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93E03B325FF97E90013F8FE /* Assets.xcassets */; };
 		A93E03B725FF97E90013F8FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93E03B525FF97E90013F8FE /* LaunchScreen.storyboard */; };
-		A93E03C225FF97EA0013F8FE /* Kenteken_ScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03C125FF97EA0013F8FE /* Kenteken_ScannerTests.swift */; };
-		A93E03CD25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */; };
-		A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */; };
-		A945102A2601005B00E6798C /* dataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94510292601005B00E6798C /* dataTableView.swift */; };
 		A94ABADC2B3C2A9100F959DB /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94ABADB2B3C2A9100F959DB /* APIManager.swift */; };
 		A94ABADE2B3C2AD000F959DB /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94ABADD2B3C2AD000F959DB /* models.swift */; };
 		A94ABAE12B3C2D3900F959DB /* CustomBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94ABAE02B3C2D3900F959DB /* CustomBottomSheetViewController.swift */; };
@@ -29,7 +25,6 @@
 		A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */; };
 		A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */; };
 		A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */; };
-		A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */; };
 		A9621AC72608C8B300A8DFE0 /* kentekenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */; };
 		A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */; };
 		A965019226498A4D0067DE62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A965019126498A4D0067DE62 /* GoogleService-Info.plist */; };
@@ -100,13 +95,7 @@
 		A93E03B625FF97E90013F8FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A93E03B825FF97E90013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A93E03BD25FF97EA0013F8FE /* Kenteken ScannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kenteken ScannerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A93E03C125FF97EA0013F8FE /* Kenteken_ScannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kenteken_ScannerTests.swift; sourceTree = "<group>"; };
-		A93E03C325FF97EA0013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A93E03C825FF97EA0013F8FE /* Kenteken ScannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kenteken ScannerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kenteken_ScannerUITests.swift; sourceTree = "<group>"; };
-		A93E03CE25FF97EA0013F8FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KentekenDataObject.swift; sourceTree = "<group>"; };
-		A94510292601005B00E6798C /* dataTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTableView.swift; sourceTree = "<group>"; };
 		A94ABADB2B3C2A9100F959DB /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		A94ABADD2B3C2AD000F959DB /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		A94ABAE02B3C2D3900F959DB /* CustomBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -116,7 +105,6 @@
 		A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageHelper.swift; sourceTree = "<group>"; };
 		A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = analyticsHelper.swift; sourceTree = "<group>"; };
 		A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageTypeEnum.swift; sourceTree = "<group>"; };
-		A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networkRequestHelper.swift; sourceTree = "<group>"; };
 		A9621AC62608C8B300A8DFE0 /* kentekenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenFactory.swift; sourceTree = "<group>"; };
 		A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kentekenDataTableViewController.swift; sourceTree = "<group>"; };
 		A965019126498A4D0067DE62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -214,8 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				A93E03A925FF97E90013F8FE /* Kenteken Scanner */,
-				A93E03C025FF97EA0013F8FE /* Kenteken ScannerTests */,
-				A93E03CB25FF97EA0013F8FE /* Kenteken ScannerUITests */,
 				A93E03A825FF97E90013F8FE /* Products */,
 				404D6971CCFDF3FAD3867E6C /* Pods */,
 				9A5F48F8690C0EF03E797EBF /* Frameworks */,
@@ -256,24 +242,6 @@
 			path = "Kenteken Scanner";
 			sourceTree = "<group>";
 		};
-		A93E03C025FF97EA0013F8FE /* Kenteken ScannerTests */ = {
-			isa = PBXGroup;
-			children = (
-				A93E03C125FF97EA0013F8FE /* Kenteken_ScannerTests.swift */,
-				A93E03C325FF97EA0013F8FE /* Info.plist */,
-			);
-			path = "Kenteken ScannerTests";
-			sourceTree = "<group>";
-		};
-		A93E03CB25FF97EA0013F8FE /* Kenteken ScannerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				A93E03CC25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift */,
-				A93E03CE25FF97EA0013F8FE /* Info.plist */,
-			);
-			path = "Kenteken ScannerUITests";
-			sourceTree = "<group>";
-		};
 		A94ABADF2B3C2D2A00F959DB /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,7 +255,6 @@
 			children = (
 				A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */,
 				A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */,
-				A9621AC12608C3BA00A8DFE0 /* networkRequestHelper.swift */,
 				A9D3BC3D266F51F10035C34C /* IAPManager.swift */,
 				A94ABADB2B3C2A9100F959DB /* APIManager.swift */,
 			);
@@ -305,9 +272,7 @@
 		A98AC25D260B39EC008B4AE0 /* CustomTypes */ = {
 			isa = PBXGroup;
 			children = (
-				A93E03E52600D7EA0013F8FE /* KentekenDataObject.swift */,
 				A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */,
-				A94510292601005B00E6798C /* dataTableView.swift */,
 				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
 				A97624282612109800565703 /* notification.swift */,
 				A96BEE7026690F7D00EF86A0 /* PendingNotificationTableViewController.swift */,
@@ -591,7 +556,6 @@
 				A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */,
 				A9621ACC2608CE7800A8DFE0 /* kentekenDataTableViewController.swift in Sources */,
 				A9D3BC42266F5F180035C34C /* SettingsManageable.swift in Sources */,
-				A93E03E62600D7EA0013F8FE /* KentekenDataObject.swift in Sources */,
 				A957296828574EFA0097BAB5 /* ImagePicker.swift in Sources */,
 				A97624292612109800565703 /* notification.swift in Sources */,
 				A9A1406D260B4EB800571D1C /* CameraViewController.swift in Sources */,
@@ -601,7 +565,6 @@
 				A957296A2857547D0097BAB5 /* ImageUploader.swift in Sources */,
 				A9A1406E260B4EB800571D1C /* StringUtils.swift in Sources */,
 				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
-				A9621AC22608C3BA00A8DFE0 /* networkRequestHelper.swift in Sources */,
 				A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */,
 				A94ABAE12B3C2D3900F959DB /* CustomBottomSheetViewController.swift in Sources */,
 				A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */,
@@ -610,7 +573,6 @@
 				A957296C285755310097BAB5 /* ResponseResult.swift in Sources */,
 				A9D3BC44266F5F510035C34C /* viewModel.swift in Sources */,
 				A94ABADC2B3C2A9100F959DB /* APIManager.swift in Sources */,
-				A945102A2601005B00E6798C /* dataTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,7 +580,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A93E03C225FF97EA0013F8FE /* Kenteken_ScannerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,7 +587,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A93E03CD25FF97EA0013F8FE /* Kenteken_ScannerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -488,7 +488,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         print("Ad did dismiss full screen content.")
         self.interstitialShowing = false
         
-        NetworkRequestHelper().actualRequest(kenteken: actualKenteken, view: self)
+        checkKenteken(kenteken: actualKenteken)
     }
     
     func openPurchaseRequest(_ context: Any) -> Void {
@@ -537,14 +537,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                 DispatchQueue.main.async {
                     if let ctx = context as? ViewController {
                         ctx.present(alert, animated: true)
-                    } else if let ctx = context as? dataTableView {
+                    } else if let ctx = context as? CustomBottomSheetViewController {
                         ctx.present(alert, animated: true)
                     }
                 }
             case .failure(let error):
                 print("IAP ERROR")
                 DispatchQueue.main.async {
-                    if let ctx = context as? dataTableView {
+                    if let ctx = context as? CustomBottomSheetViewController {
                         ctx.showIAPRelatedError(error)
                     } else {
                         self.showIAPRelatedError(error)

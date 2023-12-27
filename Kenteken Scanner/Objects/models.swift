@@ -189,10 +189,45 @@ struct EmissieGegevens: Decodable {
         return nil
     }
     
+    func getBrandstofVerbruik() -> [KeyValuePair] {
+        func calculate(fuelUsageValue: String) -> String {
+            let fuelUsageDouble = Double(fuelUsageValue)
+            
+            var fuelUsage: String = "\(fuelUsageValue) liter op 100 kilometer"
+            
+            if let unwrappedFuelUsage = fuelUsageDouble {
+                let fuelUsageCalculated = 100 / unwrappedFuelUsage
+                fuelUsage += " / 1 liter op \(Int(fuelUsageCalculated.rounded())) kilometer"
+            }
+            
+            return fuelUsage.replacingOccurrences(of: ".", with: ",")
+        }
+        
+        var list: [KeyValuePair] = []
+        
+        if let unwrapped = brandstofverbruik_stad {
+            list.append(KeyValuePair(id: "brandstofverbruik_stad", key: "Brandstof verbruik stadsverkeer", value: calculate(fuelUsageValue: unwrapped)))
+        }
+        
+        if let unwrapped = brandstofverbruik_buiten_de_stad {
+            list.append(KeyValuePair(id: "brandstofverbruik_buiten_de_stad", key: "Brandstof verbruik buiten de stad", value: calculate(fuelUsageValue: unwrapped)))
+        }
+        
+        if let unwrapped = brandstofverbruik_gecombineerd {
+            list.append(KeyValuePair(id: "brandstofverbruik_gecombineerd", key: "Brandstof verbruik gecombineerd", value: calculate(fuelUsageValue: unwrapped)))
+        }
+        
+        return list
+    }
+    
     func generateKeyValueArray() -> [KeyValuePair] {
         var list: [KeyValuePair] = []
         
+        // region nullables
         if let unwrapped = getVermogen() { list.append(unwrapped) }
+        
+        // region lists
+        list += (getBrandstofVerbruik())
         
         return list
     }
