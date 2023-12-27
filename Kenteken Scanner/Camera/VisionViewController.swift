@@ -69,7 +69,21 @@ class VisionViewController: CameraViewController {
                     DispatchQueue.main.async {
                         self.previewView.session?.stopRunning()
                         self.dismiss(animated: true, completion: nil)
-                        self.networkReqHandler.kentekenRequest(kenteken: kenteken, view: self.ctx)
+                        
+                        // request kenteken
+                        APIManager().getGekentekendeVoertuig(kenteken: kenteken) { result in
+                            switch result {
+                            case .success(let gekentekendeVoertuig):
+                                DispatchQueue.main.async {
+                                   // kenteken retrieved
+                                    print("retrieved... \(gekentekendeVoertuig.kenteken)")
+                                }
+                            case .failure(let error):
+                                print("Error: \(error)")
+                            }
+                        }
+                        
+                        //self.networkReqHandler.kentekenRequest(kenteken: kenteken, view: self.ctx)
                         
                         AnalyticsHelper().logEventMultipleItems(
                             eventkey: "search",

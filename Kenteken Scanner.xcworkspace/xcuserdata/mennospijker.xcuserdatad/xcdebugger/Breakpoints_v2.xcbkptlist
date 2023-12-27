@@ -154,13 +154,13 @@
             filePath = "Kenteken Scanner/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "595"
-            endingLineNumber = "595"
+            startingLineNumber = "614"
+            endingLineNumber = "614"
             landmarkName = "toggleOverlay(shouldShow:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5eeae4"
+                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5ee869"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -170,12 +170,12 @@
                   urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/ViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "595"
-                  endingLineNumber = "595"
-                  offsetFromSymbolStart = "88">
+                  startingLineNumber = "614"
+                  endingLineNumber = "614"
+                  offsetFromSymbolStart = "300">
                </Location>
                <Location
-                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5eeae4"
+                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5ee869"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -185,8 +185,8 @@
                   urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/ViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "595"
-                  endingLineNumber = "595"
+                  startingLineNumber = "614"
+                  endingLineNumber = "614"
                   offsetFromSymbolStart = "140">
                </Location>
             </Locations>
@@ -236,6 +236,21 @@
                   startingLineNumber = "725"
                   endingLineNumber = "725"
                   offsetFromSymbolStart = "380">
+               </Location>
+               <Location
+                  uuid = "C27F95C4-5E30-4582-951B-EA0155B772A5 - 383195c6983fbb18"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.dataTableView.dateCell(cell: __C.UITableViewCell, index: Swift.Int) -&gt; ()"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/CustomTypes/dataTableView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "725"
+                  endingLineNumber = "725"
+                  offsetFromSymbolStart = "480">
                </Location>
             </Locations>
          </BreakpointContent>

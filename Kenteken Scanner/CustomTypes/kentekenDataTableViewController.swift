@@ -71,7 +71,10 @@ class kentekenDataTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true, completion: nil)
         
-        NetworkRequestHelper().kentekenRequest(kenteken: kentekens[indexPath.row], view: ctx!)
+        // request kenteken
+        //NetworkRequestHelper().kentekenRequest(kenteken: kentekens[indexPath.row], view: ctx!)
+        self.dismiss(animated: true)
+        ctx?.checkKenteken(kenteken: kentekens[indexPath.row])
         
         if storageType == StorageIdentifier.Favorite {
             AnalyticsHelper().logEventMultipleItems(

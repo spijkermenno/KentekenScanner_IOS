@@ -332,7 +332,26 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         if KentekenFactory().getSidecode(kenteken) != -2 {
             // Performing the API request.
-            NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self);
+            
+            //NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self);
+            
+            APIManager().getGekentekendeVoertuig(kenteken: kenteken) { result in
+                switch result {
+                case .success(let gekentekendeVoertuig):
+                    DispatchQueue.main.async {
+                       // kenteken retrieved
+                        print("retrieved in viewController... \(gekentekendeVoertuig.kenteken)")
+                        
+                        // Show custom bottom sheet
+                        let bottomSheetController = CustomBottomSheetViewController()
+                        
+                        bottomSheetController.gekentekendeVoertuig = gekentekendeVoertuig
+                        self.present(bottomSheetController, animated: true, completion: nil)
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }
             
             // Logging the request to the firebase analytics.
             AnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: kenteken);

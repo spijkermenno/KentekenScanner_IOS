@@ -791,7 +791,20 @@ extension dataTableView: ImagePickerDelegate {
                 assert(value.statusCode == 200)
                 DispatchQueue.main.async {
                     self.dismiss(animated: false)
-                    NetworkRequestHelper().kentekenRequest(kenteken: self.kenteken, view: self.ctx)
+                    // request kenteken
+                    //NetworkRequestHelper().kentekenRequest(kenteken: self.kenteken, view: self.ctx)
+                    
+                    APIManager().getGekentekendeVoertuig(kenteken: self.kenteken) { result in
+                        switch result {
+                        case .success(let gekentekendeVoertuig):
+                            DispatchQueue.main.async {
+                               // kenteken retrieved
+                                print("retrieved in ImagePicker... \(gekentekendeVoertuig.kenteken)")
+                            }
+                        case .failure(let error):
+                            print("Error: \(error)")
+                        }
+                    }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
