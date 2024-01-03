@@ -24,7 +24,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     var isSpinning = false
     
-    var viewModel = ViewModel()
+    var viewModel = InAppPurchaseViewModel()
     
     var interstitialShowing = false
     
@@ -39,6 +39,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     @IBOutlet var removeAdsButton: UIButton!
     
+    let isTestAd = false
+    
     @objc func pushNotificationHandler(_ notification : NSNotification) {
         let kenteken = notification.userInfo!["kenteken"]
         checkKenteken(kenteken: kenteken as! String)
@@ -46,21 +48,40 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     func loadInterstitial() {
         let request = GADRequest()
-        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
-                               request: request,
-                               completionHandler: { [self] ad, error in
-            if let error = error {
-                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
-                return
-            }
-            print("Inter loaded")
-            
-            interstitial = ad!
-            interstitial.fullScreenContentDelegate = self
-            
-        }
-        )
         
+        if isTestAd {
+            GADInterstitialAd.load(
+                withAdUnitID:"ca-app-pub-3940256099942544/1033173712",
+                request: request,
+                completionHandler: { [self] ad, error in
+                    if let error = error {
+                        print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Inter loaded")
+                    
+                    interstitial = ad!
+                    interstitial.fullScreenContentDelegate = self
+                    
+                }
+            )
+        } else {
+            GADInterstitialAd.load(
+                withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
+                request: request,
+                completionHandler: { [self] ad, error in
+                    if let error = error {
+                        print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Inter loaded")
+                    
+                    interstitial = ad!
+                    interstitial.fullScreenContentDelegate = self
+                    
+                }
+            )
+        }
     }
     
     func showInterstitial() {
@@ -179,8 +200,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         dict["notificatiedatum"] = "01-11-21"
         
         // Add the content to the notification content
-        notificationContent.title = "test"
-        notificationContent.body = "nog een keer"
+        notificationContent.title = "Test notificatie"
+        notificationContent.body = "DIT IS EEN TEST"
         notificationContent.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         notificationContent.userInfo = dict
         
@@ -224,7 +245,13 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         print("are ads removed? \(viewModel.removedAds)")
         
         if !viewModel.removedAds {
-            bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
+            
+            if isTestAd {
+                bannerView.adUnitID = "ca-app-pub-3940256099942544/6300978111"
+            } else {
+                bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
+            }
+            
             bannerView.rootViewController = self
             
             bannerView.isHidden = false
@@ -339,7 +366,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             
             //NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self);
             
-            APIManager().getGekentekendeVoertuig(kenteken: kenteken) { result in
+            APIManager(viewController: self).getGekentekendeVoertuig(kenteken: kenteken) { result in
                 switch result {
                 case .success(let gekentekendeVoertuig):
                     DispatchQueue.main.async {
@@ -347,9 +374,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                         print("retrieved in viewController... \(gekentekendeVoertuig.kenteken)")
                         
                         // Show custom bottom sheet
-                        let bottomSheetController = CustomBottomSheetViewController()
+                        let bottomSheetController = CustomBottomSheetViewController(gekentekendeVoertuig: gekentekendeVoertuig, context: self)
                         
-                        bottomSheetController.gekentekendeVoertuig = gekentekendeVoertuig
                         self.present(bottomSheetController, animated: true, completion: nil)
                     }
                 case .failure(let error):

@@ -154,28 +154,13 @@
             filePath = "Kenteken Scanner/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "624"
-            endingLineNumber = "624"
+            startingLineNumber = "650"
+            endingLineNumber = "650"
             landmarkName = "toggleOverlay(shouldShow:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 39499e01305601d3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in Kenteken_Scanner.ViewController.toggleSpinner(onView: __C.UIView) -&gt; ()"
-                  moduleName = "Kenteken Scanner"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "624"
-                  endingLineNumber = "624"
-                  offsetFromSymbolStart = "784">
-               </Location>
-               <Location
-                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5ee923"
+                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5eedcd"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -185,8 +170,23 @@
                   urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/ViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "624"
-                  endingLineNumber = "624"
+                  startingLineNumber = "650"
+                  endingLineNumber = "650"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648 - 83d130d72a5eedcd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kenteken_Scanner.ViewController.toggleOverlay(shouldShow: Swift.Bool) -&gt; ()"
+                  moduleName = "Kenteken Scanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mennospijker/Downloads/KentekenScanner_IOS/Kenteken%20Scanner/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "650"
+                  endingLineNumber = "650"
                   offsetFromSymbolStart = "140">
                </Location>
             </Locations>

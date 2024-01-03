@@ -11,7 +11,7 @@ protocol ViewModelDelegate {
 }
 
 
-class ViewModel {
+class InAppPurchaseViewModel {
     
     // MARK: - Properties
     

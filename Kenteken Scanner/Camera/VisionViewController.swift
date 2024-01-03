@@ -70,7 +70,7 @@ class VisionViewController: CameraViewController {
                         self.dismiss(animated: true, completion: nil)
                         
                         // request kenteken
-                        APIManager().getGekentekendeVoertuig(kenteken: kenteken) { result in
+                        APIManager(viewController: self.ctx).getGekentekendeVoertuig(kenteken: kenteken) { result in
                             switch result {
                             case .success(let gekentekendeVoertuig):
                                 DispatchQueue.main.async {
