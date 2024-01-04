@@ -7,9 +7,9 @@ final class ImageUploader {
     let uploadImage: UIImage
     let number: Int
     let boundary = "example.boundary.\(ProcessInfo.processInfo.globallyUniqueString)"
-    let fieldName = "afbeeldingAuto"
-    let kenteken: String
-    
+    let fieldName = "image"
+    let kentekenID: Int
+        
     let endpointURI: URL
 
     var parameters: Parameters? {
@@ -24,11 +24,11 @@ final class ImageUploader {
         ]
     }
 
-    init(uploadImage: UIImage, number: Int, kenteken: String) {
+    init(uploadImage: UIImage, number: Int, kentekenID: Int) {
         self.uploadImage = uploadImage
         self.number = number
-        self.kenteken = kenteken
-        endpointURI = .init(string: "https://kenteken-scanner.nl/api/kenteken/image/" + kenteken)!
+        self.kentekenID = kentekenID
+        endpointURI = .init(string: "https://pixelwonders.nl/api/gekentekende-voertuigen/\(kentekenID)/upload-image")!
     }
     
     func uploadImage(completionHandler: @escaping (ImageUploadResult) -> Void) {

@@ -8,6 +8,7 @@
 import Foundation
 
 struct GekentekendeVoertuig: Decodable {
+    let id: Int
     let kenteken: String
     let voertuigsoort: String?
     let merk: String?

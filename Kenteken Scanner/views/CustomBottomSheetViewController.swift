@@ -332,8 +332,8 @@ class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, 
         }
     }
     
-    func showSingleAlert(withMessage message: String) {
-        let alertController = UIAlertController(title: "KentekenScanner", message: message, preferredStyle: .alert)
+    func showSingleAlert(withMessage message: String, title: String = "KentekenScanner") {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
@@ -466,16 +466,17 @@ extension CustomBottomSheetViewController: ImagePickerDelegate {
     func didSelect(image: UIImage?) {
         print("image selected.")
         
-        let request = ImageUploader(uploadImage: image!, number: 1, kenteken: gekentekendeVoertuig.kenteken)
+        let request = ImageUploader(uploadImage: image!, number: 1, kentekenID: gekentekendeVoertuig.id)
         request.uploadImage { (result) in
             switch result {
             case .success(let value):
                 assert(value.statusCode == 200)
                 DispatchQueue.main.async {
-                    self.dismiss(animated: false)
+                    self.showSingleAlert(withMessage: "De afbeelding is verstuurd en zal na controle worden toegevoegd. (Dit process kan even duren)", title: "Gelukt!")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+                self.showSingleAlert(withMessage: "De ontwikkelaar is op de hoogte gesteld, probeer het later nog eens.", title: "Er is iets fout gegaan")
             }
         }
     }
