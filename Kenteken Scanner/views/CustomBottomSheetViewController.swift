@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var gekentekendeVoertuig: GekentekendeVoertuig
@@ -302,6 +303,29 @@ class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, 
             cell.textLabel!.font = UIFont(name: "GillSans", size: 36)
             cell.textLabel!.textAlignment = .center
             cell.textLabel!.text = "   " + KentekenFactory().format(value.uppercased())
+            
+        } else if key == "imageURL" {
+            let imageURLs = gekentekendeVoertuig.getImageURLs()
+            
+            for urlString in imageURLs {
+                if let url = URL(string: urlString.replacingOccurrences(of: "http://", with: "https://")) {
+                    let imageView = UIImageView()
+                    imageView.kf.setImage(with: url)
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    
+                    let bounds = UIScreen.main.bounds
+                    let width = bounds.size.width
+                    var height = 160
+                    if self.imageRowHeightBig {
+                        height = 320
+                    }
+                    
+                    imageView.frame = CGRect(x: 0, y: 0, width: Int(width), height: height)
+                    cell.backgroundColor = .lightGray
+                    cell.addSubview(imageView)
+                }
+            }
         } else {
             cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 17)
             cell.textLabel!.textColor = .systemBlue
@@ -316,6 +340,14 @@ class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, 
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        print(gekentekendVoertuigItems[indexPath.row].key)
+        if gekentekendVoertuigItems[indexPath.row].key == "imageURL" {
+            imageRowHeightBig = !imageRowHeightBig
+            tableView.reloadData()
+        }
+    }
     
     private var imageRowHeightBig = false
     
@@ -436,7 +468,7 @@ class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, 
         }
         
         let confirmAction = UIAlertAction(title: "Aanmaken", style: .default) { _ in
-            let uuid = 
+            let uuid =
             self.context.createNotification(
                 title: "APK Alert",
                 description: "De APK van kenteken \(KentekenFactory().format(self.gekentekendeVoertuig.kenteken)) verloopt bijna!",

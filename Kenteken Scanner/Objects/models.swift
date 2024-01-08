@@ -85,6 +85,7 @@ struct GekentekendeVoertuig: Decodable {
     let verlengde_cabine_indicator: String?
     let carrosserie_gegevens: [CarrosserieGegevens]?
     let emissie_gegevens: [EmissieGegevens]?
+    let images: [Image]?
     
     func getKenteken() -> KeyValuePair {
         return KeyValuePair(
@@ -300,10 +301,36 @@ struct GekentekendeVoertuig: Decodable {
         
         list.append(getKenteken())
         
+        if let image = getImage() {
+            list.append(image)
+        }
+        
         list += getCarInformation()
         list += getEngineSpecifics()
         list += getEmissieGegevens()
         list += getDates()
+        
+        return list
+    }
+    
+    func getImage() -> KeyValuePair? {
+        if let unwrappedImages = images {
+            if let image = unwrappedImages.first {
+                return KeyValuePair(id: "imageURL", key: "imageURL", value: image.file_path)
+            }
+        }
+        
+        return nil
+    }
+    
+    func getImageURLs() -> [String] {
+        var list: [String] = []
+        
+        if let unwrappedImages = images {
+            for image in unwrappedImages {
+                list.append(image.file_path)
+            }
+        }
         
         return list
     }
@@ -444,4 +471,8 @@ struct CarrosserieGegevens: Decodable {
     let carrosserie_volgnummer: String
     let carrosserietype: String
     let type_carrosserie_europese_omschrijving: String
+}
+
+struct Image: Decodable {
+    let file_path: String
 }
