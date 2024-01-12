@@ -99,6 +99,7 @@ func cropImage(image: UIImage, to aspectRatio: CGFloat,completion: @escaping (UI
             newSize.width = image.size.height / aspectRatio
         } else {
             completion (image)
+            return
         }
         
         let center = CGPoint(x: image.size.width/2, y: image.size.height/2)

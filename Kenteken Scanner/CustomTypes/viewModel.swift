@@ -44,7 +44,7 @@ class InAppPurchaseViewModel {
             
             let temp: Bool = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.IAP)
             
-            AnalyticsHelper().logEvent(eventkey: "boughtPremiumUpgrade", key: "version", value: 1);
+            GoogleAnalyticsHelper().logEvent(eventkey: "boughtPremiumUpgrade", key: "version", value: 1);
             
             context.checkPurchaseUpgrade()
         }
@@ -64,7 +64,7 @@ class InAppPurchaseViewModel {
         
         let temp: Bool = StorageHelper().retrieveFromLocalStorage(storageType: StorageIdentifier.IAP)
         
-        AnalyticsHelper().logEvent(eventkey: "restoredPremiumUpgrade", key: "version", value: 1);
+        GoogleAnalyticsHelper().logEvent(eventkey: "restoredPremiumUpgrade", key: "version", value: 1);
         
         context.checkPurchaseUpgrade()
         

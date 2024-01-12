@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseAnalytics
 
-class AnalyticsHelper {
+class GoogleAnalyticsHelper {
     let DEBUG = false
     
     init() {

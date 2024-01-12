@@ -32,6 +32,7 @@ final class ImageUploader {
     }
     
     func uploadImage(completionHandler: @escaping (ImageUploadResult) -> Void) {
+        print("image uploader...")
         let imageData = uploadImage.jpegData(compressionQuality: 0.2)!
         let mimeType = imageData.mimeType!
 
@@ -44,9 +45,19 @@ final class ImageUploader {
             if let data = data, case (200..<300) = statusCode {
                 do {
                     let value = try Response(from: data, statusCode: statusCode)
+                    AnalyticsManager.shared.trackEvent(
+                        eventName: .imageUpload,
+                        parameters: ["success": true]
+                    )
+                    
                     completionHandler(.success(value))
                 } catch {
                     let _error = ResponseError(statusCode: statusCode, error: AnyError(error))
+                    AnalyticsManager.shared.trackEvent(
+                        eventName: .imageUpload,
+                        parameters: ["success": false]
+                    )
+                    
                     completionHandler(.failure(_error))
                 }
             }

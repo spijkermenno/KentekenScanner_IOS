@@ -81,6 +81,11 @@ class APIManager {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
+        
+        AnalyticsManager.shared.trackEvent(
+            eventName: .licensePlateSearch,
+            parameters: ["PlateNumber": kenteken]
+        )
 
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {

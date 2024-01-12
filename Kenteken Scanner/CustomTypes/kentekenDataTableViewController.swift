@@ -78,7 +78,7 @@ class kentekenDataTableViewController: UITableViewController {
         ctx?.checkKenteken(kenteken: kentekens[indexPath.row])
         
         if storageType == StorageIdentifier.Favorite {
-            AnalyticsHelper().logEventMultipleItems(
+            GoogleAnalyticsHelper().logEventMultipleItems(
                 eventkey: "search",
                 items: [
                     "type" : "favorite",
@@ -87,7 +87,7 @@ class kentekenDataTableViewController: UITableViewController {
                 ]
             )
         } else {
-            AnalyticsHelper().logEventMultipleItems(
+            GoogleAnalyticsHelper().logEventMultipleItems(
                 eventkey: "search",
                 items: [
                     "type" : "recent",

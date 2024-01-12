@@ -84,7 +84,7 @@ class VisionViewController: CameraViewController {
                         
                         //self.networkReqHandler.kentekenRequest(kenteken: kenteken, view: self.ctx)
                         
-                        AnalyticsHelper().logEventMultipleItems(
+                        GoogleAnalyticsHelper().logEventMultipleItems(
                             eventkey: "search",
                             items: [
                                 "type" : "camera",

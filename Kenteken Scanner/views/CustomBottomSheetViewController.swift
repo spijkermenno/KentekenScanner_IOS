@@ -455,7 +455,7 @@ class CustomBottomSheetViewController: UIViewController, UITableViewDataSource, 
         dateFormatter.dateFormat = "yyyyMMdd"
         
         let dict = ["kenteken": gekentekendeVoertuig.kenteken, "notificationDate": dateFormatter.string(from: notificationDate)]
-        AnalyticsHelper().logEventMultipleItems(eventkey: "apk_alert", items: dict)
+        GoogleAnalyticsHelper().logEventMultipleItems(eventkey: "apk_alert", items: dict)
         
         alert = UIAlertController(
             title: "Notificatie instellen",
@@ -499,6 +499,7 @@ extension CustomBottomSheetViewController: ImagePickerDelegate {
         print("image selected.")
         
         let request = ImageUploader(uploadImage: image!, number: 1, kentekenID: gekentekendeVoertuig.id)
+        
         request.uploadImage { (result) in
             switch result {
             case .success(let value):

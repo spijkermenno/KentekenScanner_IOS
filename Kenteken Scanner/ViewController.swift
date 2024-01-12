@@ -389,7 +389,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             }
             
             // Logging the request to the firebase analytics.
-            AnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: kenteken);
+            GoogleAnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: kenteken);
         }
     }
     
@@ -421,7 +421,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     @IBAction func RecentButton(_ sender: Any, forEvent event: UIEvent) {
-        AnalyticsHelper().logEvent(eventkey: "recent_load", key: "click", value: true)
+        GoogleAnalyticsHelper().logEvent(eventkey: "recent_load", key: "click", value: true)
         
         let dataTableViewObj:kentekenDataTableViewController = kentekenDataTableViewController()
         dataTableViewObj.setContext(ctx_: self)
@@ -429,7 +429,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         self.present(dataTableViewObj, animated: true, completion: nil)
     }
     @IBAction func FavoriteButton(_ sender: Any, forEvent event: UIEvent) {
-        AnalyticsHelper().logEvent(eventkey: "favorite_load", key: "click", value: true)
+        GoogleAnalyticsHelper().logEvent(eventkey: "favorite_load", key: "click", value: true)
         
         let dataTableViewObj:kentekenDataTableViewController = kentekenDataTableViewController()
         dataTableViewObj.setContext(ctx_: self)
@@ -498,6 +498,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+        AnalyticsManager.shared.trackEvent(eventName: .adImpression)
     }
     
     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {

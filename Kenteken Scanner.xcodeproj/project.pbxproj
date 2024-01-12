@@ -10,6 +10,7 @@
 		3524A6D48186DDBB13EB71D6 /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091A7E6E2C611B930F9DFEBB /* Pods_Kenteken_Scanner_Kenteken_ScannerUITests.framework */; };
 		744AEE6AFEFFF2F2280C16C6 /* Pods_Kenteken_ScannerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA15F59AF61C03555444160 /* Pods_Kenteken_ScannerTests.framework */; };
 		782D826DA705E05295F4080B /* Pods_Kenteken_Scanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B91E2AE16768A0E10083C8 /* Pods_Kenteken_Scanner.framework */; };
+		A93222422B511E5D00A2E4F4 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93222412B511E5D00A2E4F4 /* AnalyticsManager.swift */; };
 		A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AA25FF97E90013F8FE /* AppDelegate.swift */; };
 		A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */; };
 		A93E03AF25FF97E90013F8FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E03AE25FF97E90013F8FE /* ViewController.swift */; };
@@ -86,6 +87,7 @@
 		A909AB7626EE98E200732E56 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		A909AB7726EE98E200732E56 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		A910897E26D180A30040768C /* Kenteken Scanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Kenteken Scanner.entitlements"; sourceTree = "<group>"; };
+		A93222412B511E5D00A2E4F4 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		A93E03A725FF97E90013F8FE /* Kenteken Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kenteken Scanner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93E03AA25FF97E90013F8FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A93E03AC25FF97E90013F8FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */,
 				A9D3BC3D266F51F10035C34C /* IAPManager.swift */,
 				A94ABADB2B3C2A9100F959DB /* APIManager.swift */,
+				A93222412B511E5D00A2E4F4 /* AnalyticsManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				A9A1406E260B4EB800571D1C /* StringUtils.swift in Sources */,
 				A93E03AB25FF97E90013F8FE /* AppDelegate.swift in Sources */,
 				A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */,
+				A93222422B511E5D00A2E4F4 /* AnalyticsManager.swift in Sources */,
 				A94ABAE12B3C2D3900F959DB /* CustomBottomSheetViewController.swift in Sources */,
 				A9A14070260B4EB800571D1C /* VisionViewController.swift in Sources */,
 				A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */,
@@ -763,7 +767,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken Scanner.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -772,7 +776,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 10805;
+				MARKETING_VERSION = 10806;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -791,7 +795,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken ScannerRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -800,7 +804,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 10805;
+				MARKETING_VERSION = 10806;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
