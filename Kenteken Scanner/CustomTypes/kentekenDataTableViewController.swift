@@ -51,7 +51,7 @@ class kentekenDataTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cellId")
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "cellId")
         
         let img = UIImage(named: "kentekenplaat")!
         
@@ -63,6 +63,7 @@ class kentekenDataTableViewController: UITableViewController {
         
         cell.textLabel!.textAlignment = NSTextAlignment.center
         cell.textLabel!.font = UIFont(name: "GillSans", size: 42)
+        cell.textLabel!.textColor = .black
         cell.textLabel!.text = "   " + KentekenFactory().format(kentekens[indexPath.row].uppercased())
         
         return cell
@@ -71,10 +72,13 @@ class kentekenDataTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true, completion: nil)
         
-        NetworkRequestHelper().kentekenRequest(kenteken: kentekens[indexPath.row], view: ctx!)
+        // request kenteken
+        //NetworkRequestHelper().kentekenRequest(kenteken: kentekens[indexPath.row], view: ctx!)
+        self.dismiss(animated: true)
+        ctx?.checkKenteken(kenteken: kentekens[indexPath.row])
         
         if storageType == StorageIdentifier.Favorite {
-            AnalyticsHelper().logEventMultipleItems(
+            GoogleAnalyticsHelper().logEventMultipleItems(
                 eventkey: "search",
                 items: [
                     "type" : "favorite",
@@ -83,7 +87,7 @@ class kentekenDataTableViewController: UITableViewController {
                 ]
             )
         } else {
-            AnalyticsHelper().logEventMultipleItems(
+            GoogleAnalyticsHelper().logEventMultipleItems(
                 eventkey: "search",
                 items: [
                     "type" : "recent",

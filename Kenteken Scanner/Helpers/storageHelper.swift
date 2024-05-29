@@ -17,9 +17,24 @@ class StorageHelper {
     let RequestsDoneStorageIdentifier: String = "Done"
     let IAPStorageIdentifier: String = "IAP"
     let ShowAdStorageIdentifier: String = "ShowAd"
+    let idStorageIdentifier: String = "GeneratedID"
 
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
+    
+    func generateAndSaveIDIfNeeded() -> String {
+            if let generatedID = defaults.string(forKey: idStorageIdentifier) {
+                return generatedID
+            } else {
+                let newID = UUID().uuidString
+                
+                
+
+                defaults.set(newID, forKey: idStorageIdentifier)
+
+                return newID
+            }
+        }
     
     func saveToLocalStorage(bool: Bool, storageType: StorageIdentifier) {
         if storageType == StorageIdentifier.IAP {
@@ -49,8 +64,6 @@ class StorageHelper {
     }
     
     func saveToLocalStorage(arr: [NotificationObject], storageType: StorageIdentifier) {
-        print(arr)
-        print(storageType)
         if storageType == StorageIdentifier.Alert {
             defaults.set(try? PropertyListEncoder().encode(arr), forKey: alertStorageIdentifier)
         }

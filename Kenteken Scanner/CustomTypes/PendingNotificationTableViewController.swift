@@ -94,9 +94,27 @@ class pendingNotificationTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("click")
         dismiss(animated: true, completion: nil)
         
-        NetworkRequestHelper().kentekenRequest(kenteken: alerts[indexPath.row].userInfo["kenteken"] as! String, view: ctx!)
+        if let ctx = self.ctx {
+            
+            // request kenteken
+            //NetworkRequestHelper().kentekenRequest(kenteken: alerts[indexPath.row].userInfo["kenteken"] as! String, view: ctx!)
+            
+            if let kenteken = alerts[indexPath.row].userInfo["kenteken"] as? String {
+                
+                APIManager(viewController: ctx).getGekentekendeVoertuig(kenteken: kenteken) { result in
+                    switch result {
+                    case .success(let gekentekendeVoertuig):
+                        DispatchQueue.main.async {
+                            // kenteken retrieved
+                            print("retrieved in Notification Handler... \(gekentekendeVoertuig.kenteken)")
+                        }
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                }
+            }
+        }
     }
 }

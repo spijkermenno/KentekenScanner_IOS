@@ -24,7 +24,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     var isSpinning = false
     
-    var viewModel = ViewModel()
+    var viewModel = InAppPurchaseViewModel()
     
     var interstitialShowing = false
     
@@ -39,6 +39,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     @IBOutlet var removeAdsButton: UIButton!
     
+    let isTestAd = false
+    
     @objc func pushNotificationHandler(_ notification : NSNotification) {
         let kenteken = notification.userInfo!["kenteken"]
         checkKenteken(kenteken: kenteken as! String)
@@ -46,21 +48,40 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     func loadInterstitial() {
         let request = GADRequest()
-        GADInterstitialAd.load(withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
-                               request: request,
-                               completionHandler: { [self] ad, error in
-            if let error = error {
-                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
-                return
-            }
-            print("Inter loaded")
-            
-            interstitial = ad!
-            interstitial.fullScreenContentDelegate = self
-            
-        }
-        )
         
+        if isTestAd {
+            GADInterstitialAd.load(
+                withAdUnitID:"ca-app-pub-3940256099942544/1033173712",
+                request: request,
+                completionHandler: { [self] ad, error in
+                    if let error = error {
+                        print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Inter loaded")
+                    
+                    interstitial = ad!
+                    interstitial.fullScreenContentDelegate = self
+                    
+                }
+            )
+        } else {
+            GADInterstitialAd.load(
+                withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
+                request: request,
+                completionHandler: { [self] ad, error in
+                    if let error = error {
+                        print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Inter loaded")
+                    
+                    interstitial = ad!
+                    interstitial.fullScreenContentDelegate = self
+                    
+                }
+            )
+        }
     }
     
     func showInterstitial() {
@@ -90,7 +111,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         NotificationCenter.default.addObserver(self, selector: #selector(pushNotificationHandler(_:)) , name: NSNotification.Name(rawValue: "NewNotification"), object: nil)
         
-        
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
@@ -98,6 +118,11 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGray2.withAlphaComponent(0.5),
+        ]
+        kentekenField.attributedPlaceholder = NSAttributedString(string: "00-XXX-0", attributes: placeholderAttributes)
+
         europeStarsImages.roundCorners(topLeft: 10, topRight: 0, bottomLeft: 10, bottomRight: 0)
         
         kentekenField.roundCorners(topLeft: 0, topRight: 10, bottomLeft: 0, bottomRight: 10)
@@ -144,7 +169,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             }
         }
         
-        // testNotification()
+         //testNotification()
         
         Analytics.setUserID(UUID().uuidString)
         
@@ -168,7 +193,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     func testNotification() -> Void {
         let notificationContent = UNMutableNotificationContent()
         
-        let uuid = UUID().uuidString
         var dict = [String: Any]()
         
         dict["kenteken"] = "31SLDL"
@@ -176,8 +200,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         dict["notificatiedatum"] = "01-11-21"
         
         // Add the content to the notification content
-        notificationContent.title = "test"
-        notificationContent.body = "nog een keer"
+        notificationContent.title = "Test notificatie"
+        notificationContent.body = "DIT IS EEN TEST"
         notificationContent.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         notificationContent.userInfo = dict
         
@@ -221,7 +245,13 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         print("are ads removed? \(viewModel.removedAds)")
         
         if !viewModel.removedAds {
-            bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
+            
+            if isTestAd {
+                bannerView.adUnitID = "ca-app-pub-3940256099942544/6300978111"
+            } else {
+                bannerView.adUnitID = "ca-app-pub-4928043878967484/2516765129"
+            }
+            
             bannerView.rootViewController = self
             
             bannerView.isHidden = false
@@ -333,10 +363,33 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         
         if KentekenFactory().getSidecode(kenteken) != -2 {
             // Performing the API request.
-            NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self);
+            
+            //NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self);
+            
+            APIManager(viewController: self).getGekentekendeVoertuig(kenteken: kenteken) { result in
+                switch result {
+                case .success(let gekentekendeVoertuig):
+                    DispatchQueue.main.async {
+                       // kenteken retrieved
+                        print("retrieved in viewController... \(gekentekendeVoertuig.kenteken)")
+                        
+                        // Show custom bottom sheet
+                        let bottomSheetController = CustomBottomSheetViewController(gekentekendeVoertuig: gekentekendeVoertuig, context: self)
+                        
+                        self.present(bottomSheetController, animated: true, completion: nil)
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
+                    self.createAlert(
+                        title: "Kenteken niet gevonden",
+                        message: "Het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekent niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.",
+                        dismiss: true
+                    )
+                }
+            }
             
             // Logging the request to the firebase analytics.
-            AnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: kenteken);
+            GoogleAnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: kenteken);
         }
     }
     
@@ -368,7 +421,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     @IBAction func RecentButton(_ sender: Any, forEvent event: UIEvent) {
-        AnalyticsHelper().logEvent(eventkey: "recent_load", key: "click", value: true)
+        GoogleAnalyticsHelper().logEvent(eventkey: "recent_load", key: "click", value: true)
         
         let dataTableViewObj:kentekenDataTableViewController = kentekenDataTableViewController()
         dataTableViewObj.setContext(ctx_: self)
@@ -376,7 +429,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         self.present(dataTableViewObj, animated: true, completion: nil)
     }
     @IBAction func FavoriteButton(_ sender: Any, forEvent event: UIEvent) {
-        AnalyticsHelper().logEvent(eventkey: "favorite_load", key: "click", value: true)
+        GoogleAnalyticsHelper().logEvent(eventkey: "favorite_load", key: "click", value: true)
         
         let dataTableViewObj:kentekenDataTableViewController = kentekenDataTableViewController()
         dataTableViewObj.setContext(ctx_: self)
@@ -409,8 +462,9 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             alert.addAction(UIAlertAction(title: "Doorgaan", style: .cancel, handler: nil))
         }
         
-        self.present(alert, animated: true)
-        print("alert is presented")
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -444,6 +498,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+        AnalyticsManager.shared.trackEvent(eventName: .adImpression)
     }
     
     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
@@ -470,7 +525,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         print("Ad did dismiss full screen content.")
         self.interstitialShowing = false
         
-        NetworkRequestHelper().actualRequest(kenteken: actualKenteken, view: self)
+        checkKenteken(kenteken: actualKenteken)
     }
     
     func openPurchaseRequest(_ context: Any) -> Void {
@@ -519,14 +574,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                 DispatchQueue.main.async {
                     if let ctx = context as? ViewController {
                         ctx.present(alert, animated: true)
-                    } else if let ctx = context as? dataTableView {
+                    } else if let ctx = context as? CustomBottomSheetViewController {
                         ctx.present(alert, animated: true)
                     }
                 }
             case .failure(let error):
                 print("IAP ERROR")
                 DispatchQueue.main.async {
-                    if let ctx = context as? dataTableView {
+                    if let ctx = context as? CustomBottomSheetViewController {
                         ctx.showIAPRelatedError(error)
                     } else {
                         self.showIAPRelatedError(error)

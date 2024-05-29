@@ -28,29 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        
-//        if #available(iOS 14, *) {
-//            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-//                print("Status code:")
-//                switch(status) {
-//                case ATTrackingManager.AuthorizationStatus.authorized:
-//                    print("authorized")
-//                case .notDetermined:
-//                    print("notDetermined")
-//                case .restricted:
-//                    print("restricted")
-//                case .denied:
-//                    print("denied")
-//                @unknown default:
-//                    print("unknown")
-//                }
-//                // Tracking authorization completed. Start loading ads here.
-//            })
-//        } else {
-//            // Fallback on earlier versions
-//        }
-        
+        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.        
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

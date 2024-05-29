@@ -18,7 +18,6 @@ class VisionViewController: CameraViewController {
 	let numberTracker = StringTracker()
     var ctx: ViewController!
     var requesting = false
-    let networkReqHandler = NetworkRequestHelper()
 	
 	override func viewDidLoad() {
 		// Set up vision request before letting ViewController set up the camera
@@ -64,16 +63,28 @@ class VisionViewController: CameraViewController {
                 }
                             
                 if query != "" && KentekenFactory().getSidecode(query) != -2 {
-                    //print("execution: \(query) - \(KentekenFactory().getSidecode(query))")
                     let kenteken: String = query
-                    //print("valid kenteken: " + KentekenFactory().format(kenteken))
 
                     DispatchQueue.main.async {
                         self.previewView.session?.stopRunning()
                         self.dismiss(animated: true, completion: nil)
-                        self.networkReqHandler.kentekenRequest(kenteken: kenteken, view: self.ctx)
                         
-                        AnalyticsHelper().logEventMultipleItems(
+                        // request kenteken
+                        APIManager(viewController: self.ctx).getGekentekendeVoertuig(kenteken: kenteken) { result in
+                            switch result {
+                            case .success(let gekentekendeVoertuig):
+                                DispatchQueue.main.async {
+                                   // kenteken retrieved
+                                    print("retrieved... \(gekentekendeVoertuig.kenteken)")
+                                }
+                            case .failure(let error):
+                                print("Error: \(error)")
+                            }
+                        }
+                        
+                        //self.networkReqHandler.kentekenRequest(kenteken: kenteken, view: self.ctx)
+                        
+                        GoogleAnalyticsHelper().logEventMultipleItems(
                             eventkey: "search",
                             items: [
                                 "type" : "camera",

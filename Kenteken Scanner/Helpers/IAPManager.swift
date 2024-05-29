@@ -59,9 +59,7 @@ class IAPManager: NSObject {
             productsRecieveHandler(.failure(.noProductIDsFound))
             return
         }
-        
-        print(productIDs)
-        
+                
         // start requesting data from apple
         let request = SKProductsRequest(productIdentifiers: Set(productIDs))
         request.delegate = self
@@ -77,7 +75,6 @@ class IAPManager: NSObject {
     }
     
     func buy(product: SKProduct, withHandler handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
-        print("buy")
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)
 
@@ -102,9 +99,7 @@ class IAPManager: NSObject {
 
 extension IAPManager: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        print("transaction queue")
         transactions.forEach { (transaction) in
-            print(transaction)
             switch transaction.transactionState {
             case .purchased:
                 onBuyProductHandler?(.success(true))
@@ -156,12 +151,10 @@ extension IAPManager: SKPaymentTransactionObserver {
     
 
         func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
-            print("removed")
         }
 
 
         func paymentQueue(_ queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
-            print("downloading")
         }
 }
 
@@ -173,17 +166,12 @@ extension IAPManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         // Get the available products contained in the response.
         let products = response.products
-
-        print(products)
-        print(products.count)
         
         // Check if there are any products available.
         if products.count > 0 {
-            print("products found. SUCCESS")
             // Call the following handler passing the received products.
             onRecieveProductsHandler?(.success(products))
         } else {
-            print("no products found. ERROR")
             // No products were found.
             onRecieveProductsHandler?(.failure(.noProductsFound))
         }

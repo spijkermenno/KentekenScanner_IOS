@@ -7,9 +7,9 @@ final class ImageUploader {
     let uploadImage: UIImage
     let number: Int
     let boundary = "example.boundary.\(ProcessInfo.processInfo.globallyUniqueString)"
-    let fieldName = "afbeeldingAuto"
-    let kenteken: String
-    
+    let fieldName = "image"
+    let kentekenID: Int
+        
     let endpointURI: URL
 
     var parameters: Parameters? {
@@ -24,14 +24,15 @@ final class ImageUploader {
         ]
     }
 
-    init(uploadImage: UIImage, number: Int, kenteken: String) {
+    init(uploadImage: UIImage, number: Int, kentekenID: Int) {
         self.uploadImage = uploadImage
         self.number = number
-        self.kenteken = kenteken
-        endpointURI = .init(string: "https://kenteken-scanner.nl/api/kenteken/image/" + kenteken)!
+        self.kentekenID = kentekenID
+        endpointURI = .init(string: "https://pixelwonders.nl/api/gekentekende-voertuigen/\(kentekenID)/upload-image")!
     }
     
     func uploadImage(completionHandler: @escaping (ImageUploadResult) -> Void) {
+        print("image uploader...")
         let imageData = uploadImage.jpegData(compressionQuality: 0.2)!
         let mimeType = imageData.mimeType!
 
@@ -43,12 +44,20 @@ final class ImageUploader {
             let statusCode = (urlResponse as? HTTPURLResponse)?.statusCode ?? 0
             if let data = data, case (200..<300) = statusCode {
                 do {
-                    print("success")
                     let value = try Response(from: data, statusCode: statusCode)
+                    AnalyticsManager.shared.trackEvent(
+                        eventName: .imageUpload,
+                        parameters: ["success": true]
+                    )
+                    
                     completionHandler(.success(value))
                 } catch {
-                    print("error")
                     let _error = ResponseError(statusCode: statusCode, error: AnyError(error))
+                    AnalyticsManager.shared.trackEvent(
+                        eventName: .imageUpload,
+                        parameters: ["success": false]
+                    )
+                    
                     completionHandler(.failure(_error))
                 }
             }
