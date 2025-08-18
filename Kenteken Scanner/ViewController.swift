@@ -18,7 +18,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     @IBOutlet var kentekenField: UITextField!
     @IBOutlet var europeStarsImages: UIImageView!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     var bannerView: GADBannerView!
     var remoteConfig: RemoteConfig!
     
@@ -358,44 +359,54 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func checkKenteken(kenteken: String) {
-        // check if kenteken sidecode is not -2.
-        // -2 is the status code for no result.
+        let uppercasedKenteken = kenteken.uppercased().replacingOccurrences(of: "-", with: "_").replacingOccurrences(of: " ", with: "_")
         
-        if KentekenFactory().getSidecode(kenteken) != -2 {
+        if KentekenFactory().getSidecode(uppercasedKenteken) != -2 {
+            // Show spinner when request starts
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating()
+                self.kentekenField.isEnabled = false
+            }
+            
             // Performing the API request.
-            
-            //NetworkRequestHelper().kentekenRequest(kenteken: kenteken, view: self);
-            
-            APIManager(viewController: self).getGekentekendeVoertuig(kenteken: kenteken) { result in
+            APIManager(viewController: self).getGekentekendeVoertuig(kenteken: uppercasedKenteken) { result in
+                // Hide spinner when request completes (success or failure)
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.kentekenField.isEnabled = true
+                }
+                
                 switch result {
                 case .success(let gekentekendeVoertuig):
                     DispatchQueue.main.async {
-                       // kenteken retrieved
-                        print("retrieved in viewController... \(gekentekendeVoertuig.kenteken)")
-                        
-                        // Show custom bottom sheet
                         let bottomSheetController = CustomBottomSheetViewController(gekentekendeVoertuig: gekentekendeVoertuig, context: self)
                         
                         self.present(bottomSheetController, animated: true, completion: nil)
                     }
                 case .failure(let error):
-                    print("Error: \(error)")
-                    self.createAlert(
-                        title: "Kenteken niet gevonden",
-                        message: "Het kenteken \(KentekenFactory().format(kenteken)) kan niet worden gevonden in de database. \n\n Dit betekent niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.",
-                        dismiss: true
-                    )
+                    DispatchQueue.main.async {
+                        print("Error: \(error)")
+                        
+                        // Check if it's a decoding error
+                        if let decodingError = error as? DecodingError {
+                            print("Decoding error details: \(decodingError)")
+                        }
+                        
+                        self.createAlert(
+                            title: "Kenteken niet gevonden",
+                            message: "Het kenteken \(KentekenFactory().format(uppercasedKenteken)) kan niet worden gevonden in de database. \n\n Dit betekent niet direct dat het kenteken niet bestaat. Kentekens welke nog geen datum eerste toelating hebben zijn nog niet toegevoegd aan de database.",
+                            dismiss: true
+                        )
+                    }
                 }
             }
             
             // Logging the request to the firebase analytics.
-            GoogleAnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: kenteken);
+            GoogleAnalyticsHelper().logEvent(eventkey: "search", key: "kenteken", value: uppercasedKenteken);
         }
     }
     
     @objc func runKentekenAPI() {
-        print("request via runKentekenAPI")
-        
         let enteredKenteken : String = kentekenField.text!
         //check if valid kenteken
         kentekenField.text = KentekenFactory().format(enteredKenteken)
@@ -405,8 +416,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     
     // Searchfield on text change handler
     @IBAction func KentekenHandler(_ sender: UITextField, forEvent event: UIEvent) {
-        print("request via KentekenHandler")
-        
         let enteredKenteken : String = sender.text!
         //check if valid kenteken
         sender.text = KentekenFactory().format(enteredKenteken)
