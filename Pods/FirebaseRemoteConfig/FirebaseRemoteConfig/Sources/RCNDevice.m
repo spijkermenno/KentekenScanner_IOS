@@ -19,6 +19,7 @@
 #import <sys/utsname.h>
 
 #import <GoogleUtilities/GULAppEnvironmentUtil.h>
+#import "FirebaseCore/Extension/FirebaseCoreInternal.h"
 #import "FirebaseRemoteConfig/Sources/Private/RCNConfigSettings.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigConstants.h"
 
@@ -32,19 +33,19 @@ static NSString *const RCNDeviceContextKeyDeviceLocale = @"device_locale";
 static NSString *const RCNDeviceContextKeyLocaleLanguage = @"locale_language";
 static NSString *const RCNDeviceContextKeyGMPProjectIdentifier = @"GMP_project_Identifier";
 
-NSString *FIRRemoteConfigAppVersion() {
+NSString *FIRRemoteConfigAppVersion(void) {
   return [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
 }
 
-NSString *FIRRemoteConfigAppBuildVersion() {
+NSString *FIRRemoteConfigAppBuildVersion(void) {
   return [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 }
 
-NSString *FIRRemoteConfigPodVersion() {
-  return [NSString stringWithUTF8String:STR(FIRRemoteConfig_VERSION)];
+NSString *FIRRemoteConfigPodVersion(void) {
+  return FIRFirebaseVersion();
 }
 
-RCNDeviceModel FIRRemoteConfigDeviceSubtype() {
+RCNDeviceModel FIRRemoteConfigDeviceSubtype(void) {
   NSString *model = [GULAppEnvironmentUtil deviceModel];
   if ([model hasPrefix:@"iPhone"]) {
     return RCNDeviceModelPhone;
@@ -55,10 +56,11 @@ RCNDeviceModel FIRRemoteConfigDeviceSubtype() {
   return RCNDeviceModelOther;
 }
 
-NSString *FIRRemoteConfigDeviceCountry() {
+NSString *FIRRemoteConfigDeviceCountry(void) {
   return [[[NSLocale currentLocale] objectForKey:NSLocaleCountryCode] lowercaseString];
 }
 
+// TODO(rizafran): To migrate to use ISOLanguageCodes in the future
 NSDictionary<NSString *, NSArray *> *FIRRemoteConfigFirebaseLocaleMap(void) {
   return @{
     // Albanian
@@ -81,8 +83,6 @@ NSDictionary<NSString *, NSArray *> *FIRRemoteConfigFirebaseLocaleMap(void) {
     @"fi" : @[ @"fi", @"fi_FI" ],
     // Hebrew
     @"he" : @[ @"he", @"iw_IL" ],
-    // Hindi
-    @"hi" : @[ @"hi_IN" ],
     // Hungarian
     @"hu" : @[ @"hu", @"hu_HU" ],
     // Icelandic
@@ -152,6 +152,9 @@ NSDictionary<NSString *, NSArray *> *FIRRemoteConfigFirebaseLocaleMap(void) {
     @"de" : @[ @"de", @"de_AT", @"de_DE", @"de_LU", @"de_CH", @"de-DE" ],
     // Greek
     @"el" : @[ @"el", @"el_CY", @"el_GR" ],
+    // India
+    @"hi_IN" :
+        @[ @"hi_IN", @"ta_IN", @"te_IN", @"mr_IN", @"bn_IN", @"gu_IN", @"kn_IN", @"pa_Guru_IN" ],
     // Italian
     @"it" : @[ @"it", @"it_IT", @"it_CH", @"it-IT" ],
     // Japanese
@@ -187,6 +190,7 @@ NSArray<NSString *> *FIRRemoteConfigAppManagerLocales(void) {
   }
   return locales;
 }
+
 NSString *FIRRemoteConfigDeviceLocale(void) {
   NSArray<NSString *> *locales = FIRRemoteConfigAppManagerLocales();
   NSArray<NSString *> *preferredLocalizations =
