@@ -321,6 +321,7 @@
 				A93E03A525FF97E90013F8FE /* Resources */,
 				B0190FFA054D8359996806B7 /* [CP] Embed Pods Frameworks */,
 				A909AB9626EE9C1E00732E56 /* Embed App Clips */,
+				FFB8842C3503174E4ED2ABD0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -359,6 +360,7 @@
 				A93E03C525FF97EA0013F8FE /* Frameworks */,
 				A93E03C625FF97EA0013F8FE /* Resources */,
 				A8CA0391E0C0AFB4737E5CE3 /* [CP] Embed Pods Frameworks */,
+				B865E36A90C4FE246D749148 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -543,6 +545,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B865E36A90C4FE246D749148 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFB8842C3503174E4ED2ABD0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -768,7 +804,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken Scanner.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				DEVELOPMENT_TEAM = 327PJMKH2C;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -796,7 +832,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken ScannerRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = 8B6DL7HNJ3;
+				DEVELOPMENT_TEAM = 327PJMKH2C;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

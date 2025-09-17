@@ -394,6 +394,8 @@ struct EmissieGegevens: Decodable {
     let klasse_hybride_elektrisch_voertuig: String?
     let opgegeven_maximum_snelheid: Double?
     let uitlaatemissieniveau: String?
+    let maximum_massa_trekken_ongeremd: Double?
+    let maximum_massa_trekken_geremd: Double?
     
     func getVermogen() -> KeyValuePair? {
         let id = "vermogen \(brandstof_omschrijving)"

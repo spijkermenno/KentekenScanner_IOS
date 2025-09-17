@@ -114,7 +114,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
-        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+        bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: 320, height: 100)))
         
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
