@@ -72,6 +72,10 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
+            argument = "-GADDebugEnabled"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-FIRDebugEnabled"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -79,6 +83,11 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "-FIRDebugEnabled"
+            value = ""
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "-GADDebugEnabled"
             value = ""
             isEnabled = "NO">
          </EnvironmentVariable>

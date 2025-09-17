@@ -13,14 +13,14 @@ import AdSupport
 import StoreKit
 import IntentsUI
 
-class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate, GADFullScreenContentDelegate {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate, UITextFieldDelegate, FullScreenContentDelegate {
     var cameraViewController: VisionViewController!
     
     @IBOutlet var kentekenField: UITextField!
     @IBOutlet var europeStarsImages: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    var bannerView: GADBannerView!
+    var bannerView: BannerView!
     var remoteConfig: RemoteConfig!
     
     var isSpinning = false
@@ -34,7 +34,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     var spinnerView: UIView!
     var ai: UIActivityIndicatorView!
     
-    var interstitial: GADInterstitialAd!
+    var interstitial: InterstitialAd!
     
     var actualKenteken: String!
     
@@ -48,11 +48,11 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
     }
     
     func loadInterstitial() {
-        let request = GADRequest()
+        let request = Request()
         
         if isTestAd {
-            GADInterstitialAd.load(
-                withAdUnitID:"ca-app-pub-3940256099942544/1033173712",
+            InterstitialAd.load(
+                with:"ca-app-pub-3940256099942544/1033173712",
                 request: request,
                 completionHandler: { [self] ad, error in
                     if let error = error {
@@ -67,8 +67,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
                 }
             )
         } else {
-            GADInterstitialAd.load(
-                withAdUnitID:"ca-app-pub-4928043878967484/8261143212",
+            InterstitialAd.load(
+                with:"ca-app-pub-4928043878967484/8261143212",
                 request: request,
                 completionHandler: { [self] ad, error in
                     if let error = error {
@@ -89,7 +89,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         if !viewModel.removedAds {
             if interstitial != nil {
                 self.interstitialShowing = true
-                interstitial.present(fromRootViewController: self)
+                interstitial.present(from: self)
             } else {
                 print("Ad wasn't ready")
             }
@@ -115,7 +115,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
-        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+        bannerView = BannerView(adSize: adSizeFor(cgSize: CGSize(width: 320, height: 100)))
         
         kentekenField.addTarget(self, action: #selector(runKentekenAPI), for: UIControl.Event.primaryActionTriggered)
         
@@ -258,7 +258,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             bannerView.isHidden = false
             removeAdsButton.isHidden = false
             
-            bannerView.load(GADRequest())
+            bannerView.load(Request())
             
             addBannerViewToView(bannerView)
             
@@ -279,45 +279,37 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
-    func createNotification(title: String, description: String, kenteken: String, apkdatum: Date, apkdatumString: String, notificatiedatum: String, activationTimeFromNow: Double) -> String {
-        // Request permission to perform notifications
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-            if success {
-                print("All set!")
-            } else if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-        
-        // Create new notifcation content instance
-        let notificationContent = UNMutableNotificationContent()
-        
+    func createNotification(title: String,
+                            description: String,
+                            kenteken: String,
+                            apkdatum: Date,
+                            apkdatumString: String,
+                            notificatiedatum: String,
+                            activationTimeFromNow: Double) -> String? {
+        let content = UNMutableNotificationContent()
         let uuid = UUID().uuidString
-        var dict = [String: Any]()
         
-        dict["kenteken"] = kenteken
-        dict["apkdatum"] = apkdatumString
-        dict["notificatiedatum"] = notificatiedatum
-        
-        print(dict)
-        
-        // Add the content to the notification content
-        notificationContent.title = title
-        notificationContent.body = description
-        notificationContent.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
-        notificationContent.userInfo = dict
+        content.title = title
+        content.body = description
+        content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
+        content.userInfo = [
+            "kenteken": kenteken,
+            "apkdatum": apkdatumString,
+            "notificatiedatum": notificatiedatum
+        ]
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: activationTimeFromNow, repeats: false)
+        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
         
-        let request = UNNotificationRequest(identifier: uuid, content: notificationContent, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request) { (error) in
+        var success = true
+        UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
-                print("Notification Error: ", error)
+                print("Notification Error: \(error)")
+                success = false
             }
         }
         
-        return uuid
+        return success ? uuid : nil
     }
     
     func createNotUsedNotification() -> String {
@@ -453,7 +445,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         self.present(vc, animated: true, completion: nil)
     }
     @IBAction func notificationButton(_ sender: UIButton) {
-        
+        GoogleAnalyticsHelper().logEvent(eventkey: "notifications_load", key: "click", value: true)
+
         let dataTableViewObj:pendingNotificationTableViewController = pendingNotificationTableViewController()
         dataTableViewObj.setContext(ctx_: self)
         self.present(dataTableViewObj, animated: true, completion: nil)
@@ -476,7 +469,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
         }
     }
     
-    func addBannerViewToView(_ bannerView: GADBannerView) {
+    func addBannerViewToView(_ bannerView: BannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bannerView)
         view.addConstraints(
@@ -497,40 +490,44 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, UIText
             ])
     }
     
-    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
         self.removeAdsButton.isHidden = false
     }
     
-    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+    func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
         print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
         self.removeAdsButton.isHidden = true
     }
     
-    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+    func bannerViewDidRecordImpression(_ bannerView: BannerView) {
         AnalyticsManager.shared.trackEvent(eventName: .adImpression)
     }
     
-    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+    func bannerViewWillPresentScreen(_ bannerView: BannerView) {
     }
     
-    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+    func bannerViewWillDismissScreen(_ bannerView: BannerView) {
     }
     
-    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+    func bannerViewDidDismissScreen(_ bannerView: BannerView) {
     }
     
     /// Tells the delegate that the ad failed to present full screen content.
-    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+    func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print("Ad did fail to present full screen content.")
+        
+        self.interstitialShowing = false
+        
+        checkKenteken(kenteken: actualKenteken)
     }
     
     /// Tells the delegate that the ad will present full screen content.
-    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adWillPresentFullScreenContent(_ ad: FullScreenPresentingAd) {
         print("Ad will present full screen content.")
     }
     
     /// Tells the delegate that the ad dismissed full screen content.
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
         print("Ad did dismiss full screen content.")
         self.interstitialShowing = false
         
