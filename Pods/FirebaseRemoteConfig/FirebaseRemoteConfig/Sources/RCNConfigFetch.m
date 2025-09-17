@@ -24,6 +24,7 @@
 #import "FirebaseRemoteConfig/Sources/RCNConfigConstants.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigContent.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigExperiment.h"
+#import "FirebaseRemoteConfig/Sources/RCNConfigSessionConfiguration.h"
 #import "FirebaseRemoteConfig/Sources/RCNDevice.h"
 @import FirebaseRemoteConfigInterop;
 
@@ -112,6 +113,7 @@ static NSInteger const kRCNFetchResponseHTTPStatusCodeGatewayTimeout = 504;
 }
 
 /// Force a new NSURLSession creation for updated config.
+/// - Warning: This API is **not** thread-safe.
 - (void)recreateNetworkSession {
   if (_fetchSession) {
     [_fetchSession invalidateAndCancel];
@@ -641,7 +643,7 @@ static NSInteger const kRCNFetchResponseHTTPStatusCodeGatewayTimeout = 504;
 
 - (NSURLSession *)newFetchSession {
   NSURLSessionConfiguration *config =
-      [[NSURLSessionConfiguration defaultSessionConfiguration] copy];
+      [RCNConfigSessionConfiguration remoteConfigSessionConfiguration];
   config.timeoutIntervalForRequest = _settings.fetchTimeout;
   config.timeoutIntervalForResource = _settings.fetchTimeout;
   NSURLSession *session = [NSURLSession sessionWithConfiguration:config];

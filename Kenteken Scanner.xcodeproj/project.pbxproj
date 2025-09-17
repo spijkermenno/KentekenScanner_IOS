@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,7 @@
 		A957296828574EFA0097BAB5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A957296728574EFA0097BAB5 /* ImagePicker.swift */; };
 		A957296A2857547D0097BAB5 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95729692857547D0097BAB5 /* ImageUploader.swift */; };
 		A957296C285755310097BAB5 /* ResponseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A957296B285755310097BAB5 /* ResponseResult.swift */; };
+		A9605D852E7B59C60067012E /* NativeAdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9605D842E7B59C40067012E /* NativeAdTableViewCell.swift */; };
 		A9621AB32608C1EB00A8DFE0 /* storageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */; };
 		A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */; };
 		A9621ABD2608C30E00A8DFE0 /* storageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */; };
@@ -104,6 +105,7 @@
 		A957296728574EFA0097BAB5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		A95729692857547D0097BAB5 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
 		A957296B285755310097BAB5 /* ResponseResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseResult.swift; sourceTree = "<group>"; };
+		A9605D842E7B59C40067012E /* NativeAdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdTableViewCell.swift; sourceTree = "<group>"; };
 		A9621AB22608C1EB00A8DFE0 /* storageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageHelper.swift; sourceTree = "<group>"; };
 		A9621AB72608C1FA00A8DFE0 /* analyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = analyticsHelper.swift; sourceTree = "<group>"; };
 		A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storageTypeEnum.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 		A98AC25D260B39EC008B4AE0 /* CustomTypes */ = {
 			isa = PBXGroup;
 			children = (
+				A9605D842E7B59C40067012E /* NativeAdTableViewCell.swift */,
 				A9621ACB2608CE7800A8DFE0 /* kentekenDataTableViewController.swift */,
 				A9621ABC2608C30E00A8DFE0 /* storageTypeEnum.swift */,
 				A97624282612109800565703 /* notification.swift */,
@@ -321,7 +324,7 @@
 				A93E03A525FF97E90013F8FE /* Resources */,
 				B0190FFA054D8359996806B7 /* [CP] Embed Pods Frameworks */,
 				A909AB9626EE9C1E00732E56 /* Embed App Clips */,
-				FFB8842C3503174E4ED2ABD0 /* [CP] Copy Pods Resources */,
+				550DA889217440AB908CB090 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -360,7 +363,7 @@
 				A93E03C525FF97EA0013F8FE /* Frameworks */,
 				A93E03C625FF97EA0013F8FE /* Resources */,
 				A8CA0391E0C0AFB4737E5CE3 /* [CP] Embed Pods Frameworks */,
-				B865E36A90C4FE246D749148 /* [CP] Copy Pods Resources */,
+				1C054792AAB9046E1B219807 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -395,7 +398,6 @@
 				};
 			};
 			buildConfigurationList = A93E03A225FF97E90013F8FE /* Build configuration list for PBXProject "Kenteken Scanner" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -404,6 +406,7 @@
 				nl,
 			);
 			mainGroup = A93E039E25FF97E90013F8FE;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = A93E03A825FF97E90013F8FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -469,6 +472,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		1C054792AAB9046E1B219807 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		26D2409C582EDD4757D15AC2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -513,6 +533,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		550DA889217440AB908CB090 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A8CA0391E0C0AFB4737E5CE3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -547,40 +584,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B865E36A90C4FE246D749148 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner-Kenteken ScannerUITests/Pods-Kenteken Scanner-Kenteken ScannerUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FFB8842C3503174E4ED2ABD0 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kenteken Scanner/Pods-Kenteken Scanner-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -611,6 +614,7 @@
 				A9621AB82608C1FA00A8DFE0 /* analyticsHelper.swift in Sources */,
 				A93E03AD25FF97E90013F8FE /* SceneDelegate.swift in Sources */,
 				A957296C285755310097BAB5 /* ResponseResult.swift in Sources */,
+				A9605D852E7B59C60067012E /* NativeAdTableViewCell.swift in Sources */,
 				A9D3BC44266F5F510035C34C /* viewModel.swift in Sources */,
 				A94ABADC2B3C2A9100F959DB /* APIManager.swift in Sources */,
 			);
@@ -803,16 +807,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken Scanner.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 327PJMKH2C;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 10806;
+				MARKETING_VERSION = 20001;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -831,16 +835,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Kenteken Scanner/Kenteken ScannerRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 327PJMKH2C;
 				INFOPLIST_FILE = "Kenteken Scanner/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 10806;
+				MARKETING_VERSION = 20001;
 				PRODUCT_BUNDLE_IDENTIFIER = "mennospijker.nl.Kenteken-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

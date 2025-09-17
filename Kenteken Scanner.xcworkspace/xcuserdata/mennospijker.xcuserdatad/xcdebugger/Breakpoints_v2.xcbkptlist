@@ -23,22 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CB27A275-1E7E-495F-BC4E-BE4F6674B58F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Kenteken Scanner/CustomTypes/PendingNotificationTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D12B0B65-35A9-44D7-A410-365D163E08D0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -56,15 +40,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "CD8014F9-ED87-4E75-87AC-C22FC58C8648"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Kenteken Scanner/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "651"
-            endingLineNumber = "651"
-            landmarkName = "toggleOverlay(shouldShow:)"
+            startingLineNumber = "648"
+            endingLineNumber = "648"
+            landmarkName = "toggleSpinner(onView:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
